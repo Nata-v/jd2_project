@@ -1,5 +1,6 @@
 package by.nata.data.config;
 
+import by.nata.data.entity.*;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
@@ -66,11 +67,15 @@ public class DataConfiguration {
             sessionFactory.setHibernateProperties(hibernateProperties);
             sessionFactory.setDataSource(dataSource);
             sessionFactory.setAnnotatedClasses(
-//                    Person.class,
-//                    PersonDetails.class,
-//                    ProductSpecification.class,
-//                    Promo.class,
-//                    TargetGroup.class
+                    Client.class,
+                    ClientDetails.class,
+                    ClientAddress.class,
+                    Cities.class,
+                    IssuingAuthority.class,
+                    Account.class,
+                    BankomatOperations.class,
+                    ProductsOperation.class,
+                    Transactions.class
             );
             return sessionFactory;
         }

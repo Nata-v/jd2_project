@@ -1,9 +1,9 @@
 package by.nata.service.model;
 
-import lombok.Getter;
+
 
 import java.io.Serializable;
-@Getter
+
 public class IssuingAuthority implements Serializable {
     private static final long serialVersionUID = -4940313289215610911L;
 
@@ -14,5 +14,13 @@ public class IssuingAuthority implements Serializable {
     public IssuingAuthority(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

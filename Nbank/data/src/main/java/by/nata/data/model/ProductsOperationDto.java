@@ -2,14 +2,12 @@ package by.nata.data.model;
 
 import by.nata.data.entity.Account;
 import by.nata.data.entity.ProductType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import lombok.Getter;
+
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-@Getter
+
 public final class ProductsOperationDto implements Serializable {
     private static final long serialVersionUID = 872596861734532685L;
 
@@ -33,5 +31,33 @@ public final class ProductsOperationDto implements Serializable {
         this.amount = amount;
         this.interestRate = interestRate;
         this.accountId = accountId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public ZonedDateTime getDateStartOperation() {
+        return dateStartOperation;
+    }
+
+    public ZonedDateTime getDateEndOperation() {
+        return dateEndOperation;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public Integer getInterestRate() {
+        return interestRate;
+    }
+
+    public Account getAccountId() {
+        return accountId;
     }
 }

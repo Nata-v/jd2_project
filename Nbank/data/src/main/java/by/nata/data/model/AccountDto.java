@@ -2,13 +2,13 @@ package by.nata.data.model;
 
 import by.nata.data.entity.Account;
 import by.nata.data.entity.Client;
-import lombok.Getter;
+
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-@Getter
+
 public final class AccountDto implements Serializable {
     private static final long serialVersionUID = 818061212323220354L;
 
@@ -32,11 +32,26 @@ public final class AccountDto implements Serializable {
         this.balance = balance;
     }
 
+    public String getAccountId() {
+        return accountId;
+    }
 
+    public Client getClient() {
+        return client;
+    }
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 
+    public ZonedDateTime getDateOpen() {
+        return dateOpen;
+    }
 
-//    public static AccountDto valueOf(Account account){
+    public BigDecimal getBalance() {
+        return balance;
+    }
+    //    public static AccountDto valueOf(Account account){
 //
 //        return new AccountDto(
 //                account.getAccountId(),

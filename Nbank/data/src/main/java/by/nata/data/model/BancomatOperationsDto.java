@@ -4,12 +4,12 @@ import by.nata.data.entity.Card;
 import by.nata.data.entity.TypeOperation;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
-import lombok.Getter;
+
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-@Getter
+
 public final class BancomatOperationsDto implements Serializable {
     private static final long serialVersionUID = -4004789084607827376L;
 
@@ -27,5 +27,25 @@ public final class BancomatOperationsDto implements Serializable {
         this.date = date;
         this.amount = amount;
         this.typeOperation = typeOperation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public TypeOperation getTypeOperation() {
+        return typeOperation;
     }
 }

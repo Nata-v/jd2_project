@@ -1,17 +1,13 @@
 package by.nata.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "ACCOUNT")
 public class Account {
@@ -34,7 +30,54 @@ public class Account {
     @Column(name = "BALANCE")
     private BigDecimal balance;
 
+    public Account() {
+    }
 
+    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance) {
+        this.accountId = accountId;
+        this.client = client;
+        this.accountNumber = accountNumber;
+        this.dateOpen = dateOpen;
+        this.balance = balance;
+    }
 
+    public String getAccountId() {
+        return accountId;
+    }
 
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public ZonedDateTime getDateOpen() {
+        return dateOpen;
+    }
+
+    public void setDateOpen(ZonedDateTime dateOpen) {
+        this.dateOpen = dateOpen;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 }

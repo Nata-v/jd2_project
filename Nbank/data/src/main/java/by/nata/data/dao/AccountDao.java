@@ -1,21 +1,20 @@
 package by.nata.data.dao;
 
+
+
 import by.nata.data.entity.Account;
 import by.nata.data.entity.Client;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+@Repository
+@Transactional
+public class AccountDao extends BaseDao<String, Account>{
+    public AccountDao(SessionFactory sessionFactory) {
+        super(sessionFactory, Account.class);
+    }
 
-public interface AccountDao extends JpaRepository<Account, String> {
-    Optional<Account> findByAccountNumber(String accountNumber);
-    @Query("UPDATE Account SET client = :client WHERE id = :accountId")
-    @Modifying
-    void updateAccountSetClient(Client client, String accountId);
-
-    @Query("UPDATE Account SET balance = :balance WHERE id = :accountId")
-    @Modifying
-    void updateAccountSetBalance(String accountId, BigDecimal balance);
 }

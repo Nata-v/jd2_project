@@ -1,9 +1,19 @@
 package by.nata.data.dao;
 
 import by.nata.data.entity.Card;
-import org.springframework.data.jpa.repository.JpaRepository;
+import by.nata.data.entity.Client;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface CardDao extends JpaRepository<Card, String> {
+import java.util.List;
+import java.util.Optional;
+@Repository
+@Transactional
+public class CardDao extends BaseDao<String, Card>{
 
+    public CardDao(SessionFactory sessionFactory) {
+        super(sessionFactory,Card.class);
+    }
 
 }

@@ -1,14 +1,10 @@
 package by.nata.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.GenericGenerator;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "ISSUING_AUTHORITY")
 public class IssuingAuthority {
@@ -22,7 +18,27 @@ public class IssuingAuthority {
     @Column(name = "NAME")
     private String name;
 
+    public IssuingAuthority() {
+    }
 
+    public IssuingAuthority(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

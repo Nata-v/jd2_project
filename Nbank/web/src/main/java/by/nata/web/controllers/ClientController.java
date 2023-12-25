@@ -31,8 +31,8 @@ private final ClientAddress clientAddress;
     public ModelAndView registrationNewClient(Model model, @ModelAttribute("client") Client client) {
 
             model.addAttribute("client", client);
-            model.addAttribute("client_details", clientDetails);
-            model.addAttribute("client_address", clientAddress);
+         //   model.addAttribute("client_details", clientDetails);
+           // model.addAttribute("client_address", clientAddress);
         //    model.addAttribute("cities", citiesService.findAll());
           //  model.addAttribute("issuing_authority", issuingAuthorityService.findAll());
 

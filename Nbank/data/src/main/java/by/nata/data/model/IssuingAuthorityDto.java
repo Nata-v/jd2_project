@@ -1,10 +1,9 @@
 package by.nata.data.model;
 
-import jakarta.persistence.Column;
-import lombok.Getter;
+
 
 import java.io.Serializable;
-@Getter
+
 public class IssuingAuthorityDto implements Serializable {
     private static final long serialVersionUID = -9042942834034633933L;
 
@@ -15,5 +14,13 @@ public class IssuingAuthorityDto implements Serializable {
     public IssuingAuthorityDto(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

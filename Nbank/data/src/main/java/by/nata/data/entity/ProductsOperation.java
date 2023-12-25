@@ -1,17 +1,13 @@
 package by.nata.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "PRODUCTS_OPERATION")
 public class ProductsOperation {

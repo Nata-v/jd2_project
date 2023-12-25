@@ -1,16 +1,12 @@
 package by.nata.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.ZonedDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "CLIENT_INFO")
 public class ClientInfo {

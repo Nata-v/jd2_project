@@ -3,15 +3,11 @@ package by.nata.data.model;
 import by.nata.data.entity.Account;
 import by.nata.data.entity.CardStatus;
 import by.nata.data.entity.Currency;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.Getter;
+
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-@Getter
+
 public final class CardDto implements Serializable {
     private static final long serialVersionUID = -7396794317512051708L;
 
@@ -36,5 +32,33 @@ public final class CardDto implements Serializable {
         this.cvv = cvv;
         this.cardStatus = cardStatus;
         this.currency = currency;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    public Account getAccountId() {
+        return accountId;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public ZonedDateTime getExpiryDate() {
+        return expiryDate;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public CardStatus getCardStatus() {
+        return cardStatus;
+    }
+
+    public Currency getCurrency() {
+        return currency;
     }
 }

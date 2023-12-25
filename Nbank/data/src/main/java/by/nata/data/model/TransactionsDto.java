@@ -1,15 +1,13 @@
 package by.nata.data.model;
 
 import by.nata.data.entity.Card;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import lombok.Getter;
+
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-@Getter
+
 public final class TransactionsDto implements Serializable {
     private static final long serialVersionUID = -4308506027488773218L;
 
@@ -26,5 +24,25 @@ public final class TransactionsDto implements Serializable {
         this.cardIdRecipient = cardIdRecipient;
         this.amount = amount;
         this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Card getCardIdSender() {
+        return cardIdSender;
+    }
+
+    public Card getCardIdRecipient() {
+        return cardIdRecipient;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public ZonedDateTime getDate() {
+        return date;
     }
 }
