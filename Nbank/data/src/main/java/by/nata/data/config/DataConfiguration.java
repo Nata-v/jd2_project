@@ -73,6 +73,12 @@ public class DataConfiguration {
                     Cities.class,
                     IssuingAuthority.class,
                     Account.class,
+                    Card.class,
+                    CardStatus.class,
+                    Currency.class,
+                    ProductType.class,
+                    Role.class,
+                    TypeOperation.class,
                     BankomatOperations.class,
                     ProductsOperation.class,
                     Transactions.class

@@ -16,9 +16,9 @@ public class ClientAddress {
     @Column(name = "ID")
     private String id;
 
-    @JoinColumn(name = "CLIENT_ID")
-    @OneToOne(cascade = CascadeType.ALL)
-    private Client client;
+//    @JoinColumn(name = "CLIENT_ID")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Client client;
 
     @Column(name = "COUNTRY")
     private String country;
@@ -27,6 +27,7 @@ public class ClientAddress {
     @Column(name = "LOCALITY")
     private String locality;
     @JoinColumn(name = "CITY_ID")
+    @OneToOne(cascade = CascadeType.ALL)
     private Cities city;
     @Column(name = "STREET")
     private String street;
@@ -40,9 +41,9 @@ public class ClientAddress {
     public ClientAddress() {
     }
 
-    public ClientAddress(String id, Client client, String country, String region, String locality, Cities city, String street, String houseNumber, String flatNumber, String phoneNumber) {
+    public ClientAddress(String id, String country, String region, String locality, Cities city, String street, String houseNumber, String flatNumber, String phoneNumber) {
         this.id = id;
-        this.client = client;
+       // this.client = client;
         this.country = country;
         this.region = region;
         this.locality = locality;
@@ -125,11 +126,5 @@ public class ClientAddress {
         this.phoneNumber = phoneNumber;
     }
 
-    public Client getClient() {
-        return client;
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
 }

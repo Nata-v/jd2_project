@@ -24,25 +24,25 @@ public class Client {
         @Enumerated(EnumType.STRING)
         @Column(name = "role")
         private Role role;
-//        @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//        @JoinColumn(name = "CLIENT_DETAILS_ID")
-//        private ClientDetails clientDetails;
-//
-//        @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//        @JoinColumn(name = "CLIENT_ADDRESS_ID")
-//        private ClientAddress clientAddress;
+        @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JoinColumn(name = "CLIENT_DETAILS_ID")
+        private ClientDetails clientDetails;
+
+        @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JoinColumn(name = "CLIENT_ADDRESS_ID")
+        private ClientAddress clientAddress;
 
         public Client() {
         }
 
-        public Client(String id, String username, String password, String email, Role role) {
+        public Client(String id, String username, String password, String email, Role role, ClientDetails clientDetails, ClientAddress clientAddress) {
                 this.id = id;
                 this.username = username;
                 this.password = password;
                 this.email = email;
                 this.role = role;
-//                this.clientDetails = clientDetails;
-//                this.clientAddress = clientAddress;
+                this.clientDetails = clientDetails;
+                this.clientAddress = clientAddress;
         }
 
         public String getId() {
@@ -85,5 +85,19 @@ public class Client {
                 this.role = role;
         }
 
+        public ClientDetails getClientDetails() {
+                return clientDetails;
+        }
 
+        public void setClientDetails(ClientDetails clientDetails) {
+                this.clientDetails = clientDetails;
+        }
+
+        public ClientAddress getClientAddress() {
+                return clientAddress;
+        }
+
+        public void setClientAddress(ClientAddress clientAddress) {
+                this.clientAddress = clientAddress;
+        }
 }

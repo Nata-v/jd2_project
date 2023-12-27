@@ -17,9 +17,9 @@ public class ClientDetails {
     @GeneratedValue(generator = "client_details_uuid")
     @Column(name = "ID")
     private String id;
-    @JoinColumn(name = "CLIENT_ID")
-    @OneToOne(cascade = CascadeType.ALL)
-    private Client client;
+//    @JoinColumn(name = "CLIENT_ID")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Client client;
 
     @Column(name = "SURNAME")
     private String surname;
@@ -50,9 +50,9 @@ public class ClientDetails {
     public ClientDetails() {
     }
 
-    public ClientDetails(String id, Client client, String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
+    public ClientDetails(String id, String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
         this.id = id;
-        this.client = client;
+        //this.client = client;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
@@ -162,12 +162,6 @@ public class ClientDetails {
         this.issuingAuthority = issuingAuthority;
     }
 
-    public Client getClient() {
-        return client;
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
 }

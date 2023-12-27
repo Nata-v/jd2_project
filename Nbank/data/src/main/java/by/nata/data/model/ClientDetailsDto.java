@@ -12,7 +12,7 @@ public final class ClientDetailsDto implements Serializable {
     private static final long serialVersionUID = -5986222759178415490L;
 
     private final String id;
-private final Client client;
+//private final Client client;
     private final String surname;
     private final String name;
     private final String middleName;
@@ -25,9 +25,9 @@ private final Client client;
     private final String nationality;
     private final IssuingAuthority issuingAuthority;
 
-    public ClientDetailsDto(String id, Client client, String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
+    public ClientDetailsDto(String id, String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
         this.id = id;
-        this.client = client;
+       // this.client = client;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
@@ -89,7 +89,5 @@ private final Client client;
         return issuingAuthority;
     }
 
-    public Client getClient() {
-        return client;
-    }
+
 }

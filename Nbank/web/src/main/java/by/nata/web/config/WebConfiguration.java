@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan(basePackages = "by.it.academy.web")
+@ComponentScan(basePackages = "by.nata.web")
 @Import(ServiceConfiguration.class)
 @EnableWebMvc
 
@@ -25,8 +25,9 @@ public class WebConfiguration  implements WebMvcConfigurer  {
     public InternalResourceViewResolver internalResourceViewResolver() {
 
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/jsp/");
-        resolver.setSuffix(".jsp");
+        resolver.setPrefix("/WEB-INF/views/");
+       // resolver.setSuffix(".jsp");
+        resolver.setSuffix(".html");
         return resolver;
 
     }

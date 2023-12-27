@@ -3,8 +3,11 @@ package by.nata.service;
 
 import by.nata.data.dao.ClientDao;
 import by.nata.data.model.ClientDto;
-import by.nata.data.entity.ClientDetails;
+
 import by.nata.service.model.Client;
+import by.nata.service.model.ClientAddress;
+
+import by.nata.service.model.ClientDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,43 +15,41 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Optional;
-
 @Service
 @Transactional
 public class ClientServiceImpl implements ClientService, UserDetailsService {
 
     private final ClientDao clientDao;
-    @Autowired
-    public ClientServiceImpl(ClientDao clientDao) {
+    private final ClientDetails clientDetails;
+    private final ClientAddress clientAddress;
+    private final Client client;
+
+    public ClientServiceImpl(@Autowired ClientDao clientDao, ClientDetails clientDetails, ClientAddress clientAddress, Client client) {
         this.clientDao = clientDao;
+        this.clientDetails = clientDetails;
+        this.clientAddress = clientAddress;
+        this.client = client;
     }
-
-
-
-
-
 
     @Override
     public void saveNewClient(Client client) {
-        ClientDto dto = new ClientDto(
-                client.getId(),
-                client.getUsername(),
-                client.getPassword(),
-                client.getEmail(),
-                client.getRole()
-        );
-     // clientDao.save(dto);
+        String clientDetailsId = client.getClientDetails() != null ? client.getClientDetails().getId() : null;
+        String clientAddressId = client.getClientAddress() != null ? client.getClientAddress().getId() : null;
+
+//        ClientDto clientDto = new ClientDto(
+//                client.getId(),
+//                client.getUsername(),
+//                client.getPassword(),
+//                client.getEmail(),
+//                client.getRole(),
+//                clientDetailsId,
+//                clientAddressId
+//        );
+ //     clientDao.save(clientDto);
 
 
     }
 
-
-//    @Override
-//    public void saveNewClient(Client client) {
-//
-//    }
 
     @Override
     public boolean delete(String id) {
