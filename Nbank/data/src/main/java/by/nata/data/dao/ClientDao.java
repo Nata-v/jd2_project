@@ -4,6 +4,7 @@ import by.nata.data.entity.Client;
 import by.nata.data.model.ClientDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ public class ClientDao extends BaseDao<String, Client>{
     private SessionFactory sessionFactory;
     private Session session;
 
-    public ClientDao(SessionFactory sessionFactory ){
+    public ClientDao(@Autowired  SessionFactory sessionFactory ){
         super(sessionFactory, Client.class);
 
     }

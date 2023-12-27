@@ -16,7 +16,7 @@ import java.io.IOException;
 //@RequestMapping("/clients")
 
 public class ClientController {
-@Autowired
+
 private final ClientService clientService;
 private final ClientDetailsService clientDetailsService;
 private  final ClientAddressService clientAddressService;
@@ -25,7 +25,7 @@ private final IssuingAuthorityService issuingAuthorityService;
 private final ClientDetails clientDetails;
 private final ClientAddress clientAddress;
 
-    public ClientController(ClientService clientService, ClientDetailsService clientDetailsService, ClientAddressService clientAddressService, CitiesService citiesService, IssuingAuthorityService issuingAuthorityService, ClientDetails clientDetails, ClientAddress clientAddress) {
+    public ClientController(@Autowired ClientService clientService, ClientDetailsService clientDetailsService, ClientAddressService clientAddressService, CitiesService citiesService, IssuingAuthorityService issuingAuthorityService, ClientDetails clientDetails, ClientAddress clientAddress) {
         this.clientService = clientService;
         this.clientDetailsService = clientDetailsService;
         this.clientAddressService = clientAddressService;
@@ -39,10 +39,7 @@ private final ClientAddress clientAddress;
     public ModelAndView getAddClientRegistration(){
         return new ModelAndView("online-registration");
     }
-//    @GetMapping("/online-registration")
-//    public String helloPage(){
-//        return "bank/online-registration";
-//    }
+
 
     @PostMapping("/online-registration")
     public ModelAndView registrationNewClient(  Client client) throws IOException {
@@ -59,7 +56,7 @@ private final ClientAddress clientAddress;
         System.out.println("Add email: " + client);
 clientService.saveNewClient(client);
 
-        return new ModelAndView("index");
+        return new ModelAndView("redirect/success-page");
     }
     @GetMapping
     public String findAll(Model model){
@@ -69,7 +66,7 @@ clientService.saveNewClient(client);
     }
     @GetMapping("/{id}")
     public  String findById(@PathVariable("id") String id, Model model){
-        //    model.addAttribute("client", clientService.findById(id));
+        //   model.addAttribute("client", clientService.findById(id));
             return "client/client";
     }
     @PostMapping
@@ -80,13 +77,13 @@ clientService.saveNewClient(client);
     //@PutMapping("/{id}")
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") String id, @ModelAttribute Client client){
-         //   clientService.update(id, client);
+            //clientService.update(id, client);
             return  "redirect:/clients/{id}";
     }
     //@DeleteMapping("/{id}/delete")
     @PostMapping("/{id}/update")
     public String delete(@PathVariable("id") String id){
-        //   clientService.delete(id);
+           clientService.delete(id);
         return  "redirect:/clients";
     }
 }
