@@ -36,16 +36,18 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         String clientDetailsId = client.getClientDetails() != null ? client.getClientDetails().getId() : null;
         String clientAddressId = client.getClientAddress() != null ? client.getClientAddress().getId() : null;
 
-//        ClientDto clientDto = new ClientDto(
-//                client.getId(),
-//                client.getUsername(),
-//                client.getPassword(),
-//                client.getEmail(),
-//                client.getRole(),
-//                clientDetailsId,
-//                clientAddressId
-//        );
- //     clientDao.save(clientDto);
+        ClientDto clientDto = new ClientDto(
+                client.getId(),
+                client.getUsername(),
+                client.getPassword(),
+                client.getEmail(),
+                client.getRole(),
+               // clientDetailsId,
+               // clientAddressId
+                new by.nata.data.entity.ClientDetails(),
+                new by.nata.data.entity.ClientAddress()
+        );
+      clientDao.save(clientDto);
 
 
     }

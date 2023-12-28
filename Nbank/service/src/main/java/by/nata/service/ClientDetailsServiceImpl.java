@@ -1,6 +1,8 @@
 package by.nata.service;
 
 import by.nata.data.dao.ClientDetailsDao;
+import by.nata.data.entity.Cities;
+import by.nata.data.entity.IssuingAuthority;
 import by.nata.data.model.ClientDetailsDto;
 import by.nata.service.model.ClientDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +22,23 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
     @Override
     public void saveNewClientDetails(ClientDetails clientDetails) {
 
-//
-//        ClientDetailsDto clientDetailsDto = new ClientDetailsDto(
-//                clientDetails.getId(),
-//                clientDetails.getSurname(),
-//                clientDetails.getName(),
-//                clientDetails.getMiddleName(),
-//                clientDetails.getBirthDate(),
-//                clientDetails.getPassportNumber(),
-//                clientDetails.getIdentityNumber(),
-//                clientDetails.getCity().getId(),
-//                clientDetails.getDateIssue(),
-//                clientDetails.getDateExpiry(),
-//                clientDetails.getNationality(),
-//                clientDetails.getIssuingAuthority().getId()
-//        );
-//
-//        clientDetailsDao.save(clientDetailsDto);
+
+       ClientDetailsDto clientDetailsDto = new ClientDetailsDto(
+                clientDetails.getId(),
+                clientDetails.getSurname(),
+                clientDetails.getName(),
+                clientDetails.getMiddleName(),
+                clientDetails.getBirthDate(),
+                clientDetails.getPassportNumber(),
+                clientDetails.getIdentityNumber(),
+                new Cities(),
+                clientDetails.getDateIssue(),
+                clientDetails.getDateExpiry(),
+                clientDetails.getNationality(),
+               new IssuingAuthority()
+        );
+
+        clientDetailsDao.save(clientDetailsDto);
     }
 
     @Override

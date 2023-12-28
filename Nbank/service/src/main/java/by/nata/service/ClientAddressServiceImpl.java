@@ -4,6 +4,7 @@ import by.nata.data.dao.BaseDao;
 import by.nata.data.dao.ClientAddressDao;
 
 
+import by.nata.data.entity.Cities;
 import by.nata.data.model.ClientAddressDto;
 
 import by.nata.service.model.ClientAddress;
@@ -15,30 +16,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ClientAddressServiceImpl implements ClientAddressService{
 
-    private final ClientAddressDao clientAddressDao;
-   // private final BaseDao<String, ClientAddressDto> baseDao;
+  //  private final ClientAddressDao clientAddressDao;
+    private final BaseDao<String, ClientAddressDto> baseDao;
 
-
-    public ClientAddressServiceImpl( @Autowired ClientAddressDao clientAddressDao,  BaseDao<String, ClientAddressDto> baseDao) {
-        this.clientAddressDao = clientAddressDao;
-       // this.baseDao = baseDao;
+    @Autowired
+    public ClientAddressServiceImpl( BaseDao<String, ClientAddressDto> baseDao) {
+       // this.clientAddressDao = clientAddressDao;
+        this.baseDao = baseDao;
     }
 
     @Override
     public void saveClientAddress(ClientAddress clientAddress) {
-//        ClientAddressDto clientAddressDto = new ClientAddressDto(
-//                clientAddress.getId(),
-//                clientAddress.getCountry(),
-//                clientAddress.getRegion(),
-//                clientAddress.getLocality(),
-//                clientAddress.getCity(),
-//                clientAddress.getStreet(),
-//                clientAddress.getHouseNumber(),
-//                clientAddress.getFlatNumber(),
-//                clientAddress.getPhoneNumber()
-//        );
-//            // clientAddressDao.save(clientAddressDto);
-//        baseDao.save(clientAddressDto);
+        ClientAddressDto clientAddressDto = new ClientAddressDto(
+                clientAddress.getId(),
+                clientAddress.getCountry(),
+                clientAddress.getRegion(),
+                clientAddress.getLocality(),
+                new Cities(),
+                clientAddress.getStreet(),
+                clientAddress.getHouseNumber(),
+                clientAddress.getFlatNumber(),
+                clientAddress.getPhoneNumber()
+        );
+            // clientAddressDao.save(clientAddressDto);
+        baseDao.save(clientAddressDto);
 
     }
 }
