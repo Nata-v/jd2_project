@@ -6,6 +6,7 @@ import by.nata.data.entity.IssuingAuthority;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public final class ClientDetailsDto implements Serializable {
@@ -16,29 +17,28 @@ public final class ClientDetailsDto implements Serializable {
     private final String surname;
     private final String name;
     private final String middleName;
-    private final Date birthDate;
+    private final LocalDate birthDate;
     private final String passportNumber;
     private final String identityNumber;
-    private final Cities city;
-    private final Date dateIssue;
-    private final Date dateExpiry;
-    private final String nationality;
-    private final IssuingAuthority issuingAuthority;
+    //private final Cities city;
+    private final String cityBirth;
+    private final LocalDate dateIssue;
+    private final LocalDate dateExpiry;
 
-    public ClientDetailsDto(String id, String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
+
+
+    public ClientDetailsDto(String id, String surname, String name, String middleName, LocalDate birthDate, String passportNumber, String identityNumber, String cityBirth, LocalDate dateIssue, LocalDate dateExpiry) {
         this.id = id;
-       // this.client = client;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
         this.birthDate = birthDate;
         this.passportNumber = passportNumber;
         this.identityNumber = identityNumber;
-        this.city = city;
+        this.cityBirth = cityBirth;
         this.dateIssue = dateIssue;
         this.dateExpiry = dateExpiry;
-        this.nationality = nationality;
-        this.issuingAuthority = issuingAuthority;
+
     }
 
     public String getId() {
@@ -57,7 +57,7 @@ public final class ClientDetailsDto implements Serializable {
         return middleName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
@@ -69,25 +69,15 @@ public final class ClientDetailsDto implements Serializable {
         return identityNumber;
     }
 
-    public Cities getCity() {
-        return city;
+    public String getCityBirth() {
+        return cityBirth;
     }
 
-    public Date getDateIssue() {
+    public LocalDate getDateIssue() {
         return dateIssue;
     }
 
-    public Date getDateExpiry() {
+    public LocalDate getDateExpiry() {
         return dateExpiry;
     }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public IssuingAuthority getIssuingAuthority() {
-        return issuingAuthority;
-    }
-
-
 }

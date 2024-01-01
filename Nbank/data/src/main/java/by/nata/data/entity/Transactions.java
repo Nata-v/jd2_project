@@ -18,8 +18,10 @@ public class Transactions {
     private String id;
 
     @JoinColumn(name = "CARD_ID_SENDER")
+    @OneToOne(cascade = CascadeType.ALL)
     private Card cardIdSender;
     @JoinColumn(name = "CARD_ID_RECIPIENT")
+    @OneToOne(cascade = CascadeType.ALL)
     private Card cardIdRecipient;
     @Column(name = "AMOUNT")
     private BigDecimal amount;

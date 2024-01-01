@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public abstract class BaseDao<K, E> implements Dao<K, E> {
 
     private final SessionFactory sessionFactory;
     private final Class<E> clazz;
 
-    public BaseDao(@Autowired SessionFactory sessionFactory, Class<E> clazz) {
+    public BaseDao(SessionFactory sessionFactory, Class<E> clazz) {
         this.clazz = clazz;
         if (sessionFactory == null) {
             throw new IllegalArgumentException("An argument sessionFactory cannot be null");
@@ -26,10 +26,10 @@ public abstract class BaseDao<K, E> implements Dao<K, E> {
     }
 
     @Override
-    public E save(E entity) {
+    public void save(E entity) {
         Session session = sessionFactory.getCurrentSession();
         session.save(entity);
-        return entity;
+       // return entity;
     }
 
     @Override

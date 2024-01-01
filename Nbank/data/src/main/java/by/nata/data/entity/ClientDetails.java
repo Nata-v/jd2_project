@@ -3,6 +3,7 @@ package by.nata.data.entity;
 import jakarta.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,54 +18,59 @@ public class ClientDetails {
     @GeneratedValue(generator = "client_details_uuid")
     @Column(name = "ID")
     private String id;
-//    @JoinColumn(name = "CLIENT_ID")
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private Client client;
 
-    @Column(name = "SURNAME")
+
+    @Column(name = "SURNAME", nullable = false)
     private String surname;
     @Column(name = "NAME")
     private String name;
     @Column(name = "MIDDLE_NAME")
     private String middleName;
-    @Column(name = "BIRTH_DATE", nullable = false)
-    private Date birthDate;
-    @Column(name = "PASSPORT_NUMBER", nullable = false)
+    @Column(name = "BIRTH_DATE")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate birthDate;
+    @Column(name = "PASSPORT_NUMBER")
     private String passportNumber;
-    @Column(name = "IDENTITY_NUMBER", nullable = false, unique = true)
+    @Column(name = "IDENTITY_NUMBER", unique = true)
     private String identityNumber;
-    @JoinColumn(name = "CITY_BIRTH_ID")
-    @OneToOne(cascade = CascadeType.ALL)
-    private Cities city;
-    @Column(name = "DATE_ISSUE", nullable = false)
-    private Date dateIssue;
+    //@JoinColumn(name = "CITY_BIRTH_ID")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Cities city;
+    @Column(name = "CITY_BIRTH")
+    private String cityBirth;
 
-    @Column(name = "DATE_EXPIRY", nullable = false)
-    private Date dateExpiry;
-    @Column(name = "NATIONALITY")
-    private String nationality;
-    @JoinColumn(name = "ISSUING_AUTHORITY")
-    @OneToOne(cascade = CascadeType.ALL)
-    private IssuingAuthority issuingAuthority;
+    @Column(name = "DATE_ISSUE")
+    private LocalDate dateIssue;
+
+    @Column(name = "DATE_EXPIRY")
+    private LocalDate dateExpiry;
+
 
     public ClientDetails() {
     }
 
-    public ClientDetails(String id, String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
+    public ClientDetails(String id, String surname, String name, String middleName, LocalDate birthDate, String passportNumber, String identityNumber, String cityBirth, LocalDate dateIssue, LocalDate dateExpiry) {
         this.id = id;
-        //this.client = client;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
         this.birthDate = birthDate;
         this.passportNumber = passportNumber;
         this.identityNumber = identityNumber;
-        this.city = city;
+        this.cityBirth = cityBirth;
         this.dateIssue = dateIssue;
         this.dateExpiry = dateExpiry;
-        this.nationality = nationality;
-        this.issuingAuthority = issuingAuthority;
     }
+
+    //    @Column(name = "NATIONALITY")
+//    private String nationality;
+//    @JoinColumn(name = "ISSUING_AUTHORITY")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private IssuingAuthority issuingAuthority;
+
+    //    @JoinColumn(name = "CLIENT_ID")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Client client;
 
     public String getId() {
         return id;
@@ -98,11 +104,11 @@ public class ClientDetails {
         this.middleName = middleName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -122,46 +128,27 @@ public class ClientDetails {
         this.identityNumber = identityNumber;
     }
 
-    public Cities getCity() {
-        return city;
+    public String getCityBirth() {
+        return cityBirth;
     }
 
-    public void setCity(Cities city) {
-        this.city = city;
+    public void setCityBirth(String cityBirth) {
+        this.cityBirth = cityBirth;
     }
 
-    public Date getDateIssue() {
+    public LocalDate getDateIssue() {
         return dateIssue;
     }
 
-    public void setDateIssue(Date dateIssue) {
+    public void setDateIssue(LocalDate dateIssue) {
         this.dateIssue = dateIssue;
     }
 
-    public Date getDateExpiry() {
+    public LocalDate getDateExpiry() {
         return dateExpiry;
     }
 
-    public void setDateExpiry(Date dateExpiry) {
+    public void setDateExpiry(LocalDate dateExpiry) {
         this.dateExpiry = dateExpiry;
     }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public IssuingAuthority getIssuingAuthority() {
-        return issuingAuthority;
-    }
-
-    public void setIssuingAuthority(IssuingAuthority issuingAuthority) {
-        this.issuingAuthority = issuingAuthority;
-    }
-
-
-
 }

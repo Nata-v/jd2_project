@@ -3,92 +3,123 @@ package by.nata.service.model;
 
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ClientDetails implements Serializable {
 
     private static final long serialVersionUID = 4965439671051563406L;
 
-    private final String id;
+    private  String id;
    // private final Client client;
-    private final String surname;
-    private final String name;
-    private final String middleName;
-    private final Date birthDate;
-    private final String passportNumber;
-    private final String identityNumber;
-    private final Cities city;
-    private final Date dateIssue;
-    private final Date dateExpiry;
-    private final String nationality;
-    private final IssuingAuthority issuingAuthority;
+    private  String surname;
+    private  String name;
+    private  String middleName;
+    //@DateTimeFormat(pattern = "dd-MM-yyy")
+    private  LocalDate birthDate;
+    private  String passportNumber;
+    private  String identityNumber;
+    //private  Cities city;
+    private String cityBirth;
+    private  LocalDate dateIssue;
+    private  LocalDate dateExpiry;
 
+    public ClientDetails() {
+    }
 
-
-    public ClientDetails(String id,  String surname, String name, String middleName, Date birthDate, String passportNumber, String identityNumber, Cities city, Date dateIssue, Date dateExpiry, String nationality, IssuingAuthority issuingAuthority) {
+    public ClientDetails(String id, String surname, String name, String middleName, LocalDate birthDate, String passportNumber, String identityNumber, String cityBirth, LocalDate dateIssue, LocalDate dateExpiry) {
         this.id = id;
-       // this.client = client;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
         this.birthDate = birthDate;
         this.passportNumber = passportNumber;
         this.identityNumber = identityNumber;
-        this.city = city;
+        this.cityBirth = cityBirth;
         this.dateIssue = dateIssue;
         this.dateExpiry = dateExpiry;
-        this.nationality = nationality;
-        this.issuingAuthority = issuingAuthority;
     }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getMiddleName() {
         return middleName;
     }
 
-    public Date getBirthDate() {
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getPassportNumber() {
         return passportNumber;
     }
 
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
+
     public String getIdentityNumber() {
         return identityNumber;
     }
 
-    public Cities getCity() {
-        return city;
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
     }
 
-    public Date getDateIssue() {
+    public String getCityBirth() {
+        return cityBirth;
+    }
+
+    public void setCityBirth(String cityBirth) {
+        this.cityBirth = cityBirth;
+    }
+
+    public LocalDate getDateIssue() {
         return dateIssue;
     }
 
-    public Date getDateExpiry() {
+    public void setDateIssue(LocalDate dateIssue) {
+        this.dateIssue = dateIssue;
+    }
+
+    public LocalDate getDateExpiry() {
         return dateExpiry;
     }
 
-    public String getNationality() {
-        return nationality;
+    public void setDateExpiry(LocalDate dateExpiry) {
+        this.dateExpiry = dateExpiry;
     }
-
-    public IssuingAuthority getIssuingAuthority() {
-        return issuingAuthority;
-    }
-
-
 }

@@ -3,26 +3,32 @@ package by.nata.data.dao;
 import by.nata.data.entity.ClientDetails;
 
 import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-@Transactional
-public class ClientDetailsDao extends BaseDao<String, ClientDetails>{
+import java.util.Optional;
 
-    private SessionFactory sessionFactory;
-    private Session session;
 
-    public ClientDetailsDao(SessionFactory sessionFactory ){
-        super(sessionFactory, ClientDetails.class);
+public interface ClientDetailsDao  {
 
-    }
+    void save(ClientDetailsDto clientDetailsDto);
+     Optional<ClientDetailsDto> findById(String id);
 
-    public ClientDetailsDto save(ClientDetailsDto clientDetailstDto) {
-        session = sessionFactory.getCurrentSession();
-        session.save(clientDetailstDto);
-        return clientDetailstDto;
-    }
+//    private SessionFactory sessionFactory;
+//    private Session session;
+//@Autowired
+//    public ClientDetailsDao(SessionFactory sessionFactory ){
+//        super(sessionFactory, ClientDetails.class);
+//
+//    }
+//
+//    public ClientDetailsDto save(ClientDetailsDto clientDetailstDto) {
+//        session = sessionFactory.getCurrentSession();
+//        session.save(clientDetailstDto);
+//        return clientDetailstDto;
+//    }
 }

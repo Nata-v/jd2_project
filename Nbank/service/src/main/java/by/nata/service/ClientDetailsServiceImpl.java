@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class ClientDetailsServiceImpl implements ClientDetailsService{
 
     private final ClientDetailsDao clientDetailsDao;
@@ -31,14 +34,21 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
                 clientDetails.getBirthDate(),
                 clientDetails.getPassportNumber(),
                 clientDetails.getIdentityNumber(),
-                new Cities(),
+                clientDetails.getCityBirth(),
                 clientDetails.getDateIssue(),
-                clientDetails.getDateExpiry(),
-                clientDetails.getNationality(),
-               new IssuingAuthority()
+                clientDetails.getDateExpiry()
         );
 
         clientDetailsDao.save(clientDetailsDto);
+    }
+
+    @Override
+    public Optional<ClientDetails> findById(String id) {
+//        Optional<ClientDetailsDto> clientDetailsDto = clientDetailsDao.findById(id);
+//        return new ClientDetails(clientDetailsDto.get(id);
+//
+//        return clientDetailsDao.findById(id);
+        return Optional.empty();
     }
 
     @Override

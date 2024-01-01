@@ -18,6 +18,7 @@ public class BankomatOperations {
     private String id;
 
     @JoinColumn(name = "CARD_ID")
+    @OneToOne(cascade = CascadeType.ALL)
     private Card card;
     @Column(name = "DATE")
     private ZonedDateTime date;

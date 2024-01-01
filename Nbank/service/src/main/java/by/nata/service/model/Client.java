@@ -8,28 +8,28 @@ import java.io.Serializable;
 
 
 public class Client implements Serializable {
-    private static final long serialVersionUID = 3402708669125589382L;
-    private final String id;
+    private static  long serialVersionUID = 3402708669125589382L;
+    private  String id;
 
-    private final String username;
-    private final String password;
+    private  String username;
+    private  String password;
 
-    private final String email;
-    private final Role role;
-    private final ClientDetails clientDetails;
+    private  String email;
+   // private final Role role;
+    private  ClientDetails clientDetails;
+//
+//    private final ClientAddress clientAddress;
 
-    private final ClientAddress clientAddress;
 
+    public Client() {
+    }
 
-
-    public Client(String id, String username, String password, String email, Role role, ClientDetails clientDetails, ClientAddress clientAddress) {
+    public Client(String id, String username, String password, String email, ClientDetails clientDetails) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
         this.clientDetails = clientDetails;
-        this.clientAddress = clientAddress;
     }
 
     public String getId() {
@@ -48,15 +48,38 @@ public class Client implements Serializable {
         return email;
     }
 
-    public Role getRole() {
-        return role;
+    public static void setSerialVersionUID(long serialVersionUID) {
+        Client.serialVersionUID = serialVersionUID;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    //    public Role getRole() {
+//        return role;
+//    }
 
     public ClientDetails getClientDetails() {
         return clientDetails;
     }
 
-    public ClientAddress getClientAddress() {
-        return clientAddress;
+    public void setClientDetails(ClientDetails clientDetails) {
+        this.clientDetails = clientDetails;
     }
+    //
+//    public ClientAddress getClientAddress() {
+//        return clientAddress;
+//    }
 }

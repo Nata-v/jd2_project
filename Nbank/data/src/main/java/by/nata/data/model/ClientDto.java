@@ -15,19 +15,18 @@ public final class ClientDto implements Serializable {
     private final String username;
     private final String password;
     private final String email;
-    private final Role role;
-    private final ClientDetails clientDetails;
+   // private final Role role;
+   private final ClientDetails clientDetails;
+//
+//    private final ClientAddress clientAddress;
 
-    private final ClientAddress clientAddress;
 
-    public ClientDto(String id, String username, String password,  String email, Role role, ClientDetails clientDetails, ClientAddress clientAddress) {
+    public ClientDto(String id, String username, String password, String email, ClientDetails clientDetails) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
         this.clientDetails = clientDetails;
-        this.clientAddress = clientAddress;
     }
 
     public String getId() {
@@ -46,15 +45,15 @@ public final class ClientDto implements Serializable {
         return email;
     }
 
-    public Role getRole() {
-        return role;
-    }
+//    public Role getRole() {
+//        return role;
+//    }
 
     public ClientDetails getClientDetails() {
         return clientDetails;
     }
-
-    public ClientAddress getClientAddress() {
-        return clientAddress;
-    }
+//
+//    public ClientAddress getClientAddress() {
+//        return clientAddress;
+//    }
 }

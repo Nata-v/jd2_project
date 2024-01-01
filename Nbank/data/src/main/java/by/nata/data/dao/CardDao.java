@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class CardDao extends BaseDao<String, Card>{
-    @Autowired
+//    @Autowired
     private SessionFactory sessionFactory;
     private Session session;
 

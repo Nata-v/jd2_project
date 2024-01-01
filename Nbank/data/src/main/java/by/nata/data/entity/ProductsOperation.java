@@ -29,6 +29,7 @@ public class ProductsOperation {
     @Column(name = "INTEREST_RATE")
     private Integer interestRate;
     @JoinColumn(name = "ACCOUNT_ID")
+    @OneToOne(cascade = CascadeType.ALL)
     private Account accountId;
 
 }
