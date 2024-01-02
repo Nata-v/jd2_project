@@ -5,6 +5,7 @@ import by.nata.data.entity.Role;
 
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public class Client implements Serializable {
@@ -17,19 +18,20 @@ public class Client implements Serializable {
     private  String email;
    // private final Role role;
     private  ClientDetails clientDetails;
-//
-//    private final ClientAddress clientAddress;
+
+    private  ClientAddress clientAddress;
 
 
     public Client() {
     }
 
-    public Client(String id, String username, String password, String email, ClientDetails clientDetails) {
+    public Client(String id, String username, String password, String email, ClientDetails clientDetails, ClientAddress clientAddress) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.clientDetails = clientDetails;
+        this.clientAddress = clientAddress;
     }
 
     public String getId() {
@@ -78,8 +80,37 @@ public class Client implements Serializable {
     public void setClientDetails(ClientDetails clientDetails) {
         this.clientDetails = clientDetails;
     }
-    //
-//    public ClientAddress getClientAddress() {
-//        return clientAddress;
-//    }
+
+    public ClientAddress getClientAddress() {
+        return clientAddress;
+    }
+
+    public void setClientAddress(ClientAddress clientAddress) {
+        this.clientAddress = clientAddress;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (this == object) return true;
+        if (!(object instanceof Client client)) return false;
+        return Objects.equals(getId(), client.getId()) && Objects.equals(getUsername(), client.getUsername()) && Objects.equals(getPassword(), client.getPassword()) && Objects.equals(getEmail(), client.getEmail()) && Objects.equals(getClientDetails(), client.getClientDetails()) && Objects.equals(getClientAddress(), client.getClientAddress());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getClientDetails(), getClientAddress());
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", clientDetails=" + clientDetails +
+                ", clientAddress=" + clientAddress +
+                '}';
+    }
 }

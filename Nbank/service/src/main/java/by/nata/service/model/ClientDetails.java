@@ -122,4 +122,20 @@ public class ClientDetails implements Serializable {
     public void setDateExpiry(LocalDate dateExpiry) {
         this.dateExpiry = dateExpiry;
     }
+
+    @Override
+    public String toString() {
+        return "ClientDetails{" +
+                "id='" + id + '\'' +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", birthDate=" + birthDate +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", identityNumber='" + identityNumber + '\'' +
+                ", cityBirth='" + cityBirth + '\'' +
+                ", dateIssue=" + dateIssue +
+                ", dateExpiry=" + dateExpiry +
+                '}';
+    }
 }

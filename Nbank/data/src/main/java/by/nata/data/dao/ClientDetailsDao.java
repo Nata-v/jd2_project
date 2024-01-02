@@ -16,7 +16,10 @@ import java.util.Optional;
 public interface ClientDetailsDao  {
 
     void save(ClientDetailsDto clientDetailsDto);
+    void delete(String id);
      Optional<ClientDetailsDto> findById(String id);
+
+    void update(ClientDetailsDto clientDetailsDto);
 
 //    private SessionFactory sessionFactory;
 //    private Session session;

@@ -3,10 +3,7 @@ package by.nata.web.config;
 import by.nata.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.web.multipart.MultipartResolver;
@@ -22,6 +19,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @ComponentScan(basePackages = "by.nata.web")
+@PropertySource(value = {
+        "classpath:app.properties",
+        "classpath:messages_en.properties",
+        "classpath:messages_ru.properties"
+})
 @Import(ServiceConfiguration.class)
 @EnableWebMvc
 

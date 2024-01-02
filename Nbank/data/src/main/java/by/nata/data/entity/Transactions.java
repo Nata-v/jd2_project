@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 
 @Entity
 @Table(name = "TRANSACTIONS")
+//@Audited
 public class Transactions {
     @Id
     @GenericGenerator(strategy = "uuid", name = "transactions_uuid")

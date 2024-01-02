@@ -3,14 +3,22 @@ package by.nata.data.dao;
 import by.nata.data.entity.ClientAddress;
 import by.nata.data.model.ClientAddressDto;
 import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 public interface ClientAddressDao  {
+
+    void save(ClientAddressDto clientAddressDto);
+    void delete(String id);
+    Optional<ClientAddressDto> findById(String id);
+    void update(ClientAddressDto clientAddressDto);
 //    @Autowired
 //    private SessionFactory sessionFactory;
 //    private Session session;

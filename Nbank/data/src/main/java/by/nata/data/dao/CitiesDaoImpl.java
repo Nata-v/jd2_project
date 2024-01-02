@@ -1,8 +1,6 @@
 package by.nata.data.dao;
 
-import by.nata.data.entity.IssuingAuthority;
 import by.nata.data.model.CitiesDto;
-import by.nata.data.model.IssuingAuthorityDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +12,10 @@ import java.util.Optional;
 
 //@Repository
 //@Transactional
-public class IssuingAuthorityDaoImpl implements IssuingAuthorityDao{
-//@Autowired
-//    private SessionFactory sessionFactory;
-//    private Session session;
-//
-//    public IssuingAuthorityDaoImpl(SessionFactory sessionFactory ){
-//        super(sessionFactory, IssuingAuthority.class);
-//
-//    }
+public class CitiesDaoImpl implements CitiesDao{
     private final SessionFactory sessionFactory;
-   // @Autowired
-    public IssuingAuthorityDaoImpl(SessionFactory sessionFactory) {
+    //@Autowired
+    public CitiesDaoImpl(SessionFactory sessionFactory) {
         if (sessionFactory == null) {
             throw new IllegalArgumentException("An argument sessionFactory cannot be null");
         }
@@ -38,13 +28,6 @@ public class IssuingAuthorityDaoImpl implements IssuingAuthorityDao{
 //        session.save(citiesDto);
 //        return citiesDto;
 //    }
-
-//    @Override
-//    public IssuingAuthorityDto save(IssuingAuthorityDto issuingAuthorityDto) {
-//        Session session = sessionFactory.getCurrentSession();
-//        session.save(issuingAuthorityDto);
-//        return issuingAuthorityDto;
-//    }
 //
 //    @Override
 //    public void delete(String id) {
@@ -52,17 +35,17 @@ public class IssuingAuthorityDaoImpl implements IssuingAuthorityDao{
 //    }
 //
 //    @Override
-//    public void update(IssuingAuthorityDto entity) {
+//    public void update(CitiesDto entity) {
 //
 //    }
 //
 //    @Override
-//    public Optional<IssuingAuthorityDto> findById(String id) {
+//    public Optional<CitiesDto> findById(String id) {
 //        return Optional.empty();
 //    }
 //
 //    @Override
-//    public List<IssuingAuthorityDto> findAll() {
+//    public List<CitiesDto> findAll() {
 //        return null;
 //    }
 }

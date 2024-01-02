@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+<!--<p th:text="${greetingMessage}"></p>-->
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
 
@@ -39,8 +39,8 @@
                                 Выбрать язык
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">RUS</a></li>
-                                <li><a class="dropdown-item" href="#">ENG</a></li>
+                                <li><a class="dropdown-item" href="?lang=ru">RUS</a></li>
+                                <li><a class="dropdown-item" href="?lang=en">ENG</a></li>
                                 <!-- <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#"></a></li> -->
                             </ul>
@@ -49,9 +49,9 @@
                             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
+                    <form method="post" class="d-flex" role="search" action="/web/login" name="login">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <button class="btn btn-outline-success" type="submit"><a href="https://google.com"> Search</a></button>
                     </form>
                 </div>
             </div>
@@ -96,25 +96,44 @@
                                 <h3>Авторизация в системе</h3>
                                 <div class="login">
 
-                                    <!-- <form method="POST" action="p0/IZ7_0AG41KO0JGEO20A9V4JL5S0PK7=CZ6_0AG41KO0JOFV20AC1O152V3SO5=LA0=/#Z7_0AG41KO0JGEO20A9V4JL5S0PK7" name="LoginForm1" class="loginForm "> -->
+                                     <form method="POST" action="/web/login" name="Login" class="loginForm ">
 
 
-                                    <input tabindex="1" class="input" dir="ltr" type="text" id="userID"
-                                        name="UseridField" autocomplete="off" value="" placeholder="Логин" /><br>
+<!--                                    <input tabindex="1" class="input" dir="ltr" type="text" id="clientID"-->
+<!--                                        name="ClientId" autocomplete="off" value="" placeholder="Логин" /><br>-->
 
-                                    <div class="pass">
-                                        <input tabindex="2" class="password" dir="ltr" type="password" id="password"
-                                            name="PasswordField" autocomplete="off" value="" placeholder="Пароль" />
-                                        <i class="password-eye-invisible"></i>
+<!--                                    <div class="pass">-->
+<!--                                        <input tabindex="2" class="password" dir="ltr" type="password" id="password"-->
+<!--                                            name="PasswordField" autocomplete="off" value="" placeholder="Пароль" />-->
+<!--                                        <i class="password-eye-invisible"></i>-->
 
-                                    </div>
-                                    <br>
-                                    <td>
-                                        <input type="hidden" name="Login" />
-                                        <input tabindex="4" type="submit" onclick="loginWithKFP(this);" value="Войти"
-                                            class="button" />
+<!--                                    </div>-->
+<!--                                    <br>-->
+<!--                                    <td>-->
+<!--                                        <input type="hidden" name="Login" />-->
+<!--                                        <input tabindex="4" type="submit" onclick="loginWithKFP(this);" value="Войти"-->
+<!--                                            class="button" />-->
 
-                                    </td>
+<!--                                    </td>-->
+                                         <div>
+                                         <label for="username">
+                                             <input id="username" type="text" name="username" placeholder="Логин">
+                                         </label>
+                                         </div>
+                                         <div>
+                                         <label for="password">
+                                             <input id="password" type="password" name="password" placeholder="Пароль">
+                                             <i class="password-eye-invisible"></i>
+                                         </label>
+                                         </div>
+                                             <br>
+                                         <td>
+                                             <input type="hidden" name="Login" />
+<!--                                             <button type="submit" placeholder="Войти"></button>-->
+                                             <input tabindex="4" type="submit" onclick="loginWithKFP(this);" value="Войти" class="button" />
+                                         </td>
+
+                                     </form>
 
                                 </div>
 
@@ -140,18 +159,18 @@
 
 
 
-                                <tr>
-                                    <td style="vertical-align: top;">
-                                        <input type="hidden" name="bbibUnblockAction">
-                                        <a tabindex="5" href="#" style="display: block; margin-top: 10px;"
-                                            onclick="event.preventDefault();document.forms.LoginForm1.bbibUnblockAction.value='gotoUnblock';document.forms.LoginForm1.submit();"
-                                            class="sms">Разблокировать по СМС</a>
-                                    </td>
+<!--                                <tr>-->
+<!--                                    <td style="vertical-align: top;">-->
+<!--                                        <input type="hidden" name="bbibUnblockAction">-->
+<!--                                        <a tabindex="5" href="#" style="display: block; margin-top: 10px;"-->
+<!--                                            onclick="event.preventDefault();document.forms.LoginForm1.bbibUnblockAction.value='gotoUnblock';document.forms.LoginForm1.submit();"-->
+<!--                                            class="sms">Разблокировать по СМС</a>-->
+<!--                                    </td>-->
 
-                                </tr>
-                                <p> <a href="">Зарегистрироваться в системе банка</a></p>
+<!--                                </tr>-->
+                                <p> <a href="/web/registration">Зарегистрироваться в системе банка</a></p>
                                 <p><h6>Подписка на E-MAIL рассылку от N_BANK</h6></p> <a href="">>>></a></p>
-                                <p><h6>НовосиK</h6></p> <a href="">>>></a></p>
+<!--                                <p><h6>НовосиK</h6></p> <a href="">>>></a></p>-->
 
                                 <div id="footer">
                                     <a href="#" target="_blank">
@@ -181,7 +200,7 @@
                                     <h5 class="card-title">Карточки</h5>
                                     <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
                                         банка или закать доставку на дом. </p>
-                                    <a href="#" class="btn btn-primary">Заказать карту</a>
+                                    <a href="/web/registration" class="btn btn-primary">Заказать карту</a>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +212,7 @@
                                     <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
                                         проценты. Не нужно откладывать покупки, оформите кредит online не выходя из
                                         дома. </p>
-                                    <a href="#" class="btn btn-primary">Оформить кредит</a>
+                                    <a href="/web/registration" class="btn btn-primary">Оформить кредит</a>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +223,7 @@
                                     <h5 class="card-title">Вклады</h5>
                                     <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой срок.
                                     </p>
-                                    <a href="#" class="btn btn-primary">Оформить вклад</a>
+                                    <a href="/web/registration" class="btn btn-primary">Оформить вклад</a>
                                 </div>
                             </div>
                         </div>

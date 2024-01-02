@@ -2,12 +2,15 @@ package by.nata.data.entity;
 
 import jakarta.persistence.*;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.Objects;
 
 
 @Entity
 @Table(name = "CLIENT")
-
+//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Client {
         @Id
         @GenericGenerator(strategy = "uuid", name = "client_uuid")
@@ -27,20 +30,21 @@ public class Client {
         @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         @JoinColumn(name = "CLIENT_DETAILS_ID")
         private ClientDetails clientDetails;
-//
-//        @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//        @JoinColumn(name = "CLIENT_ADDRESS_ID")
-//        private ClientAddress clientAddress;
+
+        @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JoinColumn(name = "CLIENT_ADDRESS_ID")
+        private ClientAddress clientAddress;
 
         public Client() {
         }
 
-        public Client(String id, String username, String password, String email, ClientDetails clientDetails) {
+        public Client(String id, String username, String password, String email, ClientDetails clientDetails, ClientAddress clientAddress) {
                 this.id = id;
                 this.username = username;
                 this.password = password;
                 this.email = email;
                 this.clientDetails = clientDetails;
+                this.clientAddress = clientAddress;
         }
 
         public String getId() {
@@ -90,12 +94,42 @@ public class Client {
         public void setClientDetails(ClientDetails clientDetails) {
                 this.clientDetails = clientDetails;
         }
-//
-//        public ClientAddress getClientAddress() {
-//                return clientAddress;
-//        }
-//
-//        public void setClientAddress(ClientAddress clientAddress) {
-//                this.clientAddress = clientAddress;
-//        }
+
+        public ClientAddress getClientAddress() {
+                return clientAddress;
+        }
+
+        public void setClientAddress(ClientAddress clientAddress) {
+                this.clientAddress = clientAddress;
+        }
+
+        @Override
+        public String toString() {
+                return "Client{" +
+                        "id='" + id + '\'' +
+                        ", username='" + username + '\'' +
+                        ", password='" + password + '\'' +
+                        ", email='" + email + '\'' +
+                        ", clientDetails=" + clientDetails +
+                        ", clientAddress=" + clientAddress +
+                        '}';
+        }
+
+        @Override
+        public boolean equals(Object object) {
+                if (this == object) return true;
+                if (object == null || getClass() != object.getClass()) return false;
+
+                Client that = (Client) object;
+
+                if (id != that.id) return false;
+                if (!Objects.equals(username, that.username))return false;
+                if (!(object instanceof Client client)) return false;
+                return Objects.equals(getId(), client.getId()) && Objects.equals(getUsername(), client.getUsername()) && Objects.equals(getPassword(), client.getPassword()) && Objects.equals(getEmail(), client.getEmail()) && Objects.equals(getClientDetails(), client.getClientDetails()) && Objects.equals(getClientAddress(), client.getClientAddress());
+        }
+
+        @Override
+        public int hashCode() {
+                return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getClientDetails(), getClientAddress());
+        }
 }

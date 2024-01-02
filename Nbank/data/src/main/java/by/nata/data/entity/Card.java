@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "CARD")
+//@Audited
 public class Card {
     @Id
     @GenericGenerator(strategy = "uuid", name = "card_uuid")
@@ -19,6 +21,7 @@ public class Card {
 
     @JoinColumn(name = "ACCOUNT_ID")
     @ManyToOne(cascade = CascadeType.ALL)
+   // @NotAudited
     private Account accountId;
     @Column(name = "CARD_NUMBER")
     private String cardNumber;
@@ -29,9 +32,11 @@ public class Card {
     private String cvv;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "CARD_STATUS")
+    //@NotAudited
     private CardStatus cardStatus;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "CURRENCY")
+   // @NotAudited
     private Currency currency;
 
     public Card() {

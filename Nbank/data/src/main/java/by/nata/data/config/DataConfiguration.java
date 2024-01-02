@@ -68,7 +68,6 @@ public class DataConfiguration {
                     ClientDetails.class,
                     ClientAddress.class,
                     Cities.class,
-                    IssuingAuthority.class,
                     Account.class,
                     Card.class,
                     CardStatus.class,

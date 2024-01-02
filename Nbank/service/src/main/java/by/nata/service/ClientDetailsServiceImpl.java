@@ -1,15 +1,12 @@
 package by.nata.service;
 
 import by.nata.data.dao.ClientDetailsDao;
-import by.nata.data.entity.Cities;
-import by.nata.data.entity.IssuingAuthority;
 import by.nata.data.model.ClientDetailsDto;
 import by.nata.service.model.ClientDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -46,8 +43,8 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
     public Optional<ClientDetails> findById(String id) {
 //        Optional<ClientDetailsDto> clientDetailsDto = clientDetailsDao.findById(id);
 //        return new ClientDetails(clientDetailsDto.get(id);
-//
-//        return clientDetailsDao.findById(id);
+
+        //return clientDetailsDao.findById(id);
         return Optional.empty();
     }
 

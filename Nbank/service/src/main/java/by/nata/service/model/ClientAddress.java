@@ -8,20 +8,22 @@ import java.io.Serializable;
 public class ClientAddress implements Serializable {
     private static final long serialVersionUID = -1357701676527618932L;
 
-    private final String id;
-    //private final Client client;
-    private final String country;
-    private final String region;
-    private final String locality;
-    private final Cities city;
-    private final String street;
-    private final String houseNumber;
-    private final String flatNumber;
-    private final String phoneNumber;
+    private  String id;
+    private  String country;
+    private  String region;
+    private  String locality;
+   // private final Cities city;
+    private  String city;
+    private  String street;
+    private  String houseNumber;
+    private  String flatNumber;
+    private  String phoneNumber;
 
-    public ClientAddress(String id,  String country, String region, String locality, Cities city, String street, String houseNumber, String flatNumber, String phoneNumber) {
+    public ClientAddress() {
+    }
+
+    public ClientAddress(String id, String country, String region, String locality, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
         this.id = id;
-      //  this.client = client;
         this.country = country;
         this.region = region;
         this.locality = locality;
@@ -48,7 +50,7 @@ public class ClientAddress implements Serializable {
         return locality;
     }
 
-    public Cities getCity() {
+    public String getCity() {
         return city;
     }
 
@@ -68,5 +70,54 @@ public class ClientAddress implements Serializable {
         return phoneNumber;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public void setFlatNumber(String flatNumber) {
+        this.flatNumber = flatNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "ClientAddress{" +
+                "id='" + id + '\'' +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", locality='" + locality + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", flatNumber='" + flatNumber + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

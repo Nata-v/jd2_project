@@ -9,15 +9,15 @@
             <sql>
                 CREATE TABLE IF NOT EXISTS client_details (
                 id VARCHAR(256) NOT NULL,
-                surname VARCHAR(128) ,
-                name VARCHAR(128),
+                surname VARCHAR(128) NOT NULL,
+                name VARCHAR(128)NOT NULL,
                 middle_name VARCHAR(128) ,
-                birth_date Date  ,
-                passport_number VARCHAR(50),
-                identity_number VARCHAR(100) ,
-                city_birth VARCHAR(50) ,
-                date_issue Date,
-                date_expiry Date ,
+                birth_date Date  NOT NULL,
+                passport_number VARCHAR(50) NOT NULL,
+                identity_number VARCHAR(100) NOT NULL,
+                city_birth VARCHAR(50) NOT NULL,
+                date_issue Date NOT NULL,
+                date_expiry Date NOT NULL ,
                 PRIMARY KEY (id)
 
                 );
@@ -25,7 +25,24 @@
             </sql>
         </changeSet>
 
-    <changeSet id="2" author="natali">
+        <changeSet id="2" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS client_address (
+                id VARCHAR(256)  NOT NULL,
+                country VARCHAR(50) NOT NULL,
+                region VARCHAR(50),
+                locality VARCHAR(50),
+                city VARCHAR(50) NOT NULL,
+                street VARCHAR(50) NOT NULL,
+                house_number  VARCHAR(10) NOT NULL,
+                flat_number VARCHAR(10) ,
+                phone_number VARCHAR(100),
+                PRIMARY KEY (id)
+                );
+            </sql>
+        </changeSet>
+
+    <changeSet id="3" author="natali">
         <sql>
             CREATE TABLE IF NOT EXISTS client (
             id VARCHAR(256) NOT NULL,
@@ -33,8 +50,10 @@
             password VARCHAR(100) NOT NULL,
             email VARCHAR(100) NOT NULL,
             client_details_id VARCHAR(256) NOT NULL,
+            client_address_id VARCHAR(256) NOT NULL,
             PRIMARY KEY (id),
-            FOREIGN KEY (client_details_id) REFERENCES client_details (id)
+            FOREIGN KEY (client_details_id) REFERENCES client_details (id),
+            FOREIGN KEY (client_address_id) REFERENCES client_address (id)
 
 
             );
@@ -52,15 +71,7 @@
 <!--        </sql>-->
 <!--    </changeSet>-->
 
-<!--    <changeSet id="2" author="natali">-->
-<!--        <sql>-->
-<!--            CREATE TABLE IF NOT EXISTS  issuing_authority (-->
-<!--            id VARCHAR(256)  NOT NULL,-->
-<!--            name VARCHAR(128) NOT NULL,-->
-<!--            PRIMARY KEY (id)-->
-<!--            );-->
-<!--        </sql>-->
-<!--    </changeSet>-->
+
 
 <!--    <changeSet id="3" author="natali">-->
 <!--        <sql>-->
