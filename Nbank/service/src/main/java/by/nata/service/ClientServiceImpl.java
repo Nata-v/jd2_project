@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,23 +43,24 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
     }
 
     @Override
+
     public void saveNewClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
         ClientDto clientDto = new ClientDto(
                 client.getId(),
                 client.getUsername(),
                 client.getPassword(),
                 client.getEmail(),
-        new by.nata.data.entity.ClientDetails(
-                clientDetails.getId(),
-                clientDetails.getSurname(),
-            clientDetails.getName(),
-            clientDetails.getMiddleName(),
-            clientDetails.getBirthDate(),
-            clientDetails.getPassportNumber(),
-            clientDetails.getIdentityNumber(),
-            clientDetails.getCityBirth(),
-            clientDetails.getDateIssue(),
-            clientDetails.getDateExpiry()),
+                new by.nata.data.entity.ClientDetails(
+                        clientDetails.getId(),
+                        clientDetails.getSurname(),
+                        clientDetails.getName(),
+                        clientDetails.getMiddleName(),
+                        clientDetails.getBirthDate(),
+                        clientDetails.getPassportNumber(),
+                        clientDetails.getIdentityNumber(),
+                        clientDetails.getCityBirth(),
+                        clientDetails.getDateIssue(),
+                        clientDetails.getDateExpiry()),
                 new by.nata.data.entity.ClientAddress(
                         clientAddress.getId(),
                         clientAddress.getCountry(),
@@ -71,7 +73,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
                         clientAddress.getPhoneNumber()
                 ));
 
-       clientDao.save(clientDto);
+        clientDao.save(clientDto);
     }
 
     //        String clientDetailsId = client.getClientDetails() != null ? client.getClientDetails().getId() : null;
@@ -122,23 +124,115 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         );
         result.ifPresent(client ->
                 applicationEventPublisher.publishEvent(new ClientEvent(this, AccessType.READ, client.getId())));
-return result;
+        return result;
 
     }
 
     @Override
+
     public boolean delete(String id) {
-    var maybeClient = clientDao.findById(id);
-    maybeClient.ifPresent(client -> clientDao.delete(id));
-    return maybeClient.isPresent();
+//        var maybeClient = clientDao.findById(id);
+//        maybeClient.ifPresent(client -> clientDao.delete(id));
+//        return maybeClient.isPresent();
+        return clientDao.findById(id).map(clientDto -> {
+            clientDao.delete(clientDto.getId());
+            return true;
+        }).orElse(false);
     }
-
-
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public List<Client> findAllClients() {
+//        List<ClientDto> clientsDto = clientDao.findAll();
+//
+//        List<Client> clients = clientsDto.stream()
+//                .map(this::convertToClient)
+//                .collect(Collectors.toList());
+
+        return null;//clients;
     }
+//    private Client convertToClient(ClientDto clientDto, ClientDetailsDto clientDetailsDto, ClientAddressDto clientAddressDto) {
+//       // ClientDetailsDto clientDetailsDto = clientDto.getClientDetails();
+//       // ClientAddressDto clientAddressDto = clientDto.getClientAddress();
+//
+//        return new Client(
+//                clientDto.getId(),
+//                clientDto.getUsername(),
+//                clientDto.getPassword(),
+//                clientDto.getEmail(),
+//                new ClientDetails(
+//                        clientDetailsDto.getId(),
+//                        clientDetailsDto.getSurname(),
+//                        clientDetailsDto.getName(),
+//                        clientDetailsDto.getMiddleName(),
+//                        clientDetailsDto.getBirthDate(),
+//                        clientDetailsDto.getPassportNumber(),
+//                        clientDetailsDto.getIdentityNumber(),
+//                        clientDetailsDto.getCityBirth(),
+//                        clientDetailsDto.getDateIssue(),
+//                        clientDetailsDto.getDateExpiry()
+//                ),
+//                new ClientAddress(
+//                        clientAddressDto.getId(),
+//                        clientAddressDto.getCountry(),
+//                        clientAddressDto.getRegion(),
+//                        clientAddressDto.getLocality(),
+//                        clientAddressDto.getCity(),
+//                        clientAddressDto.getStreet(),
+//                        clientAddressDto.getHouseNumber(),
+//                        clientAddressDto.getFlatNumber(),
+//                        clientAddressDto.getPhoneNumber()));
+//
+//    }
+
+    @Override
+    //@Transactional
+    public void updateClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
+        ClientDto existingClientDto = clientDao.findById(client.getId()).orElse(null);
+
+        if (existingClientDto != null) {
+
+//            existingClientDto = new ClientDto(
+//                    client.getId(),
+//                    client.getUsername(),
+//                    client.getPassword(),
+//                    client.getEmail(),
+//                    new by.nata.data.entity.ClientDetails(
+//                            clientDetails.getId(),
+//                            clientDetails.getSurname(),
+//                            clientDetails.getName(),
+//                            clientDetails.getMiddleName(),
+//                            clientDetails.getBirthDate(),
+//                            clientDetails.getPassportNumber(),
+//                            clientDetails.getIdentityNumber(),
+//                            clientDetails.getCityBirth(),
+//                            clientDetails.getDateIssue(),
+//                            clientDetails.getDateExpiry()),
+//                    new by.nata.data.entity.ClientAddress(
+//                            clientAddress.getId(),
+//                            clientAddress.getCountry(),
+//                            clientAddress.getRegion(),
+//                            clientAddress.getLocality(),
+//                            clientAddress.getCity(),
+//                            clientAddress.getStreet(),
+//                            clientAddress.getHouseNumber(),
+//                            clientAddress.getFlatNumber(),
+//                            clientAddress.getPhoneNumber()));
+            client.setId(existingClientDto.getId());
+                    client.setUsername(existingClientDto.getUsername());
+            client.setPassword(existingClientDto.getPassword());
+            client.setEmail(existingClientDto.getEmail());
+            client.setClientDetails(clientDetails);
+            client.setClientAddress(clientAddress);
+
+            clientDao.update(existingClientDto);
+
+        }
+    }
+
+        @Override
+        public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
+            return null;
+        }
 
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -151,6 +245,7 @@ return result;
 //                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
 //
 //    }
+
 }
 
 

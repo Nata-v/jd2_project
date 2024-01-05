@@ -63,12 +63,7 @@ public class ClientDaoImpl implements ClientDao {
     public void save(ClientDto clientDto) {
         final Session session = sessionFactory.getCurrentSession();
 
-//        Client client = new Client();
-//        client.setId(clientDto.getId() == null ? getMaxProductId() + 1 : clientDto.getId());
-//        client.setUsername(clientDto.getUsername());
-//        client.setPassword(clientDto.getPassword());
-//        client.setEmail(clientDto.getEmail());
-//        client.setClientDetails(getClientDetails(clientDto.getClientDetails().getId()));
+
 
         Client client = new Client(
                 clientDto.getId() == null ? getMaxProductId() + 1 : clientDto.getId(),   //getMaxProductId() + 1 : clientDto.getId().intValue(),
@@ -79,10 +74,17 @@ public class ClientDaoImpl implements ClientDao {
                 clientDto.getClientAddress());
 
         session.save(client);
-log.info("Client saved: {}", client);
+ log.info("Client saved: {}", client);
 //log.error("");
 //log.warn("Client details was change: {}", client);
         //log.debug("Client: {}, session: {}", client, session);
+
+        //        Client client = new Client();
+//        client.setId(clientDto.getId() == null ? getMaxProductId() + 1 : clientDto.getId());
+//        client.setUsername(clientDto.getUsername());
+//        client.setPassword(clientDto.getPassword());
+//        client.setEmail(clientDto.getEmail());
+//        client.setClientDetails(getClientDetails(clientDto.getClientDetails().getId()));
 
     }
 

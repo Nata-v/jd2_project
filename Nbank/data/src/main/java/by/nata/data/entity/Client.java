@@ -118,12 +118,6 @@ public class Client {
         @Override
         public boolean equals(Object object) {
                 if (this == object) return true;
-                if (object == null || getClass() != object.getClass()) return false;
-
-                Client that = (Client) object;
-
-                if (id != that.id) return false;
-                if (!Objects.equals(username, that.username))return false;
                 if (!(object instanceof Client client)) return false;
                 return Objects.equals(getId(), client.getId()) && Objects.equals(getUsername(), client.getUsername()) && Objects.equals(getPassword(), client.getPassword()) && Objects.equals(getEmail(), client.getEmail()) && Objects.equals(getClientDetails(), client.getClientDetails()) && Objects.equals(getClientAddress(), client.getClientAddress());
         }

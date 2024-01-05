@@ -77,8 +77,8 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
         return Optional.ofNullable(session.find(ClientAddressDto.class, id));
     }
 
-//    @Override
-//    public List<ClientAddressDto> findAll() {
-//        return null;
-//    }
+    @Override
+    public List<ClientAddressDto> findAll() {
+        return null;
+    }
 }

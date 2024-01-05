@@ -1,9 +1,6 @@
 package by.nata.service.model;
 
 import by.nata.data.entity.Account;
-import by.nata.data.entity.CardStatus;
-import by.nata.data.entity.Currency;
-import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -15,18 +12,18 @@ public class Card implements Serializable {
     private final String cardNumber;
     private final ZonedDateTime expiryDate;
     private final String cvv;
-    private final CardStatus cardStatus;
+//    private final CardStatus cardStatus;
+//
+//    private final Currency currency;
 
-    private final Currency currency;
-
-    public Card(String cardId, Account accountId, String cardNumber, ZonedDateTime expiryDate, String cvv, CardStatus cardStatus, Currency currency) {
+    public Card(String cardId, Account accountId, String cardNumber, ZonedDateTime expiryDate, String cvv) {
         this.cardId = cardId;
         this.accountId = accountId;
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;
         this.cvv = cvv;
-        this.cardStatus = cardStatus;
-        this.currency = currency;
+//        this.cardStatus = cardStatus;
+//        this.currency = currency;
     }
 
     public String getCardId() {
@@ -49,11 +46,11 @@ public class Card implements Serializable {
         return cvv;
     }
 
-    public CardStatus getCardStatus() {
-        return cardStatus;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
+//    public CardStatus getCardStatus() {
+//        return cardStatus;
+//    }
+//
+//    public Currency getCurrency() {
+//        return currency;
+//    }
 }

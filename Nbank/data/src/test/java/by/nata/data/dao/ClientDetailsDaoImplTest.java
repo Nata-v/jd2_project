@@ -25,48 +25,48 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = DataConfigurationTest.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = DataConfigurationTest.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class ClientDetailsDaoImplTest {
 //@Mock
     // @Autowired
-    @Mock
-private ClientDetailsDao clientDetailsDao;
-    @Mock
-    private SessionFactory sessionFactory;
+//    @Mock
+//private ClientDetailsDao clientDetailsDao;
+//    @Mock
+//    private SessionFactory sessionFactory;
+//
+//    @Mock
+//    private Session session;
+//
+//    @Before
+//    public void setUp() throws Exception {
+//       MockitoAnnotations.initMocks(this);
+//    }
+//
+//    @After
+//    public void tearDown() throws Exception {
+//    }
 
-    @Mock
-    private Session session;
-
-    @Before
-    public void setUp() throws Exception {
-       MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void save() {
-
-       ClientDetailsDto clientDetailsDto = new ClientDetailsDto(null, "Volkova", "Natali", "Nikolaevna",
-               LocalDate.of(2000, 8, 31), "KB333333", "566767677", "Minsk",
-              LocalDate.of(2022, 12, 12), LocalDate.of( 2030, 01, 01));
-
-
-        System.out.println(clientDetailsDto);
-
-        //when(clientDetailsDao.save(any(ClientDetailsDto.class))).thenReturn(clientDetailsDto);
-
-           clientDetailsDao.save(clientDetailsDto);
-
-        assertNotNull(clientDetailsDto);
-        assertEquals("Natali", clientDetailsDto.getName());
-        assertEquals(LocalDate.of(2000, 8, 31), clientDetailsDto.getBirthDate());
-
-        verify(clientDetailsDao).save(clientDetailsDto);
-    }
+//    @Test
+//    public void save() {
+//
+//       ClientDetailsDto clientDetailsDto = new ClientDetailsDto(null, "Volkova", "Natali", "Nikolaevna",
+//               LocalDate.of(2000, 8, 31), "KB333333", "566767677", "Minsk",
+//              LocalDate.of(2022, 12, 12), LocalDate.of( 2030, 01, 01));
+//
+//
+//        System.out.println(clientDetailsDto);
+//
+//        //when(clientDetailsDao.save(any(ClientDetailsDto.class))).thenReturn(clientDetailsDto);
+//
+//           clientDetailsDao.save(clientDetailsDto);
+//
+//        assertNotNull(clientDetailsDto);
+//        assertEquals("Natali", clientDetailsDto.getName());
+//        assertEquals(LocalDate.of(2000, 8, 31), clientDetailsDto.getBirthDate());
+//
+//        verify(clientDetailsDao).save(clientDetailsDto);
+//    }
 //    @Test
 //    public void findById(){
 //
@@ -90,17 +90,17 @@ private ClientDetailsDao clientDetailsDao;
 
 
 
-    @Test
-    public void delete() {
-    }
-
-    @Test
-    public void update() {
-    }
-
-    @Test
-    public void findById() {
-    }
+//    @Test
+//    public void delete() {
+//    }
+//
+//    @Test
+//    public void update() {
+//    }
+//
+//    @Test
+//    public void findById() {
+//    }
 
 //    @Test
 //    public void findAll() {

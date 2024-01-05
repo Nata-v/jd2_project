@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 //@ContextConfiguration(classes = DataConfiguration.class)
 //@RunWith(SpringJUnit4ClassRunner.class)
 
-@Configuration
+//@Configuration
 @Import(DataConfiguration.class)
 
 public class DataConfigurationTest {

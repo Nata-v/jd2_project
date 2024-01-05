@@ -17,7 +17,7 @@ public class Client implements Serializable {
 
     private  String email;
    // private final Role role;
-    private  ClientDetails clientDetails;
+    private ClientDetails clientDetails;
 
     private  ClientAddress clientAddress;
 

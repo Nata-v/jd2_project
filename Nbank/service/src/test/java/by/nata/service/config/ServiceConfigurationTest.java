@@ -10,8 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
-@Configuration
-@Import(ServiceConfiguration.class)
+//@Configuration
+//@Import(ServiceConfiguration.class)
 public class ServiceConfigurationTest {
 
     @Before

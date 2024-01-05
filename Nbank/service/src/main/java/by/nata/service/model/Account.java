@@ -1,6 +1,6 @@
 package by.nata.service.model;
 
-import by.nata.data.entity.Client;
+import by.nata.service.model.Client;
 
 
 import java.io.Serializable;

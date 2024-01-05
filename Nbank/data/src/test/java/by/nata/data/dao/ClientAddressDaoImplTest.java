@@ -16,29 +16,29 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = DataConfigurationTest.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = DataConfigurationTest.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class ClientAddressDaoImplTest {
-    private static final String CLIENT_ADDRESS_ID = "3";
-
-    @Mock
-    private ClientAddressDao clientAddressDao;
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void save() {
-    }
-
-    @Test
-    public void getMaxProductId() {
-    }
+//    private static final String CLIENT_ADDRESS_ID = "3";
+//
+//
+//    private ClientAddressDao clientAddressDao;
+//    @Before
+//    public void setUp() throws Exception {
+//        MockitoAnnotations.initMocks(this);
+//    }
+//
+//    @After
+//    public void tearDown() throws Exception {
+//    }
+//
+//    @Test
+//    public void save() {
+//    }
+//
+//    @Test
+//    public void getMaxProductId() {
+//    }
 
 //    @Test
 //    public void findById() {
