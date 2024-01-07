@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="">
 <head>
   <meta charset="UTF-8"/>
   <link href="/web/static/css/online-reg.css" rel="stylesheet"/>
@@ -73,6 +73,11 @@
           <input type="text" name="email" class="form-control" id="email" placeholder="E-mail" aria-describedby="nameHelp">
 <!--          <div id="nameHelp" class="form-text">Enter email</div>-->
         </div>
+        <div class="mb-3">
+          <label for="role" class="form-label">Role </label>
+          <input type="text" name="role" class="form-control" placeholder="Role" id="role">
+
+        </div>
 
         <div class="mb-3">
           <label for="surname" class="form-label">Surname </label>
@@ -82,14 +87,7 @@
         <div class="mb-3">
           <label for="name" class="form-label">Name </label>
           <input type="text" name="name" class="form-control" placeholder="Name" id="name">
-
         </div>
-        <div class="mb-3">
-          <label for="middleName" class="form-label">MiddleName </label>
-          <input type="text" name="middleName" class="form-control" placeholder="MiddleName" id="middleName">
-
-        </div>
-
         <div class="mb-3">
           <label for="birthDate" class="form-label">BirthDate </label>
           <input type="date" name="birthDate" class="form-control" placeholder="BirthDate" id="birthDate">
@@ -105,11 +103,7 @@
           <input type="text" name="identityNumber" class="form-control" placeholder="IdentityNumber" id="identityNumber">
 
         </div>
-        <div class="mb-3">
-          <label for="cityBirth" class="form-label">CityBirth </label>
-          <input type="text" name="cityBirth" class="form-control" placeholder="CityBirth" id="cityBirth">
 
-        </div>
         <div class="mb-3">
           <label for="dateIssue" class="form-label">DateIssue </label>
           <input type="date" name="dateIssue" class="form-control" placeholder="DateIssue" id="dateIssue">
@@ -118,24 +112,14 @@
         <div class="mb-3">
           <label for="dateExpiry" class="form-label">DateExpiry </label>
           <input type="date" name="dateExpiry" class="form-control" placeholder="DateExpiry" id="dateExpiry">
-
+        </div>
           <div class="mb-3">
             <label for="country" class="form-label">Country </label>
             <input type="text" name="country" class="form-control" placeholder="Country" id="country">
 
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="region" class="form-label">Region</label>
-          <input type="text" name="region" class="form-control" placeholder="Region" id="region">
 
-        </div>
 
-        <div class="mb-3">
-          <label for="locality" class="form-label">Locality</label>
-          <input type="text" name="locality" class="form-control" placeholder="Locality" id="locality">
-
-        </div>
         <div class="mb-3">
           <label for="city" class="form-label">City </label>
           <input type="text" name="city" class="form-control" placeholder="City" id="city">
@@ -163,6 +147,7 @@
         </div>
 
         <button class="btn btn-primary" type="submit">Register</button>
+
       </form>
     </div>
 
@@ -176,7 +161,9 @@
           <h5 class="card-title">Беспроцентная рассрочка</h5>
           <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
             банка или закать доставку на дом. </p>
-          <a href="#" class="btn btn-primary">Заказать карту</a>
+          <sec:authorize access="hasRole('ROLE_ADMIN')">
+          <a href="/web/add/buyCard" class="btn btn-primary">Заказать карту</a>
+            </sec:authorize>
         </div>
         <h3>Карта рассрочки от N-Bank</h3>
         <p> -Все магазины Беларуси - партнеры банка.</p>
@@ -198,7 +185,9 @@
               <h5 class="card-title">Карточки</h5>
               <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
                 банка или закать доставку на дом. </p>
+              <sec:authorize access="hasRole('ROLE_ADMIN')">
               <a href="#" class="btn btn-primary">Заказать карту</a>
+              </sec:authorize>
             </div>
           </div>
         </div>
@@ -210,7 +199,9 @@
               <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
                 проценты. Не нужно откладывать покупки, оформите кредит online не выходя из
                 дома. </p>
+              <sec:authorize access="hasRole('ROLE_ADMIN')">
               <a href="#" class="btn btn-primary">Оформить кредит</a>
+              </sec:authorize>
             </div>
           </div>
         </div>
@@ -221,7 +212,9 @@
               <h5 class="card-title">Вклады</h5>
               <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой срок.
               </p>
+              <sec:authorize access="hasRole('ROLE_ADMIN')">
               <a href="#" class="btn btn-primary">Оформить вклад</a>
+              </sec:authorize>
             </div>
           </div>
         </div>

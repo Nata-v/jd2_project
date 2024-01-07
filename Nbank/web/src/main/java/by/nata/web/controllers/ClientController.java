@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 @Controller
 @SessionAttributes({"client"})
+@SuppressWarnings({"unused"})
 public class ClientController {
     private static final Logger log = LoggerFactory.getLogger(ClientController.class);
     @Autowired
@@ -66,7 +68,10 @@ public String addClient(){
 
         return new ModelAndView("login");
     }
-
+    @GetMapping("/api")
+    public String goPage(){
+        return "api";
+    }
 
 
 
@@ -95,7 +100,7 @@ public String addClient(){
 //    }
 
 
-
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public String findAll(Model model, ClientFilter clientFilter){
            // model.addAttribute("client", clientService.findAll());

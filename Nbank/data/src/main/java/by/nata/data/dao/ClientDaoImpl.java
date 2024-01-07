@@ -2,8 +2,14 @@ package by.nata.data.dao;
 
 import by.nata.data.entity.Client;
 
+import by.nata.data.entity.ClientAddress;
+import by.nata.data.entity.ClientDetails;
+import by.nata.data.entity.Role;
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
 import by.nata.data.model.ClientDto;
 
+import by.nata.data.model.FilterClientDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.LoggerFactory;
@@ -29,6 +35,18 @@ public class ClientDaoImpl implements ClientDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
+    public List<Client> findByUserName(String username) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Client au where au.username=:username", Client.class)
+                .setParameter("username", username)
+                .list();
+    }
+
+    @Override
+    public List<Client> findAllByFilter(FilterClientDto filterClientDto) {
+        return null;
+    }
 
     @Override
     public void delete(String id) {
@@ -45,7 +63,7 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public Optional<ClientDto> findById(String id) {
-       final Session session = sessionFactory.getCurrentSession();
+        final Session session = sessionFactory.getCurrentSession();
         return Optional.ofNullable(session.find(ClientDto.class, id));
     }
 
@@ -60,21 +78,40 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
 
-    public void save(ClientDto clientDto) {
+    public void save(ClientDto clientDto
+    ) {
         final Session session = sessionFactory.getCurrentSession();
 
-
-
         Client client = new Client(
-                clientDto.getId() == null ? getMaxProductId() + 1 : clientDto.getId(),   //getMaxProductId() + 1 : clientDto.getId().intValue(),
+                clientDto.getId() == null ? getMaxClientId() + 1 : clientDto.getId(),
                 clientDto.getUsername(),
                 clientDto.getPassword(),
                 clientDto.getEmail(),
+                Role.USER,
                 clientDto.getClientDetails(),
-                clientDto.getClientAddress());
+                clientDto.getClientAddress()
+//                new ClientDetails(
+//                        clientDetailsDto.getId() == null ? getMaxClientDetailsId() + 1 : clientDetailsDto.getId(),
+//                        clientDetailsDto.getSurname(),
+//                        clientDetailsDto.getName(),
+//                        clientDetailsDto.getBirthDate(),
+//                        clientDetailsDto.getPassportNumber(),
+//                        clientDetailsDto.getIdentityNumber(),
+//                        clientDetailsDto.getDateIssue(),
+//                        clientDetailsDto.getDateExpiry()
+//                ),
+//                new ClientAddress(
+//                        clientAddressDto.getId() == null ? getMaxClientAddressId() + 1 : clientAddressDto.getId(),
+//                        clientAddressDto.getCountry(),
+//                        clientAddressDto.getCity(),
+//                        clientAddressDto.getStreet(),
+//                        clientAddressDto.getHouseNumber(),
+//                        clientAddressDto.getFlatNumber(),
+//                        clientAddressDto.getPhoneNumber()
+        );
 
         session.save(client);
- log.info("Client saved: {}", client);
+//log.info("Client saved: {}", client);
 //log.error("");
 //log.warn("Client details was change: {}", client);
         //log.debug("Client: {}, session: {}", client, session);
@@ -88,12 +125,26 @@ public class ClientDaoImpl implements ClientDao {
 
     }
 
-    public String getMaxProductId() {
+    public String getMaxClientId() {
         return sessionFactory
                 .getCurrentSession()
                 .createQuery("select max(id) from Client", String.class)
                 .list()
                 .get(0);
     }
+//    public String getMaxClientDetailsId() {
+//        return sessionFactory
+//                .getCurrentSession()
+//                .createQuery("select max(id) from CLIENT_DETAILS", String.class)
+//                .list()
+//                .get(0);
+//    }
+//    public String getMaxClientAddressId() {
+//        return sessionFactory
+//                .getCurrentSession()
+//                .createQuery("select max(id) from CLIENT_ADDRESS", String.class)
+//                .list()
+//                .get(0);
+//    }
 
 }

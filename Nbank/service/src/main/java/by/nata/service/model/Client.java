@@ -16,7 +16,7 @@ public class Client implements Serializable {
     private  String password;
 
     private  String email;
-   // private final Role role;
+    private  Role role;
     private ClientDetails clientDetails;
 
     private  ClientAddress clientAddress;
@@ -25,11 +25,12 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(String id, String username, String password, String email, ClientDetails clientDetails, ClientAddress clientAddress) {
+    public Client(String id, String username, String password, String email, Role role, ClientDetails clientDetails, ClientAddress clientAddress) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
         this.clientDetails = clientDetails;
         this.clientAddress = clientAddress;
     }
@@ -69,9 +70,13 @@ public class Client implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    //    public Role getRole() {
-//        return role;
-//    }
+        public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public ClientDetails getClientDetails() {
         return clientDetails;
@@ -89,28 +94,5 @@ public class Client implements Serializable {
         this.clientAddress = clientAddress;
     }
 
-    @Override
-    public boolean equals(Object object) {
 
-        if (this == object) return true;
-        if (!(object instanceof Client client)) return false;
-        return Objects.equals(getId(), client.getId()) && Objects.equals(getUsername(), client.getUsername()) && Objects.equals(getPassword(), client.getPassword()) && Objects.equals(getEmail(), client.getEmail()) && Objects.equals(getClientDetails(), client.getClientDetails()) && Objects.equals(getClientAddress(), client.getClientAddress());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getClientDetails(), getClientAddress());
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", clientDetails=" + clientDetails +
-                ", clientAddress=" + clientAddress +
-                '}';
-    }
 }

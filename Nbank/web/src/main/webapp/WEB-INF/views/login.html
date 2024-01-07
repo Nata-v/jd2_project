@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 
             <div class="container-fluid"
                 style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/web/info">
                     <h4>N-Bank</h4>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -94,48 +94,50 @@
                         <div>
                             <div class="col-lg-12">
                                 <h3>Авторизация в системе</h3>
+
+<!--                                <div class="container">-->
+<!--                                    <form class="form-signin" method="post" action="/web/login">-->
+<!--                                        <h2 class="form-signin-heading">Please sign in</h2>-->
+<!--                                        <p>-->
+<!--                                            <label for="username" class="sr-only">Username</label>-->
+<!--                                            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>-->
+<!--                                        </p>-->
+<!--                                        <p>-->
+<!--                                            <label for="password" class="sr-only">Password</label>-->
+<!--                                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>-->
+<!--                                        </p>-->
+<!--                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+
+
                                 <div class="login">
 
-                                     <form method="POST" action="/web/login" name="Login" class="loginForm ">
-
-
-<!--                                    <input tabindex="1" class="input" dir="ltr" type="text" id="clientID"-->
-<!--                                        name="ClientId" autocomplete="off" value="" placeholder="Логин" /><br>-->
-
-<!--                                    <div class="pass">-->
-<!--                                        <input tabindex="2" class="password" dir="ltr" type="password" id="password"-->
-<!--                                            name="PasswordField" autocomplete="off" value="" placeholder="Пароль" />-->
-<!--                                        <i class="password-eye-invisible"></i>-->
-
-<!--                                    </div>-->
-<!--                                    <br>-->
-<!--                                    <td>-->
-<!--                                        <input type="hidden" name="Login" />-->
-<!--                                        <input tabindex="4" type="submit" onclick="loginWithKFP(this);" value="Войти"-->
-<!--                                            class="button" />-->
-
-<!--                                    </td>-->
+                                     <form method="POST" action="/web/login" name="Login" class="form-signin">
                                          <div>
-                                         <label for="username">
-                                             <input id="username" type="text" name="username" placeholder="Логин">
-                                         </label>
+                                             <label for="username" class="sr-only">
+                                                 <input id="username" type="text" name="username" placeholder="Логин">
+                                             </label>
                                          </div>
+
                                          <div>
-                                         <label for="password">
-                                             <input id="password" type="password" name="password" placeholder="Пароль">
-                                             <i class="password-eye-invisible"></i>
-                                         </label>
+                                             <label for="password" class="sr-only">
+                                                 <input id="password" type="password" name="password" placeholder="Пароль">
+                                                 <i class="password-eye-invisible"></i>
+                                             </label>
                                          </div>
-                                             <br>
+                                         <br>
                                          <td>
                                              <input type="hidden" name="Login" />
-<!--                                             <button type="submit" placeholder="Войти"></button>-->
+                                             <!--  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+                                             <!--  <button type="submit" placeholder="Войти"></button>-->
                                              <input tabindex="4" type="submit" onclick="loginWithKFP(this);" value="Войти" class="button" />
                                          </td>
-
                                      </form>
 
                                 </div>
+
+
 
                                 <table class="secondStepTypeSelection">
                                     <tr>
@@ -200,7 +202,9 @@
                                     <h5 class="card-title">Карточки</h5>
                                     <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
                                         банка или закать доставку на дом. </p>
-                                    <a href="/web/registration" class="btn btn-primary">Заказать карту</a>
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="/web/add/card" class="btn btn-primary">Заказать карту</a>
+                                    </sec:authorize>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +216,9 @@
                                     <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
                                         проценты. Не нужно откладывать покупки, оформите кредит online не выходя из
                                         дома. </p>
-                                    <a href="/web/registration" class="btn btn-primary">Оформить кредит</a>
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="/web/add/credit" class="btn btn-primary">Оформить кредит</a>
+                                    </sec:authorize>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +229,9 @@
                                     <h5 class="card-title">Вклады</h5>
                                     <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой срок.
                                     </p>
-                                    <a href="/web/registration" class="btn btn-primary">Оформить вклад</a>
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="/web/add/contribution" class="btn btn-primary">Оформить вклад</a>
+                                    </sec:authorize>
                                 </div>
                             </div>
                         </div>

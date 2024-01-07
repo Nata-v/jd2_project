@@ -4,11 +4,10 @@ package by.nata.service;
 import by.nata.data.dao.ClientAddressDao;
 import by.nata.data.dao.ClientDao;
 import by.nata.data.dao.ClientDetailsDao;
+import by.nata.data.entity.Role;
 import by.nata.data.listener.AccessType;
 import by.nata.data.listener.ClientEvent;
-import by.nata.data.model.ClientAddressDto;
-import by.nata.data.model.ClientDetailsDto;
-import by.nata.data.model.ClientDto;
+import by.nata.data.model.*;
 
 import by.nata.service.model.Client;
 
@@ -16,9 +15,6 @@ import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +23,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ClientServiceImpl implements ClientService, UserDetailsService {
+public class ClientServiceImpl implements ClientService{
 
     private final ClientDao clientDao;
     private final ClientDetailsDao clientDetailsDao;
@@ -39,6 +35,7 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         this.clientDao = clientDao;
         this.clientDetailsDao = clientDetailsDao;
         this.clientAddressDao = clientAddressDao;
+
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -50,22 +47,18 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
                 client.getUsername(),
                 client.getPassword(),
                 client.getEmail(),
-                new by.nata.data.entity.ClientDetails(
+                Role.USER, new by.nata.data.entity.ClientDetails(
                         clientDetails.getId(),
                         clientDetails.getSurname(),
                         clientDetails.getName(),
-                        clientDetails.getMiddleName(),
                         clientDetails.getBirthDate(),
                         clientDetails.getPassportNumber(),
                         clientDetails.getIdentityNumber(),
-                        clientDetails.getCityBirth(),
                         clientDetails.getDateIssue(),
                         clientDetails.getDateExpiry()),
                 new by.nata.data.entity.ClientAddress(
                         clientAddress.getId(),
                         clientAddress.getCountry(),
-                        clientAddress.getRegion(),
-                        clientAddress.getLocality(),
                         clientAddress.getCity(),
                         clientAddress.getStreet(),
                         clientAddress.getHouseNumber(),
@@ -93,16 +86,14 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
                         dto.getUsername(),
                         dto.getPassword(),
                         dto.getEmail(),
-                        clientDetailsDto.map(cd ->
+                        Role.USER, clientDetailsDto.map(cd ->
                                 new ClientDetails(
                                         cd.getId(),
                                         cd.getSurname(),
                                         cd.getName(),
-                                        cd.getMiddleName(),
                                         cd.getBirthDate(),
                                         cd.getPassportNumber(),
                                         cd.getIdentityNumber(),
-                                        cd.getCityBirth(),
                                         cd.getDateIssue(),
                                         cd.getDateExpiry()
                                 )
@@ -111,8 +102,6 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
                                 new ClientAddress(
                                         ca.getId(),
                                         ca.getCountry(),
-                                        ca.getRegion(),
-                                        ca.getLocality(),
                                         ca.getCity(),
                                         ca.getStreet(),
                                         ca.getHouseNumber(),
@@ -140,49 +129,24 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         }).orElse(false);
     }
 
-    @Override
-    public List<Client> findAllClients() {
-//        List<ClientDto> clientsDto = clientDao.findAll();
+//    @Override
+//    public List<Client> findAllClients() {
+////        List<ClientDto> clientsDto = clientDao.findAll();
+////
+////        List<Client> clients = clientsDto.stream()
+////                .map(this::convertToClient)
+////                .collect(Collectors.toList());
 //
-//        List<Client> clients = clientsDto.stream()
-//                .map(this::convertToClient)
-//                .collect(Collectors.toList());
-
-        return null;//clients;
-    }
-//    private Client convertToClient(ClientDto clientDto, ClientDetailsDto clientDetailsDto, ClientAddressDto clientAddressDto) {
-//       // ClientDetailsDto clientDetailsDto = clientDto.getClientDetails();
-//       // ClientAddressDto clientAddressDto = clientDto.getClientAddress();
-//
-//        return new Client(
-//                clientDto.getId(),
-//                clientDto.getUsername(),
-//                clientDto.getPassword(),
-//                clientDto.getEmail(),
-//                new ClientDetails(
-//                        clientDetailsDto.getId(),
-//                        clientDetailsDto.getSurname(),
-//                        clientDetailsDto.getName(),
-//                        clientDetailsDto.getMiddleName(),
-//                        clientDetailsDto.getBirthDate(),
-//                        clientDetailsDto.getPassportNumber(),
-//                        clientDetailsDto.getIdentityNumber(),
-//                        clientDetailsDto.getCityBirth(),
-//                        clientDetailsDto.getDateIssue(),
-//                        clientDetailsDto.getDateExpiry()
-//                ),
-//                new ClientAddress(
-//                        clientAddressDto.getId(),
-//                        clientAddressDto.getCountry(),
-//                        clientAddressDto.getRegion(),
-//                        clientAddressDto.getLocality(),
-//                        clientAddressDto.getCity(),
-//                        clientAddressDto.getStreet(),
-//                        clientAddressDto.getHouseNumber(),
-//                        clientAddressDto.getFlatNumber(),
-//                        clientAddressDto.getPhoneNumber()));
-//
+//        return null;//clients;
 //    }
+
+//    @Override
+//    public List<Client> findByUserName(String username) {
+//
+//        return  null;
+//    }
+
+
 
     @Override
     //@Transactional
@@ -191,36 +155,11 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
 
         if (existingClientDto != null) {
 
-//            existingClientDto = new ClientDto(
-//                    client.getId(),
-//                    client.getUsername(),
-//                    client.getPassword(),
-//                    client.getEmail(),
-//                    new by.nata.data.entity.ClientDetails(
-//                            clientDetails.getId(),
-//                            clientDetails.getSurname(),
-//                            clientDetails.getName(),
-//                            clientDetails.getMiddleName(),
-//                            clientDetails.getBirthDate(),
-//                            clientDetails.getPassportNumber(),
-//                            clientDetails.getIdentityNumber(),
-//                            clientDetails.getCityBirth(),
-//                            clientDetails.getDateIssue(),
-//                            clientDetails.getDateExpiry()),
-//                    new by.nata.data.entity.ClientAddress(
-//                            clientAddress.getId(),
-//                            clientAddress.getCountry(),
-//                            clientAddress.getRegion(),
-//                            clientAddress.getLocality(),
-//                            clientAddress.getCity(),
-//                            clientAddress.getStreet(),
-//                            clientAddress.getHouseNumber(),
-//                            clientAddress.getFlatNumber(),
-//                            clientAddress.getPhoneNumber()));
-            client.setId(existingClientDto.getId());
+           // client.setId(existingClientDto.getId());
                     client.setUsername(existingClientDto.getUsername());
             client.setPassword(existingClientDto.getPassword());
             client.setEmail(existingClientDto.getEmail());
+           // client.setRole(existingClientDto.getRole());
             client.setClientDetails(clientDetails);
             client.setClientAddress(clientAddress);
 
@@ -229,22 +168,9 @@ public class ClientServiceImpl implements ClientService, UserDetailsService {
         }
     }
 
-        @Override
-        public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
-            return null;
-        }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return clientDao.findByUsername(username)
-//                .map(client -> new org.springframework.security.core.userdetails.User(
-//                        client.getUsername(),
-//                        client.getPassword(),
-//                        Collections.singleton(client.getRole())
-//                ))
-//                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
-//
-//    }
+
+
 
 }
 

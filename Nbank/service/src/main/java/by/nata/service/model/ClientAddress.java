@@ -10,8 +10,6 @@ public class ClientAddress implements Serializable {
 
     private  String id;
     private  String country;
-    private  String region;
-    private  String locality;
    // private final Cities city;
     private  String city;
     private  String street;
@@ -22,11 +20,9 @@ public class ClientAddress implements Serializable {
     public ClientAddress() {
     }
 
-    public ClientAddress(String id, String country, String region, String locality, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
+    public ClientAddress(String id, String country,String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
         this.id = id;
         this.country = country;
-        this.region = region;
-        this.locality = locality;
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -42,13 +38,6 @@ public class ClientAddress implements Serializable {
         return country;
     }
 
-    public String getRegion() {
-        return region;
-    }
-
-    public String getLocality() {
-        return locality;
-    }
 
     public String getCity() {
         return city;
@@ -78,13 +67,6 @@ public class ClientAddress implements Serializable {
         this.country = country;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public void setLocality(String locality) {
-        this.locality = locality;
-    }
 
     public void setCity(String city) {
         this.city = city;
@@ -106,18 +88,5 @@ public class ClientAddress implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "ClientAddress{" +
-                "id='" + id + '\'' +
-                ", country='" + country + '\'' +
-                ", region='" + region + '\'' +
-                ", locality='" + locality + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", houseNumber='" + houseNumber + '\'' +
-                ", flatNumber='" + flatNumber + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
+
 }

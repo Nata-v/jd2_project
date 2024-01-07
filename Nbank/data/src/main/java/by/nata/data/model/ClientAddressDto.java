@@ -13,8 +13,7 @@ public final class ClientAddressDto implements Serializable {
     private final String id;
 
     private final String country;
-    private final String region;
-    private final String locality;
+
    // private final Cities city;
     private final String city;
     private final String street;
@@ -22,11 +21,9 @@ public final class ClientAddressDto implements Serializable {
     private final String flatNumber;
     private final String phoneNumber;
 
-    public ClientAddressDto(String id, String country, String region, String locality, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
+    public ClientAddressDto(String id, String country, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
         this.id = id;
         this.country = country;
-        this.region = region;
-        this.locality = locality;
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -40,14 +37,6 @@ public final class ClientAddressDto implements Serializable {
 
     public String getCountry() {
         return country;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public String getLocality() {
-        return locality;
     }
 
     public String getCity() {
@@ -70,30 +59,5 @@ public final class ClientAddressDto implements Serializable {
         return phoneNumber;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof ClientAddressDto that)) return false;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getCountry(), that.getCountry()) && Objects.equals(getRegion(), that.getRegion()) && Objects.equals(getLocality(), that.getLocality()) && Objects.equals(getCity(), that.getCity()) && Objects.equals(getStreet(), that.getStreet()) && Objects.equals(getHouseNumber(), that.getHouseNumber()) && Objects.equals(getFlatNumber(), that.getFlatNumber()) && Objects.equals(getPhoneNumber(), that.getPhoneNumber());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getCountry(), getRegion(), getLocality(), getCity(), getStreet(), getHouseNumber(), getFlatNumber(), getPhoneNumber());
-    }
-
-    @Override
-    public String toString() {
-        return "ClientAddressDto{" +
-                "id='" + id + '\'' +
-                ", country='" + country + '\'' +
-                ", region='" + region + '\'' +
-                ", locality='" + locality + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", houseNumber='" + houseNumber + '\'' +
-                ", flatNumber='" + flatNumber + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
 }

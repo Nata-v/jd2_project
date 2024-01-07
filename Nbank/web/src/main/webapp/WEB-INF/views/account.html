@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-  <link href="/web/static/css/menu.css" rel="stylesheet"/>
+  <link href="/web/static/css/online-reg.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Account</title>
@@ -51,8 +51,8 @@
 
 
 <div class="container-fluid">
-  <div class="text-page">
-    <h3>Добро пожаловать на сайт N-BANK!</h3>
+  <div class="text-page" >
+    <h3>Open Account!</h3>
   </div>
   <div class="row">
 
@@ -61,30 +61,53 @@
       <div class="header">
 
 
-        <ol>
-          <li><a href="/web/account">Открыть счет</a></li><br>
+        <form method="post"action="/web/account" enctype="multipart/form-data">
 
-          <li><a href="#">Снятие со счета</a></li><br>
-          <li><a href="#">Посмотреть баланс</a></li><br>
-          <li><a href="#">Перевод с карты на карту</a></li> <br>
-          <li><a href="#">Перевод со счета на счет</a></li> <br>
-          <li><a href="#">Платежи</a></li>
-          <br>
-          <li><a href="#">Кредиты</a></li> <br>
+<!--          <div class="mb-3">-->
+<!--            <label for="dateOpen" class="form-label">DateOpen</label>-->
+<!--            <input type="date" name="dateOpen" class="form-control" id="dateOpen" placeholder="DateOpen" aria-describedby="nameHelp">-->
+<!--          </div>-->
+          <div class="mb-3">
+            <label for="balance" class="form-label">Balance</label>
+            <input type="text" name="balance" class="form-control" id="balance" placeholder="Balance" aria-describedby="nameHelp">
+          </div>
 
-          <li><a href="#">Вклады</a></li> <br>
-          <li><a href="#">Блокировка карты</a></li> <br>
-          <li><a href="#">Личный кабинет</a></li>
-          <br>
-          <li><a href="#">Сменить пароль</a></li> <br>
+<!--          <div class="mb-3">-->
+<!--            <label for="carrency" class="form-label">Carrency </label>-->
+<!--            <input type="text" name="carrency" class="form-control" placeholder="Carrency" id="carrency">-->
+<!--          </div>-->
+          <div class="mb-3">
+          <label for="currency">Currency
+          <select id="currency" name="currency" required style="margin-bottom: 60px;">
+            <option value="USD">USD</option>
+            <option value="BYN">BYN</option>
+            <option value="RUB">RUB</option>
+            <option value="EUR">EUR</option>
+          </select>
+          </label>
+          </div>
+<!--          <div class="mb-3">-->
+<!--            <label for="pin" class="form-label">Create pin</label>-->
+<!--            <input type="text" name="pin" class="form-control" id="pin" placeholder="Pincode" aria-describedby="nameHelp">-->
+<!--          </div>-->
 
-          <li><a href="#">Лимиты по карте</a></li> <br>
-          <li><a href="#">История операций</a></li>
-        </ol>
-        <div>
-          <img src="/web/static/img/phone.jpg">
+          <p>Номер счета и пин код присваевается автоматически, пин-код будет выслан вам сообщением. </p>
+<!--          <div>-->
+<!--            <label for="currency">ClientDetails:-->
+<!--              <select id="currency" name="currency">-->
+<!--                <option th:each="currency : ${currency}"-->
+<!--                        th:value="${currency}"-->
+<!--                        th:selected="${clientDetails.id() == client.clientDetails.id()}"-->
+<!--                        th:text="${clientDetails.id(), clientDetails.surname()}">Currency</option>-->
+<!--              </select>-->
+<!--            </label>-->
+<!--          </div>-->
+          <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+<!--        <div>-->
+<!--          <img src="/web/static/img/phone.jpg">-->
 
-        </div>
+<!--        </div>-->
       </div>
 
 
@@ -94,54 +117,7 @@
     <div class="col-lg-6 col-md-12"
          style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
 
-      <div class="row">
-        <div id="carouselExampleCaptions" class="carousel slide">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
-                    class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="/web/static/img/car.png" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block" style="color:red">
-                <h2>AVTO CREDIT 10%
-                  <p>Купи авто в кредит всего под 10% годовых!!!</p>
-                </h2>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="/web/static/img/my_card_0111_23.png" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block" style="color: black;">
-                <h5>ИПОТЕКА</h5>
-                <p>Свое жилье всего под 15% годовых!!!</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="/web/static/img/13-01.webp" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button"
-                  data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button"
-                  data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
 
-      <!-- <img src="./images/zero.png" class="d-block w-100" alt="..."> -->
 
       <div class="row">
         <div class="col-lg-4 col-md-6">
@@ -173,18 +149,18 @@
             <div class="card-body">
               <h5 class="card-title">Вклады</h5>
               <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой
-                срок.hjjhjhjhjhjhjhjhjhfcfffcgfcfcgfc.jhjkjhjhjhjhjkhjkhjh
+                срок.
               </p>
               <a href="#" class="btn btn-primary">Оформить вклад</a>
             </div>
           </div>
         </div>
       </div>
-      <p>
-      <h1>ИПОТЕКА ПОД 15% ГОДОВЫХ</h1>
-      </p>
-      <img src="/web/static/img/house.jpg" class="d-block w-100" alt="...">
-    </div>
+<!--      <p>-->
+<!--      <h1>ИПОТЕКА ПОД 15% ГОДОВЫХ</h1>-->
+<!--      </p>-->
+<!--      <img src="/web/static/img/house.jpg" class="d-block w-100" alt="...">-->
+<!--    </div>-->
 
   </div>
 </div>

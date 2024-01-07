@@ -8,16 +8,14 @@ public class ClientFilter implements Serializable {
 
     private String surname;
     private String name;
-    private String middleName;
     private LocalDate birthDate;
 
     public ClientFilter() {
     }
 
-    public ClientFilter(String surname, String name, String middleName, LocalDate birthDate) {
+    public ClientFilter(String surname, String name, LocalDate birthDate) {
         this.surname = surname;
         this.name = name;
-        this.middleName = middleName;
         this.birthDate = birthDate;
     }
 
@@ -37,13 +35,6 @@ public class ClientFilter implements Serializable {
         this.name = name;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
 
     public LocalDate getBirthDate() {
         return birthDate;
@@ -53,13 +44,4 @@ public class ClientFilter implements Serializable {
         this.birthDate = birthDate;
     }
 
-    @Override
-    public String toString() {
-        return "ClientFilter{" +
-                "surname='" + surname + '\'' +
-                ", name='" + name + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
-    }
 }

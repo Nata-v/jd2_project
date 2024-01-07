@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="">
 
 <head>
     <meta charset="UTF-8">
@@ -40,18 +40,22 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">RUS</a></li>
                                 <li><a class="dropdown-item" href="#">ENG</a></li>
-                                <!-- <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#"></a></li> -->
+                                 <li><hr class="dropdown-divider"></li>
+<!--                      <li><a class="dropdown-item" href="#"></a></li> -->
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+<!--                            <sec:authorize access="isAuthenticated()">-->
+                            <a class="nav-link disabled" aria-disabled="true">Log out</a>
+<!--                            </sec:authorize>-->
                         </li>
-                    </ul>
+<!--                    </ul>-->
+
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+
                 </div>
             </div>
         </nav>

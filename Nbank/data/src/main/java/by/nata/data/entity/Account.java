@@ -17,28 +17,39 @@ public class Account {
     @Column(name = "ACCOUNT_ID")
     private String accountId;
 
-    @JoinColumn(name = "CLIENT_ID")
+    @JoinColumn(name = "CLIENT_DETAILS_ID")
     @ManyToOne(cascade = CascadeType.ALL)
-    private Client client;
+    private ClientDetails clientDetails;
     @Column(name = "ACCOUNT_NUMBER", nullable = false)
     private String accountNumber;
     @Column(name = "DATE_OPEN")
     //@DateTimeFormat
     //@Temporal(TemporalType.TIME)
     private ZonedDateTime dateOpen;
+    @Column(name = "DATE_LAST_VISIT")
+    private ZonedDateTime dateLastVisit;
 
     @Column(name = "BALANCE")
     private BigDecimal balance;
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "CURRENCY")
+    // @NotAudited
+    private Currency currency;
+    @Column(name = "pin")
+    private String pin;
 
     public Account() {
     }
 
-    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance) {
+    public Account(String accountId, ClientDetails clientDetails, String accountNumber, ZonedDateTime dateOpen, ZonedDateTime dateLastVisit, BigDecimal balance, Currency currency, String pin) {
         this.accountId = accountId;
-        this.client = client;
+        this.clientDetails = clientDetails;
         this.accountNumber = accountNumber;
         this.dateOpen = dateOpen;
+        this.dateLastVisit = dateLastVisit;
         this.balance = balance;
+        this.currency = currency;
+        this.pin = pin;
     }
 
     public String getAccountId() {
@@ -49,12 +60,12 @@ public class Account {
         this.accountId = accountId;
     }
 
-    public Client getClient() {
-        return client;
+    public ClientDetails getClientDetails() {
+        return clientDetails;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientDetails(ClientDetails clientDetails) {
+        this.clientDetails = clientDetails;
     }
 
     public String getAccountNumber() {
@@ -79,5 +90,29 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public ZonedDateTime getDateLastVisit() {
+        return dateLastVisit;
+    }
+
+    public void setDateLastVisit(ZonedDateTime dateLastVisit) {
+        this.dateLastVisit = dateLastVisit;
     }
 }

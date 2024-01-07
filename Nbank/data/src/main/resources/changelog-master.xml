@@ -7,15 +7,13 @@
 
         <changeSet id="1" author="natali">
             <sql>
-                CREATE TABLE IF NOT EXISTS client_details (
+                CREATE TABLE IF NOT EXISTS CLIENT_DETAILS (
                 id VARCHAR(256) NOT NULL,
                 surname VARCHAR(128) NOT NULL,
                 name VARCHAR(128)NOT NULL,
-                middle_name VARCHAR(128) ,
                 birth_date Date  NOT NULL,
                 passport_number VARCHAR(50) NOT NULL,
                 identity_number VARCHAR(100) NOT NULL,
-                city_birth VARCHAR(50) NOT NULL,
                 date_issue Date NOT NULL,
                 date_expiry Date NOT NULL ,
                 PRIMARY KEY (id)
@@ -30,8 +28,6 @@
                 CREATE TABLE IF NOT EXISTS client_address (
                 id VARCHAR(256)  NOT NULL,
                 country VARCHAR(50) NOT NULL,
-                region VARCHAR(50),
-                locality VARCHAR(50),
                 city VARCHAR(50) NOT NULL,
                 street VARCHAR(50) NOT NULL,
                 house_number  VARCHAR(10) NOT NULL,
@@ -49,6 +45,7 @@
             username VARCHAR(50) NOT NULL,
             password VARCHAR(100) NOT NULL,
             email VARCHAR(100) NOT NULL,
+            role VARCHAR(5),
             client_details_id VARCHAR(256) NOT NULL,
             client_address_id VARCHAR(256) NOT NULL,
             PRIMARY KEY (id),
@@ -59,7 +56,44 @@
             );
         </sql>
     </changeSet>
+        <changeSet id="4" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS account (
+                account_id VARCHAR(256),
+                client_details_id VARCHAR(256),
+                account_number VARCHAR(20) NOT NULL,
+                date_open TIMESTAMP NOT NULL,
+                date_last_visit TIMESTAMP NOT NULL,
+                balance DECIMAL(10,2) NOT NULL,
+                currency VARCHAR(3) NOT NULL,
+                pin VARCHAR(4) NOT NULL,
+                PRIMARY KEY (account_id),
+                FOREIGN KEY (client_details_id) REFERENCES client_details(id)
+                );
+            </sql>
+        </changeSet>
 
+
+
+    <changeSet id="5" author="natali">
+        <sql>
+            INSERT INTO CLIENT_DETAILS (id, surname, name, birth_date, passport_number, identity_number, date_issue, date_expiry)
+            VALUES ('aaaabbbbccccddddeeeeffff00000002', 'Volkova', 'Natali', '2000-08-31','KB252525', '252525M025', '2020-05-05', '2030-05-05' );
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="natali">
+        <sql>
+            INSERT INTO CLIENT_ADDRESS(id, country, city, street,house_number, flat_number, phone_number )
+            VALUES ('aaaabbbbccccddddeeeeffff00000003', 'Belarus', 'Minsk', 'Tyrova','10', '105', '25-25-25' );
+        </sql>
+    </changeSet>
+    <changeSet id="7" author="natali">
+        <sql>
+            INSERT INTO CLIENT (id, username, password, email, role, client_details_id, client_address_id)
+            VALUES ('aaaabbbbccccddddeeeeffff00000001', 'admin', 'admin', 'nat@gmail.com','ADMIN','aaaabbbbccccddddeeeeffff00000002', 'aaaabbbbccccddddeeeeffff00000003' );
+        </sql>
+    </changeSet>
 
 <!--    <changeSet id="1" author="natali">-->
 <!--        <sql>-->

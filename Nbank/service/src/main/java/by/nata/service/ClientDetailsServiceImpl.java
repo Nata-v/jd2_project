@@ -2,6 +2,7 @@ package by.nata.service;
 
 import by.nata.data.dao.ClientDetailsDao;
 import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import by.nata.data.model.ClientFilterDto;
 import by.nata.service.model.ClientDetails;
 import by.nata.service.model.ClientFilter;
@@ -32,11 +33,9 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
                 clientDetails.getId(),
                 clientDetails.getSurname(),
                 clientDetails.getName(),
-                clientDetails.getMiddleName(),
                 clientDetails.getBirthDate(),
                 clientDetails.getPassportNumber(),
                 clientDetails.getIdentityNumber(),
-                clientDetails.getCityBirth(),
                 clientDetails.getDateIssue(),
                 clientDetails.getDateExpiry()
         );
@@ -46,13 +45,21 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
 
     @Override
     public Optional<ClientDetails> findById(String id) {
-//        Optional<ClientDetailsDto> clientDetailsDto = clientDetailsDao.findById(id);
-//        return new ClientDetails(clientDetailsDto.get(id);
-//
-//        return clientDetailsDao.findById(id);
-        return Optional.empty();
+        Optional<ClientDetailsDto> clientDetailsDto = clientDetailsDao.findById(id);
+
+        return clientDetailsDto.map(this::convertToClientDetails);
     }
 
+    private ClientDetails convertToClientDetails(ClientDetailsDto clientDetailsDto) {
+     return new ClientDetails(clientDetailsDto.getId(),
+             clientDetailsDto.getSurname(),
+             clientDetailsDto.getName(),
+             clientDetailsDto.getBirthDate(),
+             clientDetailsDto.getPassportNumber(),
+             clientDetailsDto.getIdentityNumber(),
+             clientDetailsDto.getDateIssue(),
+             clientDetailsDto.getDateExpiry());
+    }
     @Override
     public boolean delete(String id) {
         return false;
@@ -60,35 +67,33 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
 
     @Override
     public void updateClientDetails(ClientDetails clientDetails) {
+        ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
 
+        if (existingClientDetailsDto != null) {
+            clientDetails.setSurname(existingClientDetailsDto.getSurname());
+            clientDetails.setName(existingClientDetailsDto.getName());
+            clientDetails.setBirthDate(existingClientDetailsDto.getBirthDate());
+            clientDetails.setPassportNumber(existingClientDetailsDto.getPassportNumber());
+            clientDetails.setIdentityNumber(existingClientDetailsDto.getIdentityNumber());
+            clientDetails.setDateIssue(existingClientDetailsDto.getDateIssue());
+            clientDetails.setDateExpiry(existingClientDetailsDto.getDateExpiry());
+
+            clientDetailsDao.update(existingClientDetailsDto);
+        }
 
     }
-//    public List<ProductSpecification> searchProducts(SearchCriteria searchCriteria)throws SQLException,ClassNotFoundException {
-//
-//        return   productSpecificationDao
-//                .read()
-//                .stream()
-//                .map(dto -> new ProductSpecification(dto.getProductName(),
-//                        dto.getProductPrice(), dto.getId()))
-//                .filter(productSpecification ->
-//                        productSpecification.getProductName()
-//                                .contains(searchCriteria.getProductNameCriteria()))
-//                .toList();
 
     @Override
     public List<ClientDetails> findAllByFilter(ClientFilter clientFilter) {
     return clientDetailsDao.findAllByFilter(new ClientFilterDto(clientFilter.getSurname(),
                     clientFilter.getName(),
-                    clientFilter.getMiddleName(),
                     clientFilter.getBirthDate())).
             stream().map(dto -> new ClientDetails(dto.getId(),
                     dto.getSurname(),
                     dto.getName(),
-                    dto.getMiddleName(),
                    dto.getBirthDate(),
                     dto.getPassportNumber(),
                     dto.getIdentityNumber(),
-                    dto.getCityBirth(),
                     dto.getDateIssue(),
                     dto.getDateExpiry())).
                     toList();

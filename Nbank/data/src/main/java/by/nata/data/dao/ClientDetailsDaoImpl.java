@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 @Repository
 @Transactional
 public class ClientDetailsDaoImpl implements ClientDetailsDao {
-    //private static final Logger log = LoggerFactory.getLogger(ClientDetailsDaoImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientDetailsDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -38,14 +38,12 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
         final Session session = sessionFactory.getCurrentSession();
         ClientDetails clientDetails = new ClientDetails(
-                clientDetailsDto.getId() == null ? getMaxProductId() + 1 : clientDetailsDto.getId(),
+                clientDetailsDto.getId() == null ? getMaxId() + 1 : clientDetailsDto.getId(),
                 clientDetailsDto.getSurname(),
                 clientDetailsDto.getName(),
-                clientDetailsDto.getMiddleName(),
                 clientDetailsDto.getBirthDate(),
                 clientDetailsDto.getPassportNumber(),
                 clientDetailsDto.getIdentityNumber(),
-                clientDetailsDto.getCityBirth(),
                 clientDetailsDto.getDateIssue(),
                 clientDetailsDto.getDateExpiry()
         );
@@ -54,10 +52,10 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
     }
 
-    public String getMaxProductId() {
+    public String getMaxId() {
         return sessionFactory
                 .getCurrentSession()
-                .createQuery("select max(id) from Client", String.class)
+                .createQuery("select max(id) from CLIENT_DETAILS", String.class)
                 .list()
                 .get(0);
     }
@@ -99,9 +97,6 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
         }
         if (clientFilterDto.name() != null){
             predicates.add((Predicate) cb.like(clientDetails.get("name"), clientFilterDto.name()));
-        }
-        if (clientFilterDto.middleName() != null){
-            predicates.add((Predicate) cb.like(clientDetails.get("middleName"), clientFilterDto.middleName()));
         }
         if (clientFilterDto.birthDate() != null){
             predicates.add((Predicate) cb.lessThan(clientDetails.get("birthDate"), clientFilterDto.birthDate()));

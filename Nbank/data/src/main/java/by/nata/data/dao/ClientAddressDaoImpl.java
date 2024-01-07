@@ -35,10 +35,8 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
 
         final Session session = sessionFactory.getCurrentSession();
         ClientAddress clientAddress = new ClientAddress(
-                clientAddressDto.getId() == null ? getMaxProductId() + 1 : clientAddressDto.getId(),
+                clientAddressDto.getId() == null ? getMaxId() + 1 : clientAddressDto.getId(),
                 clientAddressDto.getCountry(),
-                clientAddressDto.getRegion(),
-                clientAddressDto.getLocality(),
                 clientAddressDto.getCity(),
                 clientAddressDto.getStreet(),
                 clientAddressDto.getHouseNumber(),
@@ -49,10 +47,10 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
         session.save(clientAddress);
 
     }
-    public String getMaxProductId() {
+    public String getMaxId() {
         return sessionFactory
                 .getCurrentSession()
-                .createQuery("select max(id) from Client", String.class)
+                .createQuery("select max(id) from CLIENT_ADDRESS", String.class)
                 .list()
                 .get(0);
     }

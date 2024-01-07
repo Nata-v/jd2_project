@@ -18,10 +18,7 @@ public class ClientAddress {
 
     @Column(name = "COUNTRY")
     private String country;
-    @Column(name = "REGION")
-    private String region;
-    @Column(name = "LOCALITY")
-    private String locality;
+
 //    @JoinColumn(name = "CITY_ID")
 //    @OneToOne(cascade = CascadeType.ALL)
     @Column(name = "CITY")
@@ -38,12 +35,10 @@ public class ClientAddress {
     public ClientAddress() {
     }
 
-    public ClientAddress(String id, String country, String region, String locality, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
+    public ClientAddress(String id, String country, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
         this.id = id;
         this.country = country;
-        this.region = region;
-        this.locality = locality;
-      this.city = city;
+        this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
         this.flatNumber = flatNumber;
@@ -66,21 +61,6 @@ public class ClientAddress {
         this.country = country;
     }
 
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getLocality() {
-        return locality;
-    }
-
-    public void setLocality(String locality) {
-        this.locality = locality;
-    }
 
     public String getCity() {
         return city;
