@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home", "/static/**", "/WEB-INF/views/**").permitAll()
+                        .requestMatchers("/", "/home", "/static/**", "/WEB-INF/views/**", "/WEB-INF/views/info").permitAll()
                         .requestMatchers("/login").anonymous()
                         .requestMatchers("/logout").authenticated()
                         .requestMatchers("/add**").hasRole("ADMIN")

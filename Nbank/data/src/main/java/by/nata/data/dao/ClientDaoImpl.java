@@ -62,10 +62,37 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<ClientDto> findById(String id) {
         final Session session = sessionFactory.getCurrentSession();
-        return Optional.ofNullable(session.find(ClientDto.class, id));
+        // return Optional.ofNullable(session.find(ClientDto.class, id));
+        Client client = session.find(Client.class, id);
+        ClientDetails clientDetails = session.find(ClientDetails.class, id);
+        ClientAddress clientAddress = session.find(ClientAddress.class, id);
+
+        return Optional.of( new ClientDto(
+              client.getId(),
+              client.getUsername(),
+              client.getPassword(),
+              client.getEmail(),
+              client.getRole(),
+              new ClientDetailsDto(clientDetails.getId(),
+                      clientDetails.getSurname(),
+                      clientDetails.getName(),
+                      clientDetails.getBirthDate(),
+                      clientDetails.getPassportNumber(),
+                      clientDetails.getIdentityNumber(),
+                      clientDetails.getDateIssue(),
+                      clientDetails.getDateExpiry()),
+              new ClientAddressDto(clientAddress.getId(),
+                      clientAddress.getCountry(),
+                      clientAddress.getCity(),
+                      clientAddress.getStreet(),
+                      clientAddress.getHouseNumber(),
+                      clientAddress.getFlatNumber(),
+                      clientAddress.getPhoneNumber())));
     }
+
 
     @Override
     public List<ClientDto> findAll() {
@@ -78,40 +105,46 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
 
-    public void save(ClientDto clientDto
-    ) {
+    public void save(ClientDto clientDto) {
         final Session session = sessionFactory.getCurrentSession();
 
+        ClientDetailsDto clientDetailsDto = clientDto.getClientDetailsDto();
+        ClientAddressDto clientAddressDto = clientDto.getClientAddressDto();
+
+        ClientDetails clientDetails = new ClientDetails(
+                clientDetailsDto.getId() == null ? getMaxClientId() + 1 : clientDetailsDto.getId(),
+                clientDetailsDto.getSurname(),
+                clientDetailsDto.getName(),
+                clientDetailsDto.getBirthDate(),
+                clientDetailsDto.getPassportNumber(),
+                clientDetailsDto.getIdentityNumber(),
+                clientDetailsDto.getDateIssue(),
+                clientDetailsDto.getDateExpiry()
+        );
+
+        ClientAddress clientAddress = new ClientAddress(
+                clientAddressDto.getId() == null ? getMaxClientId() + 1 : clientAddressDto.getId(),
+                clientAddressDto.getCountry(),
+                clientAddressDto.getCity(),
+                clientAddressDto.getStreet(),
+                clientAddressDto.getHouseNumber(),
+                clientAddressDto.getFlatNumber(),
+                clientAddressDto.getPhoneNumber()
+        );
         Client client = new Client(
                 clientDto.getId() == null ? getMaxClientId() + 1 : clientDto.getId(),
                 clientDto.getUsername(),
                 clientDto.getPassword(),
                 clientDto.getEmail(),
                 Role.USER,
-                clientDto.getClientDetails(),
-                clientDto.getClientAddress()
-//                new ClientDetails(
-//                        clientDetailsDto.getId() == null ? getMaxClientDetailsId() + 1 : clientDetailsDto.getId(),
-//                        clientDetailsDto.getSurname(),
-//                        clientDetailsDto.getName(),
-//                        clientDetailsDto.getBirthDate(),
-//                        clientDetailsDto.getPassportNumber(),
-//                        clientDetailsDto.getIdentityNumber(),
-//                        clientDetailsDto.getDateIssue(),
-//                        clientDetailsDto.getDateExpiry()
-//                ),
-//                new ClientAddress(
-//                        clientAddressDto.getId() == null ? getMaxClientAddressId() + 1 : clientAddressDto.getId(),
-//                        clientAddressDto.getCountry(),
-//                        clientAddressDto.getCity(),
-//                        clientAddressDto.getStreet(),
-//                        clientAddressDto.getHouseNumber(),
-//                        clientAddressDto.getFlatNumber(),
-//                        clientAddressDto.getPhoneNumber()
-        );
+               clientDetails,
+                clientAddress);
 
+
+session.save(clientDetails);
+session.save(clientAddress);
         session.save(client);
-//log.info("Client saved: {}", client);
+log.info("Client saved: {}", client);
 //log.error("");
 //log.warn("Client details was change: {}", client);
         //log.debug("Client: {}, session: {}", client, session);
@@ -125,13 +158,6 @@ public class ClientDaoImpl implements ClientDao {
 
     }
 
-    public String getMaxClientId() {
-        return sessionFactory
-                .getCurrentSession()
-                .createQuery("select max(id) from Client", String.class)
-                .list()
-                .get(0);
-    }
 //    public String getMaxClientDetailsId() {
 //        return sessionFactory
 //                .getCurrentSession()
@@ -139,6 +165,7 @@ public class ClientDaoImpl implements ClientDao {
 //                .list()
 //                .get(0);
 //    }
+
 //    public String getMaxClientAddressId() {
 //        return sessionFactory
 //                .getCurrentSession()
@@ -146,5 +173,15 @@ public class ClientDaoImpl implements ClientDao {
 //                .list()
 //                .get(0);
 //    }
+
+    public String getMaxClientId() {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery("select max(id) from Client", String.class)
+                .list()
+                .get(0);
+    }
+
+
 
 }

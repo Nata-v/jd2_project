@@ -42,12 +42,43 @@ public class ClientServiceImpl implements ClientService{
     @Override
 
     public void saveNewClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
+//
+//        ClientDetailsDto clientDetailsDto = new ClientDetailsDto(
+//                clientDetails.getId() ,
+//                clientDetails.getSurname(),
+//                clientDetails.getName(),
+//                clientDetails.getBirthDate(),
+//                clientDetails.getPassportNumber(),
+//                clientDetails.getIdentityNumber(),
+//                clientDetails.getDateIssue(),
+//                clientDetails.getDateExpiry()
+//        );
+//
+//       ClientAddressDto clientAddressDto = new ClientAddressDto(
+//                clientAddress.getId(),
+//                clientAddress.getCountry(),
+//                clientAddress.getCity(),
+//                clientAddress.getStreet(),
+//                clientAddress.getHouseNumber(),
+//                clientAddress.getFlatNumber(),
+//                clientAddress.getPhoneNumber()
+//        );
+//        ClientDto clientDto = new ClientDto(
+//                client.getId() ,
+//                client.getUsername(),
+//                client.getPassword(),
+//                client.getEmail(),
+//                Role.USER,
+//                clientDetailsDto,
+//                clientAddressDto);
+
+
         ClientDto clientDto = new ClientDto(
                 client.getId(),
                 client.getUsername(),
                 client.getPassword(),
                 client.getEmail(),
-                Role.USER, new by.nata.data.entity.ClientDetails(
+                Role.USER, new ClientDetailsDto(
                         clientDetails.getId(),
                         clientDetails.getSurname(),
                         clientDetails.getName(),
@@ -56,7 +87,7 @@ public class ClientServiceImpl implements ClientService{
                         clientDetails.getIdentityNumber(),
                         clientDetails.getDateIssue(),
                         clientDetails.getDateExpiry()),
-                new by.nata.data.entity.ClientAddress(
+                new ClientAddressDto(
                         clientAddress.getId(),
                         clientAddress.getCountry(),
                         clientAddress.getCity(),

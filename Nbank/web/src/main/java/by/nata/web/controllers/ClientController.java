@@ -66,7 +66,7 @@ public String addClient(){
         clientService.saveNewClient(client, clientDetails, clientAddress);
 
 
-        return new ModelAndView("login");
+        return new ModelAndView("page");
     }
     @GetMapping("/api")
     public String goPage(){
@@ -75,9 +75,14 @@ public String addClient(){
 
 
 
-    @GetMapping("/login")
+    @GetMapping("/page")
     public String goFirstPage(){
-        return "login";
+        return "page";
+    }
+
+        @PostMapping("/page")
+    public String login(Model model, @ModelAttribute("page") Login loginDto){
+        return "menubank";
     }
 
     @GetMapping("/info")
@@ -107,11 +112,19 @@ public String addClient(){
             model.addAttribute("clientDetails", clientDetailsService.findAllByFilter(clientFilter));
             return "/client/clientFilter";
     }
-    @GetMapping("/{id}")
+    @GetMapping("/client/{id}")
     public  String findById(@PathVariable("id") String id, Model model){
           model.addAttribute("client", clientService.findClientById(id));
             return "/client";
     }
+
+//    @GetMapping("/product/{id}")
+//    public ModelAndView getProduct(@PathVariable("id") String id) {
+//        ProductSpecification product = productService.getProductById(id);
+//        ModelAndView modelAndView = new ModelAndView("product-details");
+//        modelAndView.addObject("product", product);
+//        return modelAndView;
+//    }
 //    @PostMapping
 //    public String create(@ModelAttribute Client client){
 //           clientService.saveNewClient(client);

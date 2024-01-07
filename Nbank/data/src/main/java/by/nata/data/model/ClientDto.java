@@ -16,18 +16,19 @@ public final class ClientDto implements Serializable {
     private final String password;
     private final String email;
     private final Role role;
-   private final ClientDetails clientDetails;
+   private final ClientDetailsDto clientDetailsDto;
 
-    private final ClientAddress clientAddress;
+    private final ClientAddressDto clientAddressDto;
 
-    public ClientDto(String id, String username, String password, String email, Role role, ClientDetails clientDetails, ClientAddress clientAddress) {
+    public ClientDto(String id, String username, String password, String email, Role role, ClientDetailsDto clientDetailsDto, ClientAddressDto clientAddressDto) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.clientDetails = clientDetails;
-        this.clientAddress = clientAddress;
+
+        this.clientDetailsDto = clientDetailsDto;
+        this.clientAddressDto = clientAddressDto;
     }
 
     public String getId() {
@@ -50,12 +51,12 @@ public final class ClientDto implements Serializable {
         return role;
     }
 
-    public ClientDetails getClientDetails() {
-        return clientDetails;
+    public ClientDetailsDto getClientDetailsDto() {
+        return clientDetailsDto;
     }
 
-    public ClientAddress getClientAddress() {
-        return clientAddress;
+    public ClientAddressDto getClientAddressDto() {
+        return clientAddressDto;
     }
 
     @Override
@@ -66,8 +67,8 @@ public final class ClientDto implements Serializable {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
-                ", clientDetails=" + clientDetails +
-                ", clientAddress=" + clientAddress +
+                ", clientDetailsDto=" + clientDetailsDto +
+                ", clientAddressDto=" + clientAddressDto +
                 '}';
     }
 }

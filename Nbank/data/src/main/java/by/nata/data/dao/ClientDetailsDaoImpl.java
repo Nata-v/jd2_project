@@ -38,7 +38,8 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
         final Session session = sessionFactory.getCurrentSession();
         ClientDetails clientDetails = new ClientDetails(
-                clientDetailsDto.getId() == null ? getMaxId() + 1 : clientDetailsDto.getId(),
+               // clientDetailsDto.getId() == null ? getMaxId() + 1 : clientDetailsDto.getId(),
+                clientDetailsDto.getId(),
                 clientDetailsDto.getSurname(),
                 clientDetailsDto.getName(),
                 clientDetailsDto.getBirthDate(),
@@ -52,13 +53,13 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
     }
 
-    public String getMaxId() {
-        return sessionFactory
-                .getCurrentSession()
-                .createQuery("select max(id) from CLIENT_DETAILS", String.class)
-                .list()
-                .get(0);
-    }
+//    public String getMaxId() {
+//        return sessionFactory
+//                .getCurrentSession()
+//                .createQuery("select max(id) from CLIENT_DETAILS", String.class)
+//                .list()
+//                .get(0);
+//    }
 
 
        @Override
