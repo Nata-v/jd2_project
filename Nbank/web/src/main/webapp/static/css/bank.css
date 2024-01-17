@@ -1,0 +1,23 @@
+
+body{
+    background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);
+    box-shadow: 10px 1px 33px 15px #000000, 4px 5px 10px 1px #000000, 5px 5px 10px 1px #000000;
+}
+.navbar-brand {
+  
+    width: 80px;
+    height: 66px;
+    background: url("/web/static/img/v8_20.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}  
+
+.card{
+    background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);
+}

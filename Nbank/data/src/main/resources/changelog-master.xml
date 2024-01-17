@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+        <changeSet id="1" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS CLIENT_DETAILS (
+                id VARCHAR(256) NOT NULL,
+                surname VARCHAR(128) NOT NULL,
+                name VARCHAR(128)NOT NULL,
+                birth_date Date  NOT NULL,
+                passport_number VARCHAR(50) NOT NULL,
+                identity_number VARCHAR(100) NOT NULL,
+                date_issue Date NOT NULL,
+                date_expiry Date NOT NULL ,
+                PRIMARY KEY (id)
+
+                );
+
+            </sql>
+        </changeSet>
+
+        <changeSet id="2" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS client_address (
+                id VARCHAR(256)  NOT NULL,
+                country VARCHAR(50) NOT NULL,
+                city VARCHAR(50) NOT NULL,
+                street VARCHAR(50) NOT NULL,
+                house_number  VARCHAR(10) NOT NULL,
+                flat_number VARCHAR(10) ,
+                phone_number VARCHAR(100),
+                PRIMARY KEY (id)
+                );
+            </sql>
+        </changeSet>
+
+    <changeSet id="3" author="natali">
+        <sql>
+            CREATE TABLE IF NOT EXISTS client (
+            id VARCHAR(256) NOT NULL,
+            username VARCHAR(50) NOT NULL,
+            password VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            role VARCHAR(5),
+            client_details_id VARCHAR(256) NOT NULL,
+            client_address_id VARCHAR(256) NOT NULL,
+            PRIMARY KEY (id),
+            FOREIGN KEY (client_details_id) REFERENCES client_details (id),
+            FOREIGN KEY (client_address_id) REFERENCES client_address (id)
+
+
+            );
+        </sql>
+    </changeSet>
+        <changeSet id="4" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS account (
+                account_id VARCHAR(256) NOT NULL,
+                client_id VARCHAR(256) NOT NULL,
+                account_number VARCHAR(20) NOT NULL,
+                date_open TIMESTAMP NOT NULL,
+                date_last_visit TIMESTAMP NOT NULL,
+                balance DECIMAL(10,2),
+                currency VARCHAR(3) NOT NULL,
+                pin VARCHAR(4) NOT NULL,
+                PRIMARY KEY (account_id),
+                FOREIGN KEY (client_id) REFERENCES client(id)
+                );
+            </sql>
+        </changeSet>
+
+
+
+    <changeSet id="5" author="natali">
+        <sql>
+            INSERT INTO CLIENT_DETAILS (id, surname, name, birth_date, passport_number, identity_number, date_issue, date_expiry)
+            VALUES ('aaaabbbbccccddddeeeeffff00000002', 'Volkova', 'Natali', '2000-08-31','KB252525', '252525M025', '2020-05-05', '2030-05-05' );
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="natali">
+        <sql>
+            INSERT INTO CLIENT_ADDRESS(id, country, city, street,house_number, flat_number, phone_number )
+            VALUES ('aaaabbbbccccddddeeeeffff00000003', 'Belarus', 'Minsk', 'Tyrova','10', '105', '25-25-25' );
+        </sql>
+    </changeSet>
+    <changeSet id="7" author="natali">
+        <sql>
+            INSERT INTO CLIENT (id, username, password, email, role, client_details_id, client_address_id)
+            VALUES ('aaaabbbbccccddddeeeeffff00000001', 'admin', 'admin', 'nat@gmail.com','ADMIN','aaaabbbbccccddddeeeeffff00000002', 'aaaabbbbccccddddeeeeffff00000003' );
+        </sql>
+    </changeSet>
+
+        <changeSet id="8" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS card (
+                card_id VARCHAR(256) NOT NULL,
+                account_id  VARCHAR(256) NOT NULL,
+                card_number VARCHAR(16) NOT NULL,
+                amount DECIMAL(10,2),
+                expiry_date DATE NOT NULL,
+                cvv VARCHAR(3) NOT NULL,
+                card_status VARCHAR(128) NOT NULL,
+                currency VARCHAR(3) NOT NULL,
+                PRIMARY KEY (card_id),
+                FOREIGN KEY (account_id) REFERENCES account(account_id)
+                );
+            </sql>
+        </changeSet>
+
+<!--    <changeSet id="1" author="natali">-->
+<!--        <sql>-->
+<!--            CREATE TABLE IF NOT EXISTS cities (-->
+<!--            id VARCHAR(256)  NOT NULL,-->
+<!--            name  VARCHAR(128),-->
+<!--            PRIMARY KEY (id)-->
+<!--            );-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+
+
+
+
+
+
+<!--&lt;!&ndash;    <changeSet id="5" author="natali">&ndash;&gt;-->
+<!--&lt;!&ndash;        <sql>&ndash;&gt;-->
+<!--&lt;!&ndash;            CREATE TABLE T_PERSON_DETAILS (&ndash;&gt;-->
+<!--&lt;!&ndash;            ID varchar(255) NOT NULL,&ndash;&gt;-->
+<!--&lt;!&ndash;            MOBILE_NUMBER varchar(255) DEFAULT NULL,&ndash;&gt;-->
+<!--&lt;!&ndash;            PRIMARY KEY (ID)&ndash;&gt;-->
+<!--&lt;!&ndash;            );&ndash;&gt;-->
+<!--&lt;!&ndash;            ALTER TABLE T_PERSON ADD COLUMN PERSON_DETAILS_ID VARCHAR(255) NULL AFTER LAST_NAME;&ndash;&gt;-->
+<!--&lt;!&ndash;            ALTER TABLE T_PERSON ADD CONSTRAINT fk_t_person_details_id FOREIGN KEY (PERSON_DETAILS_ID)&ndash;&gt;-->
+<!--&lt;!&ndash;            REFERENCES T_PERSON_DETAILS (ID);&ndash;&gt;-->
+<!--&lt;!&ndash;        </sql>&ndash;&gt;-->
+<!--&lt;!&ndash;    </changeSet>&ndash;&gt;-->
+
+
+
+<!--&lt;!&ndash;    <changeSet id="9" author="natali">&ndash;&gt;-->
+<!--&lt;!&ndash;        <sql>&ndash;&gt;-->
+<!--&lt;!&ndash;            ALTER TABLE T_PERSON&ndash;&gt;-->
+<!--&lt;!&ndash;            ADD COLUMN TARGET_GROUP_ID VARCHAR(255) NULL AFTER PERSON_DETAILS_ID;&ndash;&gt;-->
+<!--&lt;!&ndash;            ALTER TABLE T_PERSON&ndash;&gt;-->
+<!--&lt;!&ndash;            ADD CONSTRAINT FK_T_TARGET_GROUP_ID FOREIGN KEY (TARGET_GROUP_ID)&ndash;&gt;-->
+<!--&lt;!&ndash;            REFERENCES T_TARGET_GROUP (ID);&ndash;&gt;-->
+<!--&lt;!&ndash;        </sql>&ndash;&gt;-->
+<!--&lt;!&ndash;    </changeSet>&ndash;&gt;-->
+
+<!--    <changeSet id="7" author="natali">-->
+<!--        <sql>-->
+<!--            CREATE TABLE IF NOT EXISTS card (-->
+<!--            card_id VARCHAR(256) ,-->
+<!--            account_id  VARCHAR(256),-->
+<!--            card_number VARCHAR(16) NOT NULL,-->
+<!--            expiry_date DATE NOT NULL,-->
+<!--            cvv VARCHAR(3) NOT NULL,-->
+<!--            card_status VARCHAR(128) NOT NULL,-->
+<!--            currency VARCHAR(3) NOT NULL,-->
+<!--            PRIMARY KEY (card_id),-->
+<!--            FOREIGN KEY (account_id) REFERENCES account(account_id)-->
+<!--            );-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="8" author="natali">-->
+<!--        <sql>-->
+<!--            CREATE TABLE IF NOT EXISTS transactions (-->
+<!--            id VARCHAR(256),-->
+<!--            card_id_sender VARCHAR(256) NOT NULL,-->
+<!--            card_id_recipient VARCHAR(256) NOT NULL,-->
+<!--            amount DECIMAL(10,2) NOT NULL,-->
+<!--            date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,-->
+<!--            PRIMARY KEY (id),-->
+<!--            FOREIGN KEY (card_id_sender) REFERENCES card(card_id),-->
+<!--            FOREIGN KEY (card_id_recipient) REFERENCES card(card_id)-->
+<!--            );-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="9" author="natali">-->
+<!--        <sql>-->
+<!--            CREATE TABLE IF NOT EXISTS bankomat_operations (-->
+<!--            id VARCHAR(256),-->
+<!--            card_id VARCHAR(256) NOT NULL,-->
+<!--            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,-->
+<!--            amount DECIMAL(10, 2) NOT NULL,-->
+<!--            type_operation VARCHAR(128) NOT NULL,-->
+<!--            PRIMARY KEY (id),-->
+<!--            FOREIGN KEY (card_id) REFERENCES card(card_id)-->
+<!--            );-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="10" author="natali">-->
+<!--        <sql>-->
+<!--            CREATE TABLE IF NOT EXISTS products_operation (-->
+<!--            id VARCHAR(256) ,-->
+<!--            product_type VARCHAR(50) NOT NULL,-->
+<!--            date_start_operation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,-->
+<!--            date_end_operation TIMESTAMP,-->
+<!--            amount DECIMAL(10, 2) NOT NULL,-->
+<!--            interest_rate DECIMAL(5,2),-->
+<!--            account_id VARCHAR(256) NOT NULL,-->
+<!--            PRIMARY KEY (id),-->
+<!--            FOREIGN KEY (account_id) REFERENCES account (account_id)-->
+<!--            );-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="11" author="natali">-->
+<!--        <sql>-->
+<!--            CREATE TABLE IF NOT EXISTS client_info (-->
+<!--            id VARCHAR(256) ,-->
+<!--            client_id VARCHAR(256) NOT NULL,-->
+<!--            date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,-->
+<!--            bankomat_operation_id  VARCHAR(256) ,-->
+<!--            products_operation_id VARCHAR(256),-->
+<!--            transactions_id  VARCHAR(256) ,-->
+<!--            PRIMARY KEY (id),-->
+<!--            FOREIGN KEY (client_id) REFERENCES client(id),-->
+<!--            FOREIGN KEY (bankomat_operation_id ) REFERENCES bankomat_operations (id),-->
+<!--            FOREIGN KEY (products_operation_id ) REFERENCES products_operation (id),-->
+<!--            FOREIGN KEY (transactions_id ) REFERENCES Transactions (id)-->
+<!--            );-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+
+</databaseChangeLog>

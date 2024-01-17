@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <link href="/web/static/css/online-reg.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Account Operation</title>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+
+    <div class="container-fluid" style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
+      <a class="navbar-brand" href="#">
+        <h4>N-Bank</h4>
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/web/bank">Назад</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/web/info">Информация</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Выбрать язык
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">RUS</a></li>
+              <li><a class="dropdown-item" href="#">ENG</a></li>
+              <!-- <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#"></a></li> -->
+            </ul>
+          </li>
+          <div th:fragment="header">
+            <form action="/logout" method="post">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/web/login">Log out</a>
+              </li>
+            </form>
+          </div>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<div class="container-fluid">
+  <div class="text-page" >
+    <h3>Account Operations!</h3>
+  </div>
+  <div class="row">
+
+    <div class="col-lg-6 col-md-12"
+         style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
+      <div class="header">
+
+<!--          <form th:action="@{/web/accountOperation/{accountId}}" th:method="put" th:object="${account}">-->
+            <form action="/web/accountOperation" method="post" onsubmit="return showConfirmation()">
+<!--              <form th:action="@{'/web/accountOperation/' + ${account.accountId}}" method="post" th:object="${account}">-->
+<!--                <input type="hidden" th:field="*{accountId}" />-->
+
+              <input type="hidden" value="${account.account_id}" />
+
+              <div class="mb-3">
+                <label for="accountNumber" class="form-label">Enter Account Number</label>
+                <input type="text" name="accountNumber" class="form-control" id="accountNumber" placeholder="AccountNumber" aria-describedby="nameHelp">
+              </div>
+<!--            <input type="text" id="newBalance" th:field="*{newBalance}" required />-->
+              <div class="mb-3">
+                <label for="balance" class="form-label">Enter the amount to top up your account</label>
+                <input type="number" name="balance" class="form-control" id="balance" placeholder="Balance" aria-describedby="nameHelp">
+              </div>
+
+<!--            <label for="newDate">New Date (in ISO format):</label>-->
+<!--            <input type="date" id="newDate" th:field="*{newDate}" required />-->
+
+            <button type="submit">Replenish Account</button>
+          </form>
+
+          <p>Номер счета и пин код присваевается автоматически, пин-код будет выслан вам сообщением. </p>
+
+
+<!--      </div>-->
+<!--      <script>-->
+<!--    function showConfirmation() {-->
+<!--        var result = confirm('Пополнить счет?');-->
+<!--        return result;-->
+<!--    }-->
+<!--</script>-->
+
+
+<!--    </div>-->
+
+    <div class="col-lg-6 col-md-12"
+         style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
+
+
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="card">
+            <img src="/web/static/img/img1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Карточки</h5>
+              <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
+                банка или закать доставку на дом. </p>
+              <a href="/web/createCard" class="btn btn-primary">Заказать карту</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card">
+            <img src="/web/static/img/1579290380_12-18.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Кредиты</h5>
+              <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
+                проценты.
+                дома. </p>
+              <a href="#" class="btn btn-primary">Оформить кредит</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card">
+            <img src="/web/static/img/1579290380_12-18.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Вклады</h5>
+              <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой
+                срок.
+              </p>
+              <a href="#" class="btn btn-primary">Оформить вклад</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>
