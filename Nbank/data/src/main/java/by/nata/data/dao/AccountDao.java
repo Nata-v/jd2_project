@@ -16,13 +16,8 @@ public interface AccountDao {
     void updateAccount(Account account);
     List<AccountDto> getAccountById(String accountId);
 
-
-
-    void cashDeposit(String accountNumber, String pin, BigDecimal balance);
-    void cashWithdrawal(String accountNumber, String pin, BigDecimal balance);
-
     AccountDto findByAccountNumber(String accountNumber);
-    Optional<AccountDto> findAccountById(String id);
+//    Optional<AccountDto> findAccountById(String id);
 
 
 }

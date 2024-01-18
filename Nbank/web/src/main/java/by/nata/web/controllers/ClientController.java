@@ -1,17 +1,13 @@
 package by.nata.web.controllers;
 
-import by.nata.data.model.LoginDto;
 import by.nata.service.*;
 import by.nata.service.model.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -85,18 +81,6 @@ public String addClient() {
             return "/client";
     }
 
-//    @GetMapping("/product/{id}")
-//    public ModelAndView getProduct(@PathVariable("id") String id) {
-//        ProductSpecification product = productService.getProductById(id);
-//        ModelAndView modelAndView = new ModelAndView("product-details");
-//        modelAndView.addObject("product", product);
-//        return modelAndView;
-//    }
-//    @PostMapping
-//    public String create(@ModelAttribute Client client){
-//           clientService.saveNewClient(client);
-//            return "redirect:/clients/" + 25;
-//    }
 
 
 

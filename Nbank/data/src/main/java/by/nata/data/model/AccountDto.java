@@ -22,24 +22,49 @@ public  class AccountDto implements Serializable {
     private  String accountNumber;
 
     private  ZonedDateTime dateOpen;
-    private  ZonedDateTime dateLastVisit;
 
     private  BigDecimal balance;
-    //private  String currency;
     private Currency currency;
     private  String pin;
 
     public AccountDto() {
     }
 
-    public AccountDto(String accountId, ClientDto clientDto, String accountNumber, ZonedDateTime dateOpen, ZonedDateTime dateLastVisit, BigDecimal balance, Currency currency, String pin) {
+    public AccountDto(String accountId, ClientDto clientDto, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
         this.accountId = accountId;
         this.clientDto = clientDto;
         this.accountNumber = accountNumber;
         this.dateOpen = dateOpen;
-        this.dateLastVisit = dateLastVisit;
         this.balance = balance;
         this.currency = currency;
+        this.pin = pin;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public void setClientDto(ClientDto clientDto) {
+        this.clientDto = clientDto;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setDateOpen(ZonedDateTime dateOpen) {
+        this.dateOpen = dateOpen;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public void setPin(String pin) {
         this.pin = pin;
     }
 
@@ -55,10 +80,6 @@ public  class AccountDto implements Serializable {
         return clientDto;
     }
 
-
-    public ZonedDateTime getDateLastVisit() {
-        return dateLastVisit;
-    }
 
 
 

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class Card {
     @Column(name = "CARD_NUMBER")
     private String cardNumber;
     @Column(name = "AMOUNT")
-    private Double amount;
+    private BigDecimal amount;
     @Column(name = "EXPIRY_DATE")
     private ZonedDateTime expiryDate;
 
@@ -37,18 +38,18 @@ public class Card {
     @JoinColumn(name = "CARD_STATUS")
     //@NotAudited
     private CardStatus card_status;
-//    @Enumerated(EnumType.STRING)
-//    @JoinColumn(name = "CURRENCY")
-//    // @NotAudited
-//    private Currency currency;
-@Column(name = "CURRENCY")
-private String currency;
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "CURRENCY")
+    // @NotAudited
+    private Currency currency;
+
 
     public Card() {
     }
 
-    public Card(String cardId, String cardNumber, Double amount, ZonedDateTime expiryDate, String cvv, CardStatus card_status, String currency) {
+    public Card(String cardId, Account accountId, String cardNumber, BigDecimal amount, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
         this.cardId = cardId;
+        this.accountId = accountId;
         this.cardNumber = cardNumber;
         this.amount = amount;
         this.expiryDate = expiryDate;
@@ -82,11 +83,11 @@ private String currency;
         this.cardNumber = cardNumber;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -114,11 +115,11 @@ private String currency;
         this.card_status = card_status;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }

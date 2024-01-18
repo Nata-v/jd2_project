@@ -92,7 +92,6 @@ public class DataConfiguration {
                     Card.class,
                     CardStatus.class,
                     Currency.class,
-                    ProductType.class,
                     Role.class,
                     TypeOperation.class,
                     BankomatOperations.class,

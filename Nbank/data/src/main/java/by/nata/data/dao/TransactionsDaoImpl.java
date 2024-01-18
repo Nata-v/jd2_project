@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class TransactionsDaoImpl implements TransactionsDao{
+public class TransactionsDaoImpl {
 
 private final SessionFactory sessionFactory;
 

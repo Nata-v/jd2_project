@@ -24,17 +24,5 @@ public interface ClientDetailsDao  {
     void update(ClientDetailsDto clientDetailsDto);
     List<ClientDetails> findAllByFilter(ClientFilterDto clientFilterDto);
 
-//    private SessionFactory sessionFactory;
-//    private Session session;
-//@Autowired
-//    public ClientDetailsDao(SessionFactory sessionFactory ){
-//        super(sessionFactory, ClientDetails.class);
-//
-//    }
-//
-//    public ClientDetailsDto save(ClientDetailsDto clientDetailstDto) {
-//        session = sessionFactory.getCurrentSession();
-//        session.save(clientDetailstDto);
-//        return clientDetailstDto;
-//    }
+
 }

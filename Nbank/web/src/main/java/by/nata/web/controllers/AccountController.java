@@ -33,8 +33,6 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Controller
-//@RestController
-//@RequestMapping("/accounts")
 @Slf4j
 @SuppressWarnings({"unused"})
 public class AccountController {
@@ -70,53 +68,30 @@ public class AccountController {
             }
         }
         return new ModelAndView("login");
+
     }
 
-//    @PutMapping("/accountOperations/{accountId}")
-//    public ResponseEntity<String> updateAccount(@PathVariable String accountId,
-//                                                @RequestParam BigDecimal newBalance,
-//                                                @RequestParam String newDate) {
-//        try {
-//            ZonedDateTime parsedDate = ZonedDateTime.parse(newDate);
-//            accountService.updateAccount(accountId, newBalance, parsedDate);
-//            return ResponseEntity.ok("Account updated successfully.");
-//        } catch (Exception e) {
-//
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input.");
-//        }
-//    }
 
-    @GetMapping("/accountOperation")
-    public String showAccountOperation() {
-        return "/accountOperation";
+    @GetMapping("/addMoney")
+    public String addMoney() {
+        return "/addMoney";
     }
 
-    //@PostMapping("/accountOperation/{accountId}")
-//    @PostMapping("/accountOperation")
-//    public String updateAccount(Authentication authentication, @ModelAttribute("account") Account account) {
-//        BigDecimal newBalance = account.getBalance();
-//        ZonedDateTime newDate = account.getDateLastVisit();
-//        if (authentication != null) {
-//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//            String username = userDetails.getUsername();
-//            Client client = clientService.findByUsername(username);
-//
-//            if (client != null ) {
-//                String clientId = client.getId();
-//
-//                by.nata.data.entity.Account accountNumber = accountService.findByAccountNumber(account.getAccountNumber());
-//        accountService.updateAccount(account, clientId);
-//
-//        return "redirect:/bank";
-//    }
+    @PostMapping("/addMoney")
+    public ResponseEntity<String> depositToAccount(@RequestParam(name = "account_number") String accountNumber,
+                                                   @RequestParam(name = "pin") String pin,
+                                                   @RequestParam(name = "balance") BigDecimal balance) {
+        try {
+            accountService.cashDeposit(accountNumber, pin, balance);
+            return ResponseEntity.ok("Deposit successful");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 
-//    @PostMapping("/create")
-//    public ResponseEntity<Account> createAccount(Account account, @RequestBody ClientDetails clientDetails) {
-//        account = accountService.createAccount(account, clientDetails.getId());
-//
-//        return new ResponseEntity<>(account, HttpStatus.CREATED);
-//    }
+
+
 
 
 }

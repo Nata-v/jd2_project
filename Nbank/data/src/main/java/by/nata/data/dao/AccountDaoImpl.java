@@ -25,6 +25,7 @@ import java.util.Optional;
 public class AccountDaoImpl implements AccountDao {
     private static final Logger log = LoggerFactory.getLogger(ClientDaoImpl.class);
     private final SessionFactory sessionFactory;
+    private ClientDao clientDao;
 
     @Autowired
     public AccountDaoImpl(SessionFactory sessionFactory) {
@@ -43,8 +44,38 @@ public class AccountDaoImpl implements AccountDao {
 
     public void updateAccount(Account account) {
         final Session session = sessionFactory.getCurrentSession();
+      //  Account account = convertDtoToEntity(accountDto);
+//        String hql = "FROM Account WHERE client.id = :clientId";
+//        Query<Account> query = session.createQuery(hql, Account.class);
+//        query.setParameter("clientId", clientId);
+//        Account account = query.uniqueResult();
         session.update(account);
     }
+
+//    private Account convertDtoToEntity(AccountDto accountDto) {
+//        if (accountDto == null) {
+//            throw new IllegalArgumentException("AccountDto cannot be null");
+//        }
+//
+//        Account account = new Account();
+//        account.setAccountId(accountDto.getAccountId());
+//        // convertClientDtoToEntity(accountDto.getClientDto());
+//        account.setClient(clientDao.getClientById(accountDto.getClientDto().getId()));
+//        account.setAccountNumber(accountDto.getAccountNumber());
+//        account.setDateOpen(accountDto.getDateOpen());
+//        account.setBalance(accountDto.getBalance());
+//        account.setCurrency(accountDto.getCurrency());
+//        account.setPin(accountDto.getPin());
+//
+//        return account;
+//    }
+
+//    private void convertClientDtoToEntity(ClientDto clientDto, Account account) {
+//        if (clientDto != null) {
+//            // Ваш код для установки клиента в аккаунт (например, получение клиента по ID)
+//            Client client = clientDao.getClientById(clientDto.getId()); // Подставьте ваш метод для получения клиента по ID
+//            account.setClient(client);
+//        }
 
     @Override
     public List<AccountDto> getAccountById(String clientId) {
@@ -52,7 +83,6 @@ public class AccountDaoImpl implements AccountDao {
             String hql = "FROM Account WHERE client.id = :clientId";
             Query<Account> query = session.createQuery(hql, Account.class);
             query.setParameter("clientId", clientId);
-           // return query.getResultList();
         Account account = query.uniqueResult();
 
         if (account != null) {
@@ -61,21 +91,6 @@ public class AccountDaoImpl implements AccountDao {
         return null;
     }
 
-    @Override
-    public Optional<AccountDto> findAccountById(String id) {
-        return Optional.empty();
-    }
-
-
-    @Override
-    public void cashDeposit(String accountNumber, String pin, BigDecimal balance) {
-
-    }
-
-    @Override
-    public void cashWithdrawal(String accountNumber, String pin, BigDecimal balance) {
-
-    }
 
     @Override
     public AccountDto findByAccountNumber(String accountNumber) {
@@ -98,7 +113,6 @@ public class AccountDaoImpl implements AccountDao {
                 convertToDto(account.getClient()),
                 account.getAccountNumber(),
                 account.getDateOpen(),
-                account.getDateLastVisit(),
                 account.getBalance(),
                 account.getCurrency(),
                 account.getPin());

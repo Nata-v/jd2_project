@@ -19,22 +19,19 @@ public class Account implements Serializable {
     private  String accountNumber;
 
     private  ZonedDateTime dateOpen;
-    private  ZonedDateTime dateLastVisit;
 
     private  BigDecimal balance;
     private Currency currency;
-   //private String currency;
     private String pin;
 
     public Account() {
     }
 
-    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, ZonedDateTime dateLastVisit, BigDecimal balance, Currency currency, String pin) {
+    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
         this.accountId = accountId;
         this.client = client;
         this.accountNumber = accountNumber;
         this.dateOpen = dateOpen;
-        this.dateLastVisit = dateLastVisit;
         this.balance = balance;
         this.currency = currency;
         this.pin = pin;
@@ -55,14 +52,6 @@ public class Account implements Serializable {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public ZonedDateTime getDateLastVisit() {
-        return dateLastVisit;
-    }
-
-    public void setDateLastVisit(ZonedDateTime dateLastVisit) {
-        this.dateLastVisit = dateLastVisit;
     }
 
     public String getAccountNumber() {

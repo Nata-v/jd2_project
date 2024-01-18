@@ -4,6 +4,7 @@ import by.nata.data.entity.CardStatus;
 import by.nata.data.entity.Currency;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 public class Card implements Serializable {
@@ -11,17 +12,17 @@ public class Card implements Serializable {
     private  String cardId;
     private Account account;
     private  String cardNumber;
-    private Double amount;
+    private BigDecimal amount;
     private  ZonedDateTime expiryDate;
     private  String cvv;
     private  CardStatus card_status;
 
-    private String currency;
+    private Currency currency;
 
     public Card() {
     }
 
-    public Card(String cardId, Account account, String cardNumber, Double amount, ZonedDateTime expiryDate, String cvv, CardStatus card_status, String currency) {
+    public Card(String cardId, Account account, String cardNumber, BigDecimal amount, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
         this.cardId = cardId;
         this.account = account;
         this.cardNumber = cardNumber;
@@ -57,11 +58,6 @@ public class Card implements Serializable {
     }
 
 
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public String getCardId() {
         return cardId;
     }
@@ -87,15 +83,19 @@ public class Card implements Serializable {
         this.card_status = card_status;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public Double getAmount() {
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

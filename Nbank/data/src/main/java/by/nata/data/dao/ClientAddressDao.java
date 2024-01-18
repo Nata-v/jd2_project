@@ -21,17 +21,5 @@ public interface ClientAddressDao  {
     Optional<ClientAddressDto> findById(String id);
     void update(ClientAddressDto clientAddressDto);
      List<ClientAddressDto> findAll();
-//    @Autowired
-//    private SessionFactory sessionFactory;
-//    private Session session;
-//
-//    public ClientAddressDao(SessionFactory sessionFactory ){
-//        super(sessionFactory, ClientAddress.class);
-//
-//    }
-//    public ClientDetailsDto save(ClientDetailsDto clientDetailstDto) {
-//        session = sessionFactory.getCurrentSession();
-//        session.save(clientDetailstDto);
-//        return clientDetailstDto;
-//    }
+
 }

@@ -63,9 +63,8 @@
                 client_id VARCHAR(256) NOT NULL,
                 account_number VARCHAR(20) NOT NULL,
                 date_open TIMESTAMP NOT NULL,
-                date_last_visit TIMESTAMP NOT NULL,
                 balance DECIMAL(10,2),
-                currency VARCHAR(3) NOT NULL,
+                currency ENUM ('EUR', 'USD', 'RUB', 'BYR'),
                 pin VARCHAR(4) NOT NULL,
                 PRIMARY KEY (account_id),
                 FOREIGN KEY (client_id) REFERENCES client(id)
@@ -104,10 +103,25 @@
                 amount DECIMAL(10,2),
                 expiry_date DATE NOT NULL,
                 cvv VARCHAR(3) NOT NULL,
-                card_status VARCHAR(128) NOT NULL,
-                currency VARCHAR(3) NOT NULL,
+                card_status ENUM('DEBIT', 'CREDIT', 'OVERDRAFT'),
+                currency ENUM ('EUR', 'USD', 'RUB', 'BYR'),
                 PRIMARY KEY (card_id),
                 FOREIGN KEY (account_id) REFERENCES account(account_id)
+                );
+            </sql>
+        </changeSet>
+
+        <changeSet id="9" author="natali">
+            <sql>
+                CREATE TABLE IF NOT EXISTS transactions (
+                id VARCHAR(256) NOT NULL,
+                account_number VARCHAR(16) NOT NULL,
+                account_number_recipient VARCHAR(16),
+                amount DECIMAL(10,2),
+                updated_amount DECIMAL(10,2),
+                date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                type_operation ENUM('ADD_BALANCE', 'WITHDRAW', 'TRANSFER'),
+                PRIMARY KEY (id)
                 );
             </sql>
         </changeSet>
@@ -153,21 +167,7 @@
 <!--&lt;!&ndash;        </sql>&ndash;&gt;-->
 <!--&lt;!&ndash;    </changeSet>&ndash;&gt;-->
 
-<!--    <changeSet id="7" author="natali">-->
-<!--        <sql>-->
-<!--            CREATE TABLE IF NOT EXISTS card (-->
-<!--            card_id VARCHAR(256) ,-->
-<!--            account_id  VARCHAR(256),-->
-<!--            card_number VARCHAR(16) NOT NULL,-->
-<!--            expiry_date DATE NOT NULL,-->
-<!--            cvv VARCHAR(3) NOT NULL,-->
-<!--            card_status VARCHAR(128) NOT NULL,-->
-<!--            currency VARCHAR(3) NOT NULL,-->
-<!--            PRIMARY KEY (card_id),-->
-<!--            FOREIGN KEY (account_id) REFERENCES account(account_id)-->
-<!--            );-->
-<!--        </sql>-->
-<!--    </changeSet>-->
+
 
 <!--    <changeSet id="8" author="natali">-->
 <!--        <sql>-->

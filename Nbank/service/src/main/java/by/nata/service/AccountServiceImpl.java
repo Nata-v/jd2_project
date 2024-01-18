@@ -1,11 +1,8 @@
 package by.nata.service;
 
 import by.nata.data.dao.AccountDao;
-import by.nata.data.dao.ClientAddressDao;
 import by.nata.data.dao.ClientDao;
-import by.nata.data.dao.ClientDetailsDao;
 import by.nata.data.entity.Account;
-import by.nata.data.entity.Currency;
 import by.nata.data.model.AccountDto;
 import by.nata.data.model.ClientAddressDto;
 import by.nata.data.model.ClientDetailsDto;
@@ -28,17 +25,11 @@ public class AccountServiceImpl implements AccountService{
 
     private final AccountDao accountDao;
     private final ClientDao clientDao;
-    private final ClientService clientService;
-    private final ClientDetailsDao clientDetailsDao;
-    private final ClientAddressDao clientAddressDao;
 
     @Autowired
-    public AccountServiceImpl(AccountDao accountDao, ClientDao clientDao, ClientService clientService, ClientDetailsDao clientDetailsDao, ClientAddressDao clientAddressDao) {
+    public AccountServiceImpl(AccountDao accountDao, ClientDao clientDao) {
         this.accountDao = accountDao;
         this.clientDao = clientDao;
-        this.clientService = clientService;
-        this.clientDetailsDao = clientDetailsDao;
-        this.clientAddressDao = clientAddressDao;
     }
 
 
@@ -48,31 +39,23 @@ public class AccountServiceImpl implements AccountService{
         String accountNumber = generateAccountNumber();
         String pin = generateRandomPin();
         ZonedDateTime openDate = ZonedDateTime.now();
-        ZonedDateTime lastVisit = ZonedDateTime.now();
-
+        BigDecimal balance = new BigDecimal("0.0");
 
         Account account = new Account();
         account.setClient(clientDao.getClientById(id));
         account.setAccountNumber(accountNumber);
         account.setDateOpen(openDate);
-        account.setDateLastVisit(lastVisit);
-      //  account.setBalance(BigDecimal.valueOf(0.0));
-        account.setBalance(accountDto.getBalance());
-account.setCurrency(Currency.EUR);
+        account.setBalance(balance);
+        account.setCurrency(accountDto.getCurrency());
         account.setPin(pin);
         accountDao.save(account);
     }
-
-
-
-
-
 
     private String generateAccountNumber(){
         String accountNumber;
         do{
             accountNumber = UUID.randomUUID().toString().replaceAll("-", "")
-                    .substring(0, 6);
+                    .substring(0, 16);
         }while (accountDao.findByAccountNumber(accountNumber) != null);
         return accountNumber;
     }
@@ -82,6 +65,40 @@ account.setCurrency(Currency.EUR);
         int pinNumber = random.nextInt(10000);
 
         return String.format("%04d", pinNumber);
+    }
+
+    @Override
+    public void cashDeposit(String accountNumber, String pin, BigDecimal balance) {
+
+        AccountDto accountDto = accountDao.findByAccountNumber(accountNumber);
+
+        if (accountDto == null || !pin.equals(accountDto.getPin())) {
+            throw new IllegalArgumentException("Invalid account number or PIN");
+        }
+
+//        BigDecimal currentBalance = accountDto.getBalance();
+//        BigDecimal newBalance = currentBalance.add(balance);
+//
+//        List<AccountDto> accountDtos = accountDao.getAccountById(accountDto.getAccountId());
+//
+//        if (accountDtos != null && !accountDtos.isEmpty()) {
+//            AccountDto accountDto1 = accountDtos.get(0);
+//            accountDto1.setBalance(newBalance);
+//
+//            accountDao.updateAccount(accountDto1);
+        Account account = (Account) accountDao.getAccountById(accountDto.getAccountId());
+
+        if (account != null) {
+            BigDecimal currentBalance = account.getBalance();
+            BigDecimal newBalance = currentBalance.add(balance);
+
+            account.setBalance(newBalance);
+            accountDao.updateAccount(account);
+
+        } else {
+            throw new RuntimeException("Account not found");
+
+        }
     }
 
     @Override
@@ -99,7 +116,6 @@ account.setCurrency(Currency.EUR);
                convertToModel(accountDto.getClientDto()),
                 accountDto.getAccountNumber(),
                 accountDto.getDateOpen(),
-                accountDto.getDateLastVisit(),
                 accountDto.getBalance(),
                 accountDto.getCurrency(),
                 accountDto.getPin()
@@ -142,20 +158,6 @@ account.setCurrency(Currency.EUR);
                 clientAddressDto.getPhoneNumber());
     }
 
-    @Override
-    public void cashDeposit(String accountNumber, String pin, BigDecimal balance) {
-       // account.setBalance(BigDecimal.valueOf(0.0));
-        //                account.setDateOpen(ZonedDateTime.now()),
-//                account.setBalance(BigDecimal.ZERO),
-//                account.setCurrency(Currency.valueOf(account.getCurrency().name())),
-//        account.setPin(pin));
-    }
-
-    @Override
-    public void cashWithdrawal(String accountNumber, String pin, BigDecimal balance) {
-
-    }
-
 
 
     @Override
@@ -168,11 +170,6 @@ account.setCurrency(Currency.EUR);
 
     @Override
     public Account findAccountById(String id) {
-        return null;
-    }
-
-    @Override
-    public List<Account> getAccountByClientId(String clientId) {
         return null;
     }
 
@@ -194,29 +191,6 @@ account.setCurrency(Currency.EUR);
 //                        );
         return null;
     }
-
-    @Transactional
-    public void updateAccount(String accountId, BigDecimal newBalance) {
-        ZonedDateTime lastVisit = ZonedDateTime.now();
-//        Account existingAccount = accountDao.getAccountById(accountId);
-//
-//        if (existingAccount != null) {
-//            existingAccount.setBalance(newBalance);
-//            existingAccount.setDateLastVisit(lastVisit);
-//
-//            accountDao.updateAccount(existingAccount);
-//        }
-    }
-    @Override
-    public Account addBalance(String id, BigDecimal amount, String clientId) {
-        return null;
-    }
-
-    @Override
-    public Account withdrawBalance(String id, BigDecimal amount, String clientId) {
-        return null;
-    }
-
 
 
 }

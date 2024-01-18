@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public interface ClientDao {
     void save(ClientDto clientDto);
-
-
   Client getClientById(String id);
 
 

@@ -28,8 +28,6 @@ public class Account {
     private String accountNumber;
     @Column(name = "DATE_OPEN")
     private ZonedDateTime dateOpen;
-    @Column(name = "DATE_LAST_VISIT")
-    private ZonedDateTime dateLastVisit;
 
     @Column(name = "BALANCE")
     private BigDecimal balance;
@@ -37,8 +35,7 @@ public class Account {
     @JoinColumn(name = "CURRENCY")
     // @NotAudited
     private Currency currency;
-//    @Column(name = "CURRENCY")
-//    private String currency;
+
     @Column(name = "pin")
     private String pin;
 
@@ -46,12 +43,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, ZonedDateTime dateLastVisit, BigDecimal balance, Currency currency, String pin) {
+    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
         this.accountId = accountId;
         this.client = client;
         this.accountNumber = accountNumber;
         this.dateOpen = dateOpen;
-        this.dateLastVisit = dateLastVisit;
         this.balance = balance;
         this.currency = currency;
         this.pin = pin;
@@ -113,24 +109,5 @@ public class Account {
         this.pin = pin;
     }
 
-    public ZonedDateTime getDateLastVisit() {
-        return dateLastVisit;
-    }
 
-    public void setDateLastVisit(ZonedDateTime dateLastVisit) {
-        this.dateLastVisit = dateLastVisit;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-
-        if (this == object) return true;
-        if (!(object instanceof Account account)) return false;
-        return Objects.equals(getAccountId(), account.getAccountId()) && Objects.equals(getClient(), account.getClient()) && Objects.equals(getAccountNumber(), account.getAccountNumber()) && Objects.equals(getDateOpen(), account.getDateOpen()) && Objects.equals(getDateLastVisit(), account.getDateLastVisit()) && Objects.equals(getBalance(), account.getBalance()) && getCurrency() == account.getCurrency() && Objects.equals(getPin(), account.getPin());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAccountId(), getClient(), getAccountNumber(), getDateOpen(), getDateLastVisit(), getBalance(), getCurrency(), getPin());
-    }
 }

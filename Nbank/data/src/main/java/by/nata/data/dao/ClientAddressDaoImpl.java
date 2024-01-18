@@ -35,7 +35,7 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
 
         final Session session = sessionFactory.getCurrentSession();
         ClientAddress clientAddress = new ClientAddress(
-                clientAddressDto.getId(), // == null ? getMaxId() + 1 : clientAddressDto.getId(),
+                clientAddressDto.getId(),
                 clientAddressDto.getCountry(),
                 clientAddressDto.getCity(),
                 clientAddressDto.getStreet(),
@@ -47,13 +47,6 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
         session.save(clientAddress);
 
     }
-//    public String getMaxId() {
-//        return sessionFactory
-//                .getCurrentSession()
-//                .createQuery("select max(id) from CLIENT_ADDRESS", String.class)
-//                .list()
-//                .get(0);
-//    }
 
     @Override
     public void delete(String id) {
@@ -72,14 +65,9 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
     @Transactional(readOnly = true)
     public Optional<ClientAddressDto> findById(String id) {
 
-//       final Session session = sessionFactory.getCurrentSession();
-//        return Optional.ofNullable(session.find(ClientAddressDto.class, id));
-
         final Session session = sessionFactory.getCurrentSession();
 
         ClientAddress clientAddress = session.find(ClientAddress.class, id);
-        // return Optional.ofNullable(session.find(ClientDetailsDto.class, id));
-        // Hibernate.initialize(clientDetails.getSomeLazyLoadedProperty());
         return Optional.of(new ClientAddressDto(clientAddress.getId(),
                 clientAddress.getCountry(),
                 clientAddress.getCity(),

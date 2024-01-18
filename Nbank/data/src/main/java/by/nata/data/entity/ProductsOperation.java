@@ -16,9 +16,9 @@ public class ProductsOperation {
     @GeneratedValue(generator = "products_operation_uuid")
     @Column(name = "ID")
     private String id;
-@Enumerated(EnumType.STRING)
-    @JoinColumn(name = "PRODUCT_TYPE")
-    private ProductType productType;
+//@Enumerated(EnumType.STRING)
+//    @JoinColumn(name = "PRODUCT_TYPE")
+//    private ProductType productType;
     @Column(name = "DATE_START_OPERATION")
     private ZonedDateTime dateStartOperation;
     @Column(name = "DATE_END_OPERATION")

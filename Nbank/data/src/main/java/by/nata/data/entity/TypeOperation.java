@@ -1,7 +1,8 @@
 package by.nata.data.entity;
 
 public enum TypeOperation {
-    DEPOSIT,
-    WITHDRAW
+    ADD_BALANCE,
+    WITHDRAW,
+    TRANSFER
 
 }
