@@ -43,7 +43,7 @@ public class CardDaoImpl implements CardDao{
         card.setCardId(cardDto.getCardId());
         card.setAccountId(account);
         card.setCardNumber(cardDto.getCardNumber());
-        card.setAmount(cardDto.getAmount());
+        card.setBalance(cardDto.getBalance());
         card.setExpiryDate(cardDto.getExpiryDate());
         card.setCvv(cardDto.getCvv());
         card.setCard_status(cardDto.getCard_status());

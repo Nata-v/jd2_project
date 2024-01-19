@@ -42,40 +42,86 @@ public class AccountDaoImpl implements AccountDao {
     }
 
 
-    public void updateAccount(Account account) {
-        final Session session = sessionFactory.getCurrentSession();
-      //  Account account = convertDtoToEntity(accountDto);
-//        String hql = "FROM Account WHERE client.id = :clientId";
-//        Query<Account> query = session.createQuery(hql, Account.class);
-//        query.setParameter("clientId", clientId);
-//        Account account = query.uniqueResult();
-        session.update(account);
+    public void updateAccount(AccountDto accountDto) {
+        if (accountDto == null) {
+            throw new IllegalArgumentException("AccountDto cannot be null");
+        }
+        Account account = convertDtoToEntity(accountDto);
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(account);
     }
 
-//    private Account convertDtoToEntity(AccountDto accountDto) {
-//        if (accountDto == null) {
-//            throw new IllegalArgumentException("AccountDto cannot be null");
-//        }
-//
-//        Account account = new Account();
-//        account.setAccountId(accountDto.getAccountId());
-//        // convertClientDtoToEntity(accountDto.getClientDto());
-//        account.setClient(clientDao.getClientById(accountDto.getClientDto().getId()));
-//        account.setAccountNumber(accountDto.getAccountNumber());
-//        account.setDateOpen(accountDto.getDateOpen());
-//        account.setBalance(accountDto.getBalance());
-//        account.setCurrency(accountDto.getCurrency());
-//        account.setPin(accountDto.getPin());
-//
-//        return account;
-//    }
+    private Account convertDtoToEntity(AccountDto accountDto) {
+        if (accountDto == null) {
+            throw new IllegalArgumentException("AccountDto cannot be null");
+        }
 
-//    private void convertClientDtoToEntity(ClientDto clientDto, Account account) {
-//        if (clientDto != null) {
-//            // Ваш код для установки клиента в аккаунт (например, получение клиента по ID)
-//            Client client = clientDao.getClientById(clientDto.getId()); // Подставьте ваш метод для получения клиента по ID
-//            account.setClient(client);
-//        }
+        Account account = new Account();
+        account.setAccountId(accountDto.getAccountId());
+
+        Client client = convertClientDtoToEntity(accountDto.getClientDto());
+       account.setClient(client);
+
+        account.setAccountNumber(accountDto.getAccountNumber());
+        account.setDateOpen(accountDto.getDateOpen());
+        account.setBalance(accountDto.getBalance());
+        account.setCurrency(accountDto.getCurrency());
+        account.setPin(accountDto.getPin());
+
+        return account;
+    }
+
+    private Client convertClientDtoToEntity(ClientDto clientDto) {
+        if (clientDto == null) {
+            throw new IllegalArgumentException("ClientDto cannot be null");
+        }
+            Client client = new Client();
+            client.setId(clientDto.getId());
+            client.setUsername(clientDto.getUsername());
+            client.setPassword(clientDto.getPassword());
+            client.setEmail(clientDto.getEmail());
+            client.setRole(clientDto.getRole());
+            ClientDetails clientDetails = convertClientDetailsDtoToEntity(clientDto.getClientDetailsDto());
+            client.setClientDetails(clientDetails);
+
+            ClientAddress clientAddress = convertClientAddressDtoToEntity(clientDto.getClientAddressDto());
+            client.setClientAddress(clientAddress);
+
+        return client;
+    }
+    private ClientDetails convertClientDetailsDtoToEntity(ClientDetailsDto clientDetailsDto) {
+        if (clientDetailsDto == null) {
+            throw new IllegalArgumentException("ClientDetailsDto cannot be null");
+        }
+
+        ClientDetails clientDetails = new ClientDetails();
+        clientDetails.setId(clientDetailsDto.getId());
+       clientDetails.setSurname(clientDetailsDto.getSurname());
+              clientDetails.setName(clientDetailsDto.getName());
+              clientDetails.setBirthDate(clientDetailsDto.getBirthDate());
+            clientDetails.setPassportNumber(clientDetailsDto.getPassportNumber());
+               clientDetails.setIdentityNumber( clientDetailsDto.getIdentityNumber());
+            clientDetails.setDateIssue(clientDetailsDto.getDateIssue());
+                clientDetails.setDateExpiry( clientDetailsDto.getDateExpiry());
+
+        return clientDetails;
+    }
+    private ClientAddress convertClientAddressDtoToEntity(ClientAddressDto clientAddressDto) {
+        if (clientAddressDto == null) {
+            throw new IllegalArgumentException("ClientAddressDto cannot be null");
+        }
+
+        ClientAddress clientAddress = new ClientAddress();
+        clientAddress.setId(clientAddressDto.getId());
+        clientAddress.setCountry(clientAddressDto.getCountry());
+                clientAddress.setCity(clientAddressDto.getCity());
+                clientAddress.setStreet(clientAddressDto.getStreet());
+                clientAddress.setHouseNumber(clientAddressDto.getHouseNumber());
+                clientAddress.setFlatNumber(clientAddressDto.getFlatNumber());
+                clientAddress.setPhoneNumber(clientAddressDto.getPhoneNumber());
+
+        return clientAddress;
+    }
 
     @Override
     public List<AccountDto> getAccountById(String clientId) {

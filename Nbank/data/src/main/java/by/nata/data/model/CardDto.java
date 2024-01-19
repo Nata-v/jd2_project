@@ -17,7 +17,7 @@ public final class CardDto implements Serializable {
 
     private final String cardNumber;
 
-    private final BigDecimal amount;
+    private final BigDecimal balance;
 
     private final ZonedDateTime expiryDate;
 
@@ -26,11 +26,11 @@ public final class CardDto implements Serializable {
 
     private final Currency currency;
 
-    public CardDto(String cardId,AccountDto accountDto, String cardNumber, BigDecimal amount, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
+    public CardDto(String cardId,AccountDto accountDto, String cardNumber, BigDecimal balance, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
         this.cardId = cardId;
         this.accountDto = accountDto;
         this.cardNumber = cardNumber;
-        this.amount = amount;
+        this.balance = balance;
         this.expiryDate = expiryDate;
         this.cvv = cvv;
         this.card_status = card_status;
@@ -65,7 +65,7 @@ public final class CardDto implements Serializable {
         return currency;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getBalance() {
+        return balance;
     }
 }

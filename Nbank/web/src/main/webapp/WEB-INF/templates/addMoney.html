@@ -66,20 +66,38 @@
 
 <!--          <form th:action="@{/web/accountOperation/{accountId}}" th:method="put" th:object="${account}">-->
             <form th:action="@{/addMoney}" method="post" onsubmit="return showConfirmation()">
+
 <!--              <form th:action="@{'/web/accountOperation/' + ${account.accountId}}" method="post" th:object="${account}">-->
 <!--                <input type="hidden" th:field="*{accountId}" />-->
 
               <input type="hidden" value="${account.account_id}" />
 
               <div class="mb-3">
-                <label for="account_number" class="form-label">Enter Account Number</label>
-                <input type="text" name="account_number" class="form-control" id="account_number" placeholder="AccountNumber" required>
+                <label for="accountNumber" class="form-label">Enter Account Number</label>
+                <input type="text" name="accountNumber" class="form-control" id="accountNumber" placeholder="AccountNumber" required>
               </div>
 <!--            <input type="text" id="newBalance" th:field="*{newBalance}" required />-->
               <div class="mb-3">
                 <label for="balance" class="form-label">Enter the amount to top up your account</label>
-                <input type="number" name="balance" class="form-control" id="balance" placeholder="Balance" required>
+                <input type="text" name="balance" class="form-control" id="balance" placeholder="Balance" required>
               </div>
+<!--              <div class="mb-3">-->
+<!--                <label for="transaction_currency">Currency</label>-->
+<!--                <select id="transaction_currency" name="transaction_currency" required style="margin-bottom: 60px;">-->
+<!--                  <option th:each="transaction_currency : ${T(by.nata.data.entity.Currency).values()}"-->
+<!--                          th:value="${transaction_currency}" th:text="${transaction_currency}"></option>-->
+<!--                </select>-->
+<!--              </div>-->
+                        <div class="mb-3">
+                        <label for="transaction_currency">Currency
+                        <select id="transaction_currency" name="transaction_currency" required style="margin-bottom: 60px;">
+                          <option value="USD">USD</option>
+                          <option value="BYN">BYN</option>
+                          <option value="RUB">RUB</option>
+                          <option value="EUR">EUR</option>
+                        </select>
+                        </label>
+                        </div>
               <div class="mb-3">
                 <label for="pin" class="form-label">Enter your pin code</label>
                 <input type="password" name="pin" class="form-control" id="pin" placeholder="Pin Code" required>
@@ -108,45 +126,48 @@
     <div class="col-lg-6 col-md-12"
          style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
 
+<div>
+  <img src="/web/static/img/bankaccount.jpg" class="card-img-top" alt="...">
+  <h2>Храните деньги в надежном месте!</h2>
+</div>
 
-
-      <div class="row">
-        <div class="col-lg-4 col-md-6">
-          <div class="card">
-            <img src="/web/static/img/1579290380_12-18.jpg"  class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Карточки</h5>
-              <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
-                банка или закать доставку на дом. </p>
-              <a href="/web/createCard" class="btn btn-primary">Заказать карту</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card">
-            <img src="/web/static/img/img1.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Кредиты</h5>
-              <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
-                проценты.
-                дома. </p>
-              <a href="#" class="btn btn-primary">Оформить кредит</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card">
-            <img src="/web/static/img/1579290380_12-18.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Вклады</h5>
-              <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой
-                срок.
-              </p>
-              <a href="#" class="btn btn-primary">Оформить вклад</a>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-lg-4 col-md-6">-->
+<!--          <div class="card">-->
+<!--            <img src="/web/static/img/1579290380_12-18.jpg"  class="card-img-top" alt="...">-->
+<!--            <div class="card-body">-->
+<!--              <h5 class="card-title">Карточки</h5>-->
+<!--              <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении-->
+<!--                банка или закать доставку на дом. </p>-->
+<!--              <a href="/web/createCard" class="btn btn-primary">Заказать карту</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-4 col-md-6">-->
+<!--          <div class="card">-->
+<!--            <img src="/web/static/img/img1.png" class="card-img-top" alt="...">-->
+<!--            <div class="card-body">-->
+<!--              <h5 class="card-title">Кредиты</h5>-->
+<!--              <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие-->
+<!--                проценты.-->
+<!--                дома. </p>-->
+<!--              <a href="#" class="btn btn-primary">Оформить кредит</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-4 col-md-6">-->
+<!--          <div class="card">-->
+<!--            <img src="/web/static/img/1579290380_12-18.jpg" class="card-img-top" alt="...">-->
+<!--            <div class="card-body">-->
+<!--              <h5 class="card-title">Вклады</h5>-->
+<!--              <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой-->
+<!--                срок.-->
+<!--              </p>-->
+<!--              <a href="#" class="btn btn-primary">Оформить вклад</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 
   </div>

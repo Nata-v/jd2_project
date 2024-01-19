@@ -1,36 +1,25 @@
 package by.nata.web.controllers;
 
-import by.nata.data.dao.ClientAddressDao;
-import by.nata.data.dao.ClientDao;
-import by.nata.data.dao.ClientDetailsDao;
+import by.nata.data.entity.Currency;
 import by.nata.data.model.AccountDto;
-import by.nata.data.model.ClientAddressDto;
-import by.nata.data.model.ClientDetailsDto;
-import by.nata.data.model.ClientDto;
+import by.nata.data.model.TransactionsDto;
 import by.nata.service.AccountService;
-import by.nata.service.ClientAddressService;
-import by.nata.service.ClientDetailsService;
 import by.nata.service.ClientService;
-import by.nata.service.model.Account;
-import by.nata.service.model.Client;
-import by.nata.service.model.ClientAddress;
-import by.nata.service.model.ClientDetails;
+import by.nata.service.TransactionsService;
+import by.nata.service.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-import java.util.Optional;
+import java.util.Locale;
 
 @Controller
 @Slf4j
@@ -39,12 +28,14 @@ public class AccountController {
 
     private final AccountService accountService;
     private final ClientService clientService;
+    private final TransactionsService transactionsService;
 
 
     @Autowired
-    public AccountController(AccountService accountService, ClientService clientService) {
+    public AccountController(AccountService accountService, ClientService clientService, TransactionsService transactionsService) {
         this.accountService = accountService;
         this.clientService = clientService;
+        this.transactionsService = transactionsService;
 
     }
 
@@ -78,11 +69,48 @@ public class AccountController {
     }
 
     @PostMapping("/addMoney")
-    public ResponseEntity<String> depositToAccount(@RequestParam(name = "account_number") String accountNumber,
+    public ResponseEntity<String> depositToAccount(@RequestParam(name = "accountNumber") String accountNumber,
                                                    @RequestParam(name = "pin") String pin,
-                                                   @RequestParam(name = "balance") BigDecimal balance) {
+                                                   @RequestParam(name = "balance") BigDecimal balance,
+                                                   @RequestParam(name = "transaction_currency") String transaction_currency) {
         try {
             accountService.cashDeposit(accountNumber, pin, balance);
+
+            Transactions transactions = new Transactions();
+            transactions.setAccountNumber(accountNumber);
+            transactions.setBalance(balance);
+            transactions.setTransaction_currency(Currency.valueOf(transaction_currency));
+
+
+            transactionsService.saveTransactionsReplenishment(transactions);
+
+            return ResponseEntity.ok("Deposit successful");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getMoney")
+    public String withdrawalFromAccount() {
+        return "/getMoney";
+    }
+
+    @PostMapping("/getMoney")
+    public ResponseEntity<String> withdrawalFromAccount(@RequestParam(name = "accountNumber") String accountNumber,
+                                                   @RequestParam(name = "pin") String pin,
+                                                   @RequestParam(name = "balance") BigDecimal balance,
+                                                   @RequestParam(name = "transaction_currency") String transaction_currency) {
+        try {
+            accountService.cashWithdrawal(accountNumber, pin, balance);
+
+            Transactions transactions = new Transactions();
+            transactions.setAccountNumber(accountNumber);
+            transactions.setBalance(balance);
+            transactions.setTransaction_currency(Currency.valueOf(transaction_currency));
+
+
+            transactionsService.saveTransactionsWithdrawal(transactions);
+
             return ResponseEntity.ok("Deposit successful");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -90,8 +118,11 @@ public class AccountController {
     }
 
 
+    }
 
 
 
 
-}
+
+
+

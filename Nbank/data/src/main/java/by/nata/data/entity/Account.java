@@ -43,9 +43,8 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
+    public Account(String accountId, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
         this.accountId = accountId;
-        this.client = client;
         this.accountNumber = accountNumber;
         this.dateOpen = dateOpen;
         this.balance = balance;

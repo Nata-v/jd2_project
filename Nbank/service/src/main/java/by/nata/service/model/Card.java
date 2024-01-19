@@ -12,7 +12,7 @@ public class Card implements Serializable {
     private  String cardId;
     private Account account;
     private  String cardNumber;
-    private BigDecimal amount;
+    private BigDecimal balance;
     private  ZonedDateTime expiryDate;
     private  String cvv;
     private  CardStatus card_status;
@@ -22,11 +22,11 @@ public class Card implements Serializable {
     public Card() {
     }
 
-    public Card(String cardId, Account account, String cardNumber, BigDecimal amount, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
+    public Card(String cardId, Account account, String cardNumber, BigDecimal balance, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
         this.cardId = cardId;
         this.account = account;
         this.cardNumber = cardNumber;
-        this.amount = amount;
+        this.balance = balance;
         this.expiryDate = expiryDate;
         this.cvv = cvv;
         this.card_status = card_status;
@@ -91,11 +91,11 @@ public class Card implements Serializable {
         this.currency = currency;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

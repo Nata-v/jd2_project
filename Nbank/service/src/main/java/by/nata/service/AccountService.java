@@ -14,11 +14,8 @@ public interface AccountService {
     Account findAccountById(String id);
 by.nata.service.model.Account findByAccountNumber(String accountNumber);
 
-    Optional<by.nata.service.model.Account> updateAccount(String id, by.nata.service.model.Account account,
-                                                          ClientDetails clientDetails);
-
-
         void createAccount(AccountDto accountDto, String id);
     void cashDeposit(String accountNumber, String pin, BigDecimal balance);
+    void cashWithdrawal(String accountNumber, String pin, BigDecimal balance);
 
 }

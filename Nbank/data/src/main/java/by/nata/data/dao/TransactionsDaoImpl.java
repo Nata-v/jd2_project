@@ -1,13 +1,19 @@
 package by.nata.data.dao;
 
+import by.nata.data.entity.ClientDetails;
+import by.nata.data.entity.Transactions;
+import by.nata.data.model.TransactionsDto;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @Repository
 @Transactional
-public class TransactionsDaoImpl {
+public class TransactionsDaoImpl implements TransactionsDao{
 
 private final SessionFactory sessionFactory;
 
@@ -19,5 +25,22 @@ private final SessionFactory sessionFactory;
         }
         this.sessionFactory = sessionFactory;
     }
+
+    @Override
+    public void save(TransactionsDto transactionsDto) {
+        final Session session = sessionFactory.getCurrentSession();
+        Transactions transactions = new Transactions(
+                transactionsDto.getId(),
+                transactionsDto.getAccountNumber(),
+                transactionsDto.getAccount_number_recipient(),
+                transactionsDto.getBalance(),
+                transactionsDto.getTransaction_currency(),
+                transactionsDto.getDate(),
+                transactionsDto.getType_operation()
+        );
+
+        session.save(transactions);
+    }
+
 
 }

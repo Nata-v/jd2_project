@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:c="">
+<html lang="en" xmlns:th="http://thymeleaf.org" >
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <link href="/web/static/css/online-reg.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Account</title>
+  <title>Add balance</title>
 </head>
 <body>
 <header>
@@ -38,9 +38,9 @@
           </li>
           <div th:fragment="header">
             <form action="/logout" method="post">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/web/login">Log out</a>
-          </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/web/login">Log out</a>
+              </li>
             </form>
           </div>
         </ul>
@@ -56,7 +56,7 @@
 
 <div class="container-fluid">
   <div class="text-page" >
-    <h3>Open Account!</h3>
+    <h3>Withdrawal of bank account!</h3>
   </div>
   <div class="row">
 
@@ -64,29 +64,61 @@
          style="background: linear-gradient(80deg, rgb(160, 220, 255) 50%, #61ffa5 100%);">
       <div class="header">
 
+        <!--          <form th:action="@{/web/accountOperation/{accountId}}" th:method="put" th:object="${account}">-->
+        <form th:action="@{/getMoney}" method="post" onsubmit="return showConfirmation()">
 
-        <form method="post"action="/web/account">
-          <input type="hidden" name="id" value="${client.client_id}"/>
-<p>Выберите валюту счета и нажмите кнопку 'создать счет'! </p>
+          <!--              <form th:action="@{'/web/accountOperation/' + ${account.accountId}}" method="post" th:object="${account}">-->
+          <!--                <input type="hidden" th:field="*{accountId}" />-->
+
+          <input type="hidden" value="${account.account_id}" />
 
           <div class="mb-3">
-            <label for="currency">Currency</label>
-            <select id="currency" name="currency" required style="margin-bottom: 60px;">
-              <option th:each="currency : ${T(by.nata.data.entity.Currency).values()}"
-                      th:value="${currency}" th:text="${currency}"></option>
-            </select>
+            <label for="accountNumber" class="form-label">Enter Account Number</label>
+            <input type="text" name="accountNumber" class="form-control" id="accountNumber" placeholder="AccountNumber" required>
+          </div>
+          <!--            <input type="text" id="newBalance" th:field="*{newBalance}" required />-->
+          <div class="mb-3">
+            <label for="balance" class="form-label">Enter the amount to top up your account</label>
+            <input type="text" name="balance" class="form-control" id="balance" placeholder="Balance" required>
+          </div>
+          <!--              <div class="mb-3">-->
+          <!--                <label for="transaction_currency">Currency</label>-->
+          <!--                <select id="transaction_currency" name="transaction_currency" required style="margin-bottom: 60px;">-->
+          <!--                  <option th:each="transaction_currency : ${T(by.nata.data.entity.Currency).values()}"-->
+          <!--                          th:value="${transaction_currency}" th:text="${transaction_currency}"></option>-->
+          <!--                </select>-->
+          <!--              </div>-->
+          <div class="mb-3">
+            <label for="transaction_currency">Currency
+              <select id="transaction_currency" name="transaction_currency" required style="margin-bottom: 60px;">
+                <option value="USD">USD</option>
+                <option value="BYN">BYN</option>
+                <option value="RUB">RUB</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </label>
+          </div>
+          <div class="mb-3">
+            <label for="pin" class="form-label">Enter your pin code</label>
+            <input type="password" name="pin" class="form-control" id="pin" placeholder="Pin Code" required>
           </div>
 
-          <p>Номер счета и пин код присваевается автоматически, пин-код будет выслан вам сообщением. </p>
+          <!--            <label for="newDate">New Date (in ISO format):</label>-->
+          <!--            <input type="date" id="newDate" th:field="*{newDate}" required />-->
 
-          <button class="btn btn-primary" type="submit">Create Account</button>
+          <button type="submit">Replenish Account</button>
         </form>
-<!--        <div>-->
-<!--          <img src="/web/static/img/phone.jpg">-->
 
-<!--        </div>-->
+        <p> </p>
+
+
       </div>
-
+      <!--      <script>-->
+      <!--    function showConfirmation() {-->
+      <!--        var result = confirm('Пополнить счет?');-->
+      <!--        return result;-->
+      <!--    }-->
+      <!--</script>-->
 
 
     </div>
@@ -99,7 +131,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6">
           <div class="card">
-            <img src="/web/static/img/img1.png" class="card-img-top" alt="...">
+            <img src="/web/static/img/1579290380_12-18.jpg"  class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Карточки</h5>
               <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
@@ -110,7 +142,7 @@
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="card">
-            <img src="/web/static/img/1579290380_12-18.jpg" class="card-img-top" alt="...">
+            <img src="/web/static/img/img1.png" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Кредиты</h5>
               <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
@@ -133,10 +165,6 @@
           </div>
         </div>
       </div>
-<!--      <p>-->
-<!--      <h1>ИПОТЕКА ПОД 15% ГОДОВЫХ</h1>-->
-<!--      </p>-->
-<!--      <img src="/web/static/img/house.jpg" class="d-block w-100" alt="...">-->
     </div>
 
   </div>

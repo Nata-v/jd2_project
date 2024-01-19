@@ -1,35 +1,42 @@
 package by.nata.service;
 
 import by.nata.data.dao.AccountDao;
+import by.nata.data.dao.CardDaoImpl;
 import by.nata.data.dao.ClientDao;
+import by.nata.data.dao.TransactionsDao;
 import by.nata.data.entity.Account;
-import by.nata.data.model.AccountDto;
-import by.nata.data.model.ClientAddressDto;
-import by.nata.data.model.ClientDetailsDto;
-import by.nata.data.model.ClientDto;
+import by.nata.data.entity.TypeOperation;
+import by.nata.data.model.*;
 import by.nata.service.model.Client;
 import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
+import by.nata.service.model.Transactions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
 @Transactional
-public class AccountServiceImpl implements AccountService{
 
+public class AccountServiceImpl implements AccountService{
+    private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     private final AccountDao accountDao;
     private final ClientDao clientDao;
+    private  final TransactionsDao transactionsDao;
 
     @Autowired
-    public AccountServiceImpl(AccountDao accountDao, ClientDao clientDao) {
+    public AccountServiceImpl(AccountDao accountDao, ClientDao clientDao, TransactionsDao transactionsDao) {
         this.accountDao = accountDao;
         this.clientDao = clientDao;
+        this.transactionsDao = transactionsDao;
     }
 
 
@@ -69,36 +76,34 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void cashDeposit(String accountNumber, String pin, BigDecimal balance) {
-
         AccountDto accountDto = accountDao.findByAccountNumber(accountNumber);
 
         if (accountDto == null || !pin.equals(accountDto.getPin())) {
             throw new IllegalArgumentException("Invalid account number or PIN");
         }
 
-//        BigDecimal currentBalance = accountDto.getBalance();
-//        BigDecimal newBalance = currentBalance.add(balance);
-//
-//        List<AccountDto> accountDtos = accountDao.getAccountById(accountDto.getAccountId());
-//
-//        if (accountDtos != null && !accountDtos.isEmpty()) {
-//            AccountDto accountDto1 = accountDtos.get(0);
-//            accountDto1.setBalance(newBalance);
-//
-//            accountDao.updateAccount(accountDto1);
-        Account account = (Account) accountDao.getAccountById(accountDto.getAccountId());
+        BigDecimal newBalance = accountDto.getBalance().add(balance);
+        accountDto.setBalance(newBalance);
+        accountDao.updateAccount(accountDto);
 
-        if (account != null) {
-            BigDecimal currentBalance = account.getBalance();
-            BigDecimal newBalance = currentBalance.add(balance);
-
-            account.setBalance(newBalance);
-            accountDao.updateAccount(account);
-
-        } else {
-            throw new RuntimeException("Account not found");
+         log.error("Счет с номером " + accountNumber + " не найден");
 
         }
+
+
+    @Override
+    public void cashWithdrawal(String accountNumber, String pin, BigDecimal balance) {
+        AccountDto accountDto = accountDao.findByAccountNumber(accountNumber);
+
+        if (accountDto == null || !pin.equals(accountDto.getPin())) {
+            throw new IllegalArgumentException("Invalid account number or PIN");
+        }
+
+        BigDecimal newBalance = accountDto.getBalance().subtract(balance);
+        accountDto.setBalance(newBalance);
+        accountDao.updateAccount(accountDto);
+
+        log.error("Недостаточно средств для снятия!");
     }
 
     @Override
@@ -173,24 +178,7 @@ public class AccountServiceImpl implements AccountService{
         return null;
     }
 
-    @Override
-    public Optional<by.nata.service.model.Account> updateAccount(String id, by.nata.service.model.Account account,
-                                                                 ClientDetails clientDetails) {
 
-//        return accountDao.findAccountById(id)
-//                .map(accountDto -> new AccountDto(
-//                        account.setAccountId(account.getAccountId()),
-//                        account.setClientDetails(account.getClientDetails()),
-//                        account.setAccountNumber(account.getAccountNumber()),
-//                        account.setDateOpen(account.getDateOpen()),
-//                        account.setDateLastVisit(ZonedDateTime.now()),
-//                        account.setBalance(account.getBalance()),
-//                        Currency.EUR,
-//                        account.setCurrency(Currency.EUR),
-//                        account.setPin(account.getPin())
-//                        );
-        return null;
-    }
 
 
 }

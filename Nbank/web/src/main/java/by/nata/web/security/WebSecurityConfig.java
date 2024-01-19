@@ -47,9 +47,9 @@ public class WebSecurityConfig {
 //                .logout(Customizer.withDefaults());
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home","/static/**", "/WEB-INF/templates/**","/login", "/info", "/registration", "/v3/api-docs/","/swagger-ui/" ).permitAll()
+                        .requestMatchers("/", "/home","/static/**", "/WEB-INF/templates/**","/login", "/info", "/registration").permitAll()
                         .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
-                        .requestMatchers("/account", "/clients", "/accountOperation", "/createCard", "/bank").authenticated()   //hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/account", "/clients",  "/createCard", "/bank").authenticated()   //hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers(antMatcher("/client/{\\d}/delete")).hasAnyAuthority(Role.ADMIN.getAuthority(), Role.USER.getAuthority())
                         .anyRequest().authenticated())
                 .formLogin(login -> login

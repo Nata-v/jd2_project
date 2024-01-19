@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 
 @Entity
@@ -20,14 +21,16 @@ public class Transactions {
     private String id;
 
     @Column(name = "ACCOUNT_NUMBER")
-    private String account_number;
+    private String accountNumber;
     @Column(name = "ACCOUNT_NUMBER_RECIPIENT")
     private String account_number_recipient;
-    @Column(name = "AMOUNT")
-    private BigDecimal amount;
+    @Column(name = "BALANCE")
+    private BigDecimal balance;
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "TRANSACTION_CURRENCY")
+    // @NotAudited
+    private Currency transaction_currency;
 
-    @Column(name = "UPDATED_AMOUNT")
-    private BigDecimal updated_amount;
     @Column(name = "DATE")
     private ZonedDateTime date;
     @Enumerated(EnumType.STRING)
@@ -37,12 +40,12 @@ public class Transactions {
     public Transactions() {
     }
 
-    public Transactions(String id, String account_number, String account_number_recipient, BigDecimal amount, BigDecimal updated_amount, ZonedDateTime date, TypeOperation type_operation) {
+    public Transactions(String id, String accountNumber, String account_number_recipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
         this.id = id;
-        this.account_number = account_number;
+        this.accountNumber = accountNumber;
         this.account_number_recipient = account_number_recipient;
-        this.amount = amount;
-        this.updated_amount = updated_amount;
+        this.balance = balance;
+        this.transaction_currency = transaction_currency;
         this.date = date;
         this.type_operation = type_operation;
     }
@@ -55,12 +58,12 @@ public class Transactions {
         this.id = id;
     }
 
-    public String getAccount_number() {
-        return account_number;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setAccount_number(String account_number) {
-        this.account_number = account_number;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public String getAccount_number_recipient() {
@@ -71,20 +74,12 @@ public class Transactions {
         this.account_number_recipient = account_number_recipient;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getUpdated_amount() {
-        return updated_amount;
-    }
-
-    public void setUpdated_amount(BigDecimal updated_amount) {
-        this.updated_amount = updated_amount;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public ZonedDateTime getDate() {
@@ -102,4 +97,14 @@ public class Transactions {
     public void setType_operation(TypeOperation type_operation) {
         this.type_operation = type_operation;
     }
+
+    public Currency getTransaction_currency() {
+        return transaction_currency;
+    }
+
+    public void setTransaction_currency(Currency transaction_currency) {
+        this.transaction_currency = transaction_currency;
+    }
+
+
 }

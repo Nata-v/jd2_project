@@ -13,7 +13,7 @@ public interface AccountDao {
 
      void save(Account account);
     // void save(AccountDto accountDto, String id);
-    void updateAccount(Account account);
+    void updateAccount(AccountDto accountDto);
     List<AccountDto> getAccountById(String accountId);
 
     AccountDto findByAccountNumber(String accountNumber);
