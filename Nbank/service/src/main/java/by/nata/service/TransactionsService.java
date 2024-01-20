@@ -9,5 +9,6 @@ import java.math.BigDecimal;
 public interface TransactionsService {
     void saveTransactionsReplenishment(Transactions transactions);
     void saveTransactionsWithdrawal(Transactions transactions);
+    void saveTransactionsTransfer(Transactions transactions);
 
 }

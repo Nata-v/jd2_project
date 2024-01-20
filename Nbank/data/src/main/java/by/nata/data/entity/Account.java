@@ -1,13 +1,12 @@
 package by.nata.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -59,6 +58,7 @@ public class Account {
     public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
+    @JsonIgnore
 
     public Client getClient() {
         return client;
@@ -108,5 +108,27 @@ public class Account {
         this.pin = pin;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Account account)) return false;
+        return Objects.equals(getAccountId(), account.getAccountId()) && Objects.equals(getClient(), account.getClient()) && Objects.equals(getAccountNumber(), account.getAccountNumber()) && Objects.equals(getDateOpen(), account.getDateOpen()) && Objects.equals(getBalance(), account.getBalance()) && getCurrency() == account.getCurrency() && Objects.equals(getPin(), account.getPin());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAccountId(), getClient(), getAccountNumber(), getDateOpen(), getBalance(), getCurrency(), getPin());
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId='" + accountId + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", dateOpen=" + dateOpen +
+                ", balance=" + balance +
+                ", currency=" + currency +
+                ", pin='" + pin + '\'' +
+                '}';
+    }
 }

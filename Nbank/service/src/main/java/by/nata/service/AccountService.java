@@ -17,5 +17,6 @@ by.nata.service.model.Account findByAccountNumber(String accountNumber);
         void createAccount(AccountDto accountDto, String id);
     void cashDeposit(String accountNumber, String pin, BigDecimal balance);
     void cashWithdrawal(String accountNumber, String pin, BigDecimal balance);
+    void cashTransfer(String accountNumber, String accountNumberRecipient, String pin, BigDecimal balance);
 
 }

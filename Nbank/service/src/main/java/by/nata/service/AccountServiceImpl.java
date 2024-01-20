@@ -107,6 +107,34 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
+    public void cashTransfer(String accountNumber, String accountNumberRecipient, String pin, BigDecimal balance) {
+        AccountDto accountDto_sender = accountDao.findByAccountNumber(accountNumber);
+        AccountDto accountDto_recipient = accountDao.findByAccountNumber(accountNumberRecipient);
+
+
+        if (accountDto_sender == null || !pin.equals(accountDto_sender.getPin())) {
+            throw new IllegalArgumentException("Invalid account number or PIN");
+        }
+
+
+        if (accountDto_sender.getBalance().compareTo(balance) >= 0) {
+
+            BigDecimal newBalance_sender = accountDto_sender.getBalance().subtract(balance);
+            accountDto_sender.setBalance(newBalance_sender);
+
+            BigDecimal newBalance_recipient = accountDto_recipient.getBalance().add(balance);
+            accountDto_recipient.setBalance(newBalance_recipient);
+
+
+        }
+        accountDao.updateAccount(accountDto_sender);
+accountDao.updateAccount(accountDto_recipient);
+        log.error("Счет с номером " + accountNumberRecipient + " не найден");
+
+
+    }
+
+    @Override
     public by.nata.service.model.Account findByAccountNumber(String accountNumber) {
 
         AccountDto accountDto = accountDao.findByAccountNumber(accountNumber);

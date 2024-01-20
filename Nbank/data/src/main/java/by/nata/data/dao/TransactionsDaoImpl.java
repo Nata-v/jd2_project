@@ -5,6 +5,8 @@ import by.nata.data.entity.Transactions;
 import by.nata.data.model.TransactionsDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import java.math.BigDecimal;
 @Repository
 @Transactional
 public class TransactionsDaoImpl implements TransactionsDao{
+    private static final Logger log = LoggerFactory.getLogger(TransactionsDaoImpl.class);
 
 private final SessionFactory sessionFactory;
 
@@ -32,7 +35,7 @@ private final SessionFactory sessionFactory;
         Transactions transactions = new Transactions(
                 transactionsDto.getId(),
                 transactionsDto.getAccountNumber(),
-                transactionsDto.getAccount_number_recipient(),
+                transactionsDto.getAccountNumberRecipient(),
                 transactionsDto.getBalance(),
                 transactionsDto.getTransaction_currency(),
                 transactionsDto.getDate(),
@@ -40,6 +43,7 @@ private final SessionFactory sessionFactory;
         );
 
         session.save(transactions);
+        log.info("Such accountNumbers doesn't exist!");
     }
 
 

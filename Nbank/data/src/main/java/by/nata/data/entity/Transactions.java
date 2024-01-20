@@ -23,7 +23,7 @@ public class Transactions {
     @Column(name = "ACCOUNT_NUMBER")
     private String accountNumber;
     @Column(name = "ACCOUNT_NUMBER_RECIPIENT")
-    private String account_number_recipient;
+    private String accountNumberRecipient;
     @Column(name = "BALANCE")
     private BigDecimal balance;
     @Enumerated(EnumType.STRING)
@@ -40,10 +40,10 @@ public class Transactions {
     public Transactions() {
     }
 
-    public Transactions(String id, String accountNumber, String account_number_recipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
+    public Transactions(String id, String accountNumber, String accountNumberRecipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.account_number_recipient = account_number_recipient;
+        this.accountNumberRecipient= accountNumberRecipient;
         this.balance = balance;
         this.transaction_currency = transaction_currency;
         this.date = date;
@@ -66,12 +66,12 @@ public class Transactions {
         this.accountNumber = accountNumber;
     }
 
-    public String getAccount_number_recipient() {
-        return account_number_recipient;
+    public String getAccountNumberRecipient() {
+        return accountNumberRecipient;
     }
 
-    public void setAccount_number_recipient(String account_number_recipient) {
-        this.account_number_recipient = account_number_recipient;
+    public void setAccountNumberRecipient(String accountNumberRecipient) {
+        this.accountNumberRecipient = accountNumberRecipient;
     }
 
     public BigDecimal getBalance() {
@@ -106,5 +106,28 @@ public class Transactions {
         this.transaction_currency = transaction_currency;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Transactions that)) return false;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getAccountNumber(), that.getAccountNumber()) && Objects.equals(getAccountNumberRecipient(), that.getAccountNumberRecipient()) && Objects.equals(getBalance(), that.getBalance()) && getTransaction_currency() == that.getTransaction_currency() && Objects.equals(getDate(), that.getDate()) && getType_operation() == that.getType_operation();
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getAccountNumber(), getAccountNumberRecipient(), getBalance(), getTransaction_currency(), getDate(), getType_operation());
+    }
+
+    @Override
+    public String toString() {
+        return "Transactions{" +
+                "id='" + id + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", accountNumberRecipient='" + accountNumberRecipient + '\'' +
+                ", balance=" + balance +
+                ", transaction_currency=" + transaction_currency +
+                ", date=" + date +
+                ", type_operation=" + type_operation +
+                '}';
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 
 @Entity
@@ -31,10 +32,6 @@ public class ClientDetails {
     private String passportNumber;
     @Column(name = "IDENTITY_NUMBER", unique = true)
     private String identityNumber;
-    //@JoinColumn(name = "CITY_BIRTH_ID")
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private Cities city;
-
     @Column(name = "DATE_ISSUE")
     private LocalDate dateIssue;
 
@@ -120,5 +117,31 @@ public class ClientDetails {
 
     public void setDateExpiry(LocalDate dateExpiry) {
         this.dateExpiry = dateExpiry;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof ClientDetails that)) return false;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getSurname(), that.getSurname()) && Objects.equals(getName(), that.getName()) && Objects.equals(getBirthDate(), that.getBirthDate()) && Objects.equals(getPassportNumber(), that.getPassportNumber()) && Objects.equals(getIdentityNumber(), that.getIdentityNumber()) && Objects.equals(getDateIssue(), that.getDateIssue()) && Objects.equals(getDateExpiry(), that.getDateExpiry());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getSurname(), getName(), getBirthDate(), getPassportNumber(), getIdentityNumber(), getDateIssue(), getDateExpiry());
+    }
+
+    @Override
+    public String toString() {
+        return "ClientDetails{" +
+                "id='" + id + '\'' +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", identityNumber='" + identityNumber + '\'' +
+                ", dateIssue=" + dateIssue +
+                ", dateExpiry=" + dateExpiry +
+                '}';
     }
 }

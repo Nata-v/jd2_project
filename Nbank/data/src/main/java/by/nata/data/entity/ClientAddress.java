@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Objects;
 
 
 @Entity
@@ -102,5 +103,28 @@ public class ClientAddress {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof ClientAddress that)) return false;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getCountry(), that.getCountry()) && Objects.equals(getCity(), that.getCity()) && Objects.equals(getStreet(), that.getStreet()) && Objects.equals(getHouseNumber(), that.getHouseNumber()) && Objects.equals(getFlatNumber(), that.getFlatNumber()) && Objects.equals(getPhoneNumber(), that.getPhoneNumber());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCountry(), getCity(), getStreet(), getHouseNumber(), getFlatNumber(), getPhoneNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "ClientAddress{" +
+                "id='" + id + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", flatNumber='" + flatNumber + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

@@ -18,6 +18,6 @@ public interface ClientDao {
   void update(ClientDto clientDto, ClientDetailsDto clientDetailsDto, ClientAddressDto clientAddressDto);
   List<ClientDto> findAll();
   ClientDto findByUsername(String username);
-    //List<ClientDto> findByUsername(String username);
+
 
 }

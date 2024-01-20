@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -182,10 +184,20 @@ public class ClientDaoImpl implements ClientDao {
     @Override
     public List<ClientDto> findAll() {
         final Session session = sessionFactory.getCurrentSession();
-        var criteria = session.getCriteriaBuilder().createQuery(ClientDto.class);
-        criteria.from(ClientDto.class);
-        return session.createQuery(criteria).getResultList();
+        String hql = "SELECT new by.nata.data.entity.Client(c.id, c.username, c.password, c.email, c.role, c.clientDetails, c.clientAddress) FROM Client c";
+        Query<Client> query = session.createQuery(hql, Client.class);
+        List<Client> clients = query.getResultList();
+
+        List<ClientDto> clientDtos = new ArrayList<>();
+
+        for (Client client : clients) {
+            clientDtos.add(convertToDto(client));
+        }
+
+        return clientDtos;
     }
+
+
 
 
     @Override
@@ -231,10 +243,6 @@ session.save(clientAddress);
         session.save(client);
 log.info("Client saved: {}", client);
 
-
-//log.error("");
-//log.warn("Client details was change: {}", client);
-        //log.debug("Client: {}, session: {}", client, session);
 
     }
 }

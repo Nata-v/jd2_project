@@ -26,10 +26,17 @@ public class AdminController {
     this.clientDetailsService = clientDetailsService;
 }
 //@PreAuthorize("hasAnyAuthority('ADMIN')")
-@GetMapping("/clients")
+@GetMapping("/clientDetails")
     public ResponseEntity<List<ClientDetails>> findClientDetailsById(ClientFilter clientFilter){
     List<ClientDetails> clients = clientDetailsService.findAllByFilter(clientFilter);
     if (clients.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
+
+    @GetMapping("/clients")
+    public ResponseEntity<List<Client>> findAllClients(Client client){
+        List<Client> clients = clientService.findAllClients();
+        if (clients.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 }

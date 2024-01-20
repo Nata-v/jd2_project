@@ -53,7 +53,7 @@ public class AccountController {
             String username = userDetails.getUsername();
             Client client = clientService.findByUsername(username);
 
-            if (client != null ) {
+            if (client != null) {
                 String clientId = client.getId();
                 accountService.createAccount(account, clientId);
             }
@@ -97,9 +97,9 @@ public class AccountController {
 
     @PostMapping("/getMoney")
     public ResponseEntity<String> withdrawalFromAccount(@RequestParam(name = "accountNumber") String accountNumber,
-                                                   @RequestParam(name = "pin") String pin,
-                                                   @RequestParam(name = "balance") BigDecimal balance,
-                                                   @RequestParam(name = "transaction_currency") String transaction_currency) {
+                                                        @RequestParam(name = "pin") String pin,
+                                                        @RequestParam(name = "balance") BigDecimal balance,
+                                                        @RequestParam(name = "transaction_currency") String transaction_currency) {
         try {
             accountService.cashWithdrawal(accountNumber, pin, balance);
 
@@ -117,8 +117,36 @@ public class AccountController {
         }
     }
 
-
+    @GetMapping("/transferMoney")
+    public String transferMoney() {
+        return "/transferMoney";
     }
+
+    @PostMapping("/transferMoney")
+    public ResponseEntity<String> transferMoney(@RequestParam(name = "accountNumber") String accountNumber,
+                                                @RequestParam(name = "accountNumberRecipient") String accountNumberRecipient,
+                                                @RequestParam(name = "pin") String pin,
+                                                @RequestParam(name = "balance") BigDecimal balance,
+                                                @RequestParam(name = "transaction_currency") String transaction_currency) {
+        try {
+            accountService.cashTransfer(accountNumber, accountNumberRecipient, pin, balance);
+
+            Transactions transactions = new Transactions();
+            transactions.setAccountNumber(accountNumber);
+            transactions.setAccountNumberRecipient(accountNumberRecipient);
+            transactions.setBalance(balance);
+            transactions.setTransaction_currency(Currency.valueOf(transaction_currency));
+
+
+            transactionsService.saveTransactionsTransfer(transactions);
+
+            return ResponseEntity.ok("Deposit successful");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+}
 
 
 

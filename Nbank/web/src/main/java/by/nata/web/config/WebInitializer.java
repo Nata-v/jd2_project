@@ -3,6 +3,7 @@ package by.nata.web.config;
 import by.nata.data.config.DataConfiguration;
 import by.nata.service.config.ServiceConfiguration;
 import by.nata.web.config.WebConfiguration;
+import by.nata.web.rest.RestConfiguration;
 import by.nata.web.security.WebSecurityConfig;
 import jakarta.servlet.*;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -19,6 +20,7 @@ public class WebInitializer implements ServletContainerInitializer {
         context.register(ServiceConfiguration.class);
         context.register(DataConfiguration.class);
         context.register(WebSecurityConfig.class);
+        context.register(RestConfiguration.class);
 
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);

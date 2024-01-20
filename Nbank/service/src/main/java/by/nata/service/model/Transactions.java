@@ -13,7 +13,7 @@ public class Transactions implements Serializable {
 
     private String id;
     private String accountNumber;
-    private String account_number_recipient;
+    private String accountNumberRecipient;
 
     private BigDecimal balance;
     private Currency transaction_currency;
@@ -23,10 +23,10 @@ public class Transactions implements Serializable {
     public Transactions() {
     }
 
-    public Transactions(String id, String accountNumber, String account_number_recipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
+    public Transactions(String id, String accountNumber, String accountNumberRecipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.account_number_recipient = account_number_recipient;
+        this.accountNumberRecipient = accountNumberRecipient;
         this.balance = balance;
         this.transaction_currency = transaction_currency;
         this.date = date;
@@ -49,12 +49,12 @@ public class Transactions implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    public String getAccount_number_recipient() {
-        return account_number_recipient;
+    public String getAccountNumberRecipient() {
+        return accountNumberRecipient;
     }
 
-    public void setAccount_number_recipient(String account_number_recipient) {
-        this.account_number_recipient = account_number_recipient;
+    public void setAccountNumberRecipient(String accountNumberRecipient) {
+        this.accountNumberRecipient = accountNumberRecipient;
     }
 
     public BigDecimal getBalance() {

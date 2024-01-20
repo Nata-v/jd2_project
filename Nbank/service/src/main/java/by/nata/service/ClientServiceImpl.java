@@ -18,7 +18,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -129,16 +131,16 @@ public class ClientServiceImpl implements ClientService{
         }).orElse(false);
     }
 
-//    @Override
-//    public List<Client> findAllClients() {
-////        List<ClientDto> clientsDto = clientDao.findAll();
-////
-////        List<Client> clients = clientsDto.stream()
-////                .map(this::convertToClient)
-////                .collect(Collectors.toList());
-//
-//        return null;//clients;
-//    }
+    @Override
+    public List<Client> findAllClients() {
+        List<ClientDto> clientsDto = clientDao.findAll();
+
+        List<Client> clients = clientsDto.stream()
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
+
+        return clients;
+    }
 
 
     @Override

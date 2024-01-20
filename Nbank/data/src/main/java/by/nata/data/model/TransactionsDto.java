@@ -14,7 +14,7 @@ public final class TransactionsDto implements Serializable {
 
     private final String id;
     private final String accountNumber;
-    private final String account_number_recipient;
+    private final String accountNumberRecipient;
 
     private final BigDecimal balance;
     private final Currency transaction_currency;
@@ -24,10 +24,10 @@ public final class TransactionsDto implements Serializable {
     private final TypeOperation type_operation;
 
 
-    public TransactionsDto(String id, String accountNumber, String account_number_recipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
+    public TransactionsDto(String id, String accountNumber, String accountNumberRecipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.account_number_recipient = account_number_recipient;
+        this.accountNumberRecipient = accountNumberRecipient;
         this.balance = balance;
         this.transaction_currency = transaction_currency;
         this.date = date;
@@ -42,8 +42,8 @@ public final class TransactionsDto implements Serializable {
         return accountNumber;
     }
 
-    public String getAccount_number_recipient() {
-        return account_number_recipient;
+    public String getAccountNumberRecipient() {
+        return accountNumberRecipient;
     }
 
     public BigDecimal getBalance() {

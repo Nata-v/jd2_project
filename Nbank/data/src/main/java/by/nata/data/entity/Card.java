@@ -65,7 +65,7 @@ public class Card {
     public void setCardId(String cardId) {
         this.cardId = cardId;
     }
-   // @JsonIgnore
+    @JsonIgnore
 
     public Account getAccountId() {
         return accountId;
@@ -121,5 +121,30 @@ public class Card {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Card card)) return false;
+        return Objects.equals(getCardId(), card.getCardId()) && Objects.equals(getAccountId(), card.getAccountId()) && Objects.equals(getCardNumber(), card.getCardNumber()) && Objects.equals(getBalance(), card.getBalance()) && Objects.equals(getExpiryDate(), card.getExpiryDate()) && Objects.equals(getCvv(), card.getCvv()) && getCard_status() == card.getCard_status() && getCurrency() == card.getCurrency();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCardId(), getAccountId(), getCardNumber(), getBalance(), getExpiryDate(), getCvv(), getCard_status(), getCurrency());
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardId='" + cardId + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", balance=" + balance +
+                ", expiryDate=" + expiryDate +
+                ", cvv='" + cvv + '\'' +
+                ", card_status=" + card_status +
+                ", currency=" + currency +
+                '}';
     }
 }
