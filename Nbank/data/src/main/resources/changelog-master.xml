@@ -137,53 +137,6 @@
 <!--    </changeSet>-->
 
 
-
-
-
-
-
-<!--&lt;!&ndash;    <changeSet id="5" author="natali">&ndash;&gt;-->
-<!--&lt;!&ndash;        <sql>&ndash;&gt;-->
-<!--&lt;!&ndash;            CREATE TABLE T_PERSON_DETAILS (&ndash;&gt;-->
-<!--&lt;!&ndash;            ID varchar(255) NOT NULL,&ndash;&gt;-->
-<!--&lt;!&ndash;            MOBILE_NUMBER varchar(255) DEFAULT NULL,&ndash;&gt;-->
-<!--&lt;!&ndash;            PRIMARY KEY (ID)&ndash;&gt;-->
-<!--&lt;!&ndash;            );&ndash;&gt;-->
-<!--&lt;!&ndash;            ALTER TABLE T_PERSON ADD COLUMN PERSON_DETAILS_ID VARCHAR(255) NULL AFTER LAST_NAME;&ndash;&gt;-->
-<!--&lt;!&ndash;            ALTER TABLE T_PERSON ADD CONSTRAINT fk_t_person_details_id FOREIGN KEY (PERSON_DETAILS_ID)&ndash;&gt;-->
-<!--&lt;!&ndash;            REFERENCES T_PERSON_DETAILS (ID);&ndash;&gt;-->
-<!--&lt;!&ndash;        </sql>&ndash;&gt;-->
-<!--&lt;!&ndash;    </changeSet>&ndash;&gt;-->
-
-
-
-<!--&lt;!&ndash;    <changeSet id="9" author="natali">&ndash;&gt;-->
-<!--&lt;!&ndash;        <sql>&ndash;&gt;-->
-<!--&lt;!&ndash;            ALTER TABLE T_PERSON&ndash;&gt;-->
-<!--&lt;!&ndash;            ADD COLUMN TARGET_GROUP_ID VARCHAR(255) NULL AFTER PERSON_DETAILS_ID;&ndash;&gt;-->
-<!--&lt;!&ndash;            ALTER TABLE T_PERSON&ndash;&gt;-->
-<!--&lt;!&ndash;            ADD CONSTRAINT FK_T_TARGET_GROUP_ID FOREIGN KEY (TARGET_GROUP_ID)&ndash;&gt;-->
-<!--&lt;!&ndash;            REFERENCES T_TARGET_GROUP (ID);&ndash;&gt;-->
-<!--&lt;!&ndash;        </sql>&ndash;&gt;-->
-<!--&lt;!&ndash;    </changeSet>&ndash;&gt;-->
-
-
-
-<!--    <changeSet id="8" author="natali">-->
-<!--        <sql>-->
-<!--            CREATE TABLE IF NOT EXISTS transactions (-->
-<!--            id VARCHAR(256),-->
-<!--            card_id_sender VARCHAR(256) NOT NULL,-->
-<!--            card_id_recipient VARCHAR(256) NOT NULL,-->
-<!--            amount DECIMAL(10,2) NOT NULL,-->
-<!--            date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,-->
-<!--            PRIMARY KEY (id),-->
-<!--            FOREIGN KEY (card_id_sender) REFERENCES card(card_id),-->
-<!--            FOREIGN KEY (card_id_recipient) REFERENCES card(card_id)-->
-<!--            );-->
-<!--        </sql>-->
-<!--    </changeSet>-->
-
 <!--    <changeSet id="9" author="natali">-->
 <!--        <sql>-->
 <!--            CREATE TABLE IF NOT EXISTS bankomat_operations (-->

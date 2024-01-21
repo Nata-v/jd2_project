@@ -13,5 +13,6 @@ public interface TransactionsService {
     void saveTransactionsTransfer(Transactions transactions);
 
     List<Transactions> findAllTransactions();
+    //List<by.nata.data.entity.Transactions> getTransactions(Integer startPosition, Integer pageSize);
 
 }

@@ -222,15 +222,6 @@ accountDao.updateAccount(accountDto_recipient);
         return accounts;
     }
 
-    @Override
-    public void deleteAccount(String accountId) {
-        List<AccountDto> accountDto = accountDao.getAccountById(accountId);
-    }
-
-    @Override
-    public Account findAccountById(String id) {
-        return null;
-    }
 
 
 

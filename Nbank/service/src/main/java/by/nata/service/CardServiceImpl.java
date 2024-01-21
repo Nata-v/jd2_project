@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -78,6 +80,19 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Card> getAllCards() {
+        List<CardDto> cardDto = cardDao.getAllCards();
+
+        List<Card> cards = cardDto.stream()
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
+
+        return cards;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Card findCardByCardNumber(String cardNumber) {
         CardDto cardDto = cardDao.findByCardNumber(cardNumber);
         if (cardDto != null) {

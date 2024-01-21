@@ -14,7 +14,7 @@ import java.util.List;
 public interface CardDao {
 
     void save(CardDto cardDto, String accountNumber);
-    Card getCardById(String cardId);
+    List<CardDto> getAllCards();
     CardDto findByCardNumber(String cardNumber);
     void deleteCardByCardNumber(String cardNumber);
    // List<CardDto> getAllAccounts();

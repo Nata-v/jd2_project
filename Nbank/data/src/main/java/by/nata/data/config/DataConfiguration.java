@@ -95,7 +95,6 @@ public class DataConfiguration {
                     Role.class,
                     TypeOperation.class,
                     BankomatOperations.class,
-                    ProductsOperation.class,
                     Transactions.class
             );
             return sessionFactory;

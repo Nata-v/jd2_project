@@ -11,9 +11,8 @@ import java.util.Optional;
 
 public interface AccountService {
     List<by.nata.service.model.Account> getAllAccounts();
-    Account findAccountById(String id);
 by.nata.service.model.Account findByAccountNumber(String accountNumber);
-void deleteAccount(String accountId);
+
 void deleteAccountByAccountNumber(String accountNumber);
 
         void createAccount(by.nata.service.model.Account account, String id);

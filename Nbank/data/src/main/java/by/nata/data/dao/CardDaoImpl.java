@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 @Transactional
 public class CardDaoImpl implements CardDao{
@@ -63,12 +66,24 @@ public class CardDaoImpl implements CardDao{
     }
 
     @Override
-    public Card getCardById(String cardId) {
+    @Transactional(readOnly = true)
+    public List<CardDto> getAllCards() {
         final Session session = sessionFactory.getCurrentSession();
-        return session.find(Card.class, cardId);
+        String hql = "SELECT new by.nata.data.entity.Card(c.cardId, c.accountId, c.cardNumber, c.balance, c.expiryDate, c.cvv, c.card_status,m c.currency) FROM Card c";
+        Query<Card> query = session.createQuery(hql, Card.class);
+        List<Card> cards = query.getResultList();
+
+        List<CardDto> cardDtos = new ArrayList<>();
+
+        for (Card card : cards) {
+            cardDtos.add(convertToDto(card));
+        }
+
+        return cardDtos;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CardDto findByCardNumber(String cardNumber) {
         final Session session = sessionFactory.getCurrentSession();
         String hql = "from Card WHERE cardNumber = :searchedCardNumber";

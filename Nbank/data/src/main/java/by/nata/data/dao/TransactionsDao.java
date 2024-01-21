@@ -10,5 +10,6 @@ import java.util.List;
 public interface TransactionsDao {
 void save(TransactionsDto transactionsDto);
     List<TransactionsDto> findAllTransactions();
+    List<Transactions> getTransactions(Integer startPosition, Integer pageSize);
 
 }

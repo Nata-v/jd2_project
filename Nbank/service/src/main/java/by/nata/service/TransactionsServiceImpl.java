@@ -7,11 +7,14 @@ import by.nata.data.model.AccountDto;
 import by.nata.data.model.TransactionsDto;
 import by.nata.service.model.Account;
 import by.nata.service.model.Transactions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 
 public class TransactionsServiceImpl implements TransactionsService{
+    private static final Logger log = LoggerFactory.getLogger(TransactionsServiceImpl.class);
 private final TransactionsDao transactionsDao;
 
     public TransactionsServiceImpl(TransactionsDao transactionsDao) {
@@ -81,6 +85,7 @@ private final TransactionsDao transactionsDao;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Transactions> findAllTransactions() {
         List<TransactionsDto> transactionsDto = transactionsDao.findAllTransactions();
 
@@ -103,4 +108,18 @@ private final TransactionsDao transactionsDao;
 
         );
     }
+//@Override
+//@Transactional(readOnly = true)
+//    public List<by.nata.data.entity.Transactions> getTransactions(Integer startPosition, Integer pageSize) {
+//    if (startPosition != null && pageSize != null) {
+//        return transactionsDao.getTransactions(startPosition, pageSize);
+//
+//    }else {
+//        log.error("Not found transactions!");
+//      //  throw new IllegalArgumentException("Start position and page size must be provided for pagination");
+//        return Collections.emptyList();
+//    }
+//}
+
+
 }

@@ -206,6 +206,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AccountDto> getAllAccounts() {
         final Session session = sessionFactory.getCurrentSession();
         String hql = "SELECT new by.nata.data.entity.Account(c.id, c.client, c.accountNumber, c.dateOpen, c.balance, c.currency, c.pin) FROM Account c";

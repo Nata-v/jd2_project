@@ -1,9 +1,6 @@
 package by.nata.data.dao;
 
-import by.nata.data.entity.Account;
-import by.nata.data.entity.ClientDetails;
 import by.nata.data.entity.Transactions;
-import by.nata.data.model.AccountDto;
 import by.nata.data.model.TransactionsDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -77,4 +74,14 @@ private final SessionFactory sessionFactory;
                 transactions.getDate(),
                 transactions.getType_operation());
     }
+
+    @Override
+    public List<Transactions> getTransactions(Integer startPosition, Integer pageSize) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Transactions", Transactions.class)
+                .setFirstResult(startPosition)
+                .setMaxResults(pageSize)
+                .list();
+    }
+
 }
