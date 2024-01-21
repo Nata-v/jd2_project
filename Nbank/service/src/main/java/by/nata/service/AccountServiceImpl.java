@@ -11,6 +11,7 @@ import by.nata.service.model.Client;
 import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
 import by.nata.service.model.Transactions;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,8 +139,16 @@ public void createAccount(by.nata.service.model.Account account, String id) {
         accountDao.updateAccount(accountDto_sender);
 accountDao.updateAccount(accountDto_recipient);
         log.error("Счет с номером " + accountNumberRecipient + " не найден");
+    }
 
+    @Override
+    public void deleteAccountByAccountNumber(String accountNumber) {
+        AccountDto accountDto = accountDao.findByAccountNumber(accountNumber);
 
+        if (accountDto != null) {
+            accountDao.deleteAccountByAccountNumber(accountNumber);
+        }
+        log.error("Account number not found!");
     }
 
     @Override

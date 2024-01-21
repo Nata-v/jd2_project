@@ -17,7 +17,6 @@ import java.util.Optional;
 public interface ClientAddressDao  {
 
     void save(ClientAddressDto clientAddressDto);
-    void delete(String id);
     Optional<ClientAddressDto> findById(String id);
     void update(ClientAddressDto clientAddressDto);
      List<ClientAddressDto> findAll();

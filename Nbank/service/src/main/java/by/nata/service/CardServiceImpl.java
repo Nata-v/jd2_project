@@ -1,9 +1,13 @@
 package by.nata.service;
 
 import by.nata.data.dao.*;
-import by.nata.data.model.AccountDto;
-import by.nata.data.model.CardDto;
+import by.nata.data.model.*;
 import by.nata.service.model.Card;
+import by.nata.service.model.Client;
+import by.nata.service.model.ClientAddress;
+import by.nata.service.model.ClientDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +21,7 @@ import java.util.UUID;
 @Transactional
 @Service
 public class CardServiceImpl implements CardService {
-
+    private static final Logger log = LoggerFactory.getLogger(CardServiceImpl.class);
     private final AccountDao accountDao;
 
     private final CardDao cardDao;
@@ -71,5 +75,84 @@ public class CardServiceImpl implements CardService {
         int cvvNumber = random.nextInt(900) + 100;
 
         return String.format("%03d", cvvNumber);
+    }
+
+    @Override
+    public Card findCardByCardNumber(String cardNumber) {
+        CardDto cardDto = cardDao.findByCardNumber(cardNumber);
+        if (cardDto != null) {
+            return convertToModel(cardDto);
+        }
+        return null;
+    }
+    private Card convertToModel(CardDto cardDto){
+        return new Card(
+                cardDto.getCardId(),
+                convertToModel(cardDto.getAccountDto()),
+                cardDto.getCardNumber(),
+                cardDto.getBalance(),
+                cardDto.getExpiryDate(),
+                cardDto.getCvv(),
+                cardDto.getCard_status(),
+                cardDto.getCurrency()
+        );
+    }
+
+    private by.nata.service.model.Account convertToModel(AccountDto accountDto){
+        return new by.nata.service.model.Account(
+                accountDto.getAccountId(),
+                convertToModel(accountDto.getClientDto()),
+                accountDto.getAccountNumber(),
+                accountDto.getDateOpen(),
+                accountDto.getBalance(),
+                accountDto.getCurrency(),
+                accountDto.getPin()
+        );
+    }
+
+    private Client convertToModel(ClientDto clientDto) {
+        return new Client(
+                clientDto.getId(),
+                clientDto.getUsername(),
+                clientDto.getPassword(),
+                clientDto.getEmail(),
+                clientDto.getRole(),
+                convertToModelDetails(clientDto.getClientDetailsDto()),
+                convertToModelAddress(clientDto.getClientAddressDto()));
+
+
+
+    }
+
+
+    private ClientDetails convertToModelDetails(ClientDetailsDto clientDetailsDto) {
+        return new ClientDetails(clientDetailsDto.getId(),
+                clientDetailsDto.getSurname(),
+                clientDetailsDto.getName(),
+                clientDetailsDto.getBirthDate(),
+                clientDetailsDto.getPassportNumber(),
+                clientDetailsDto.getIdentityNumber(),
+                clientDetailsDto.getDateIssue(),
+                clientDetailsDto.getDateExpiry());
+    }
+
+    private ClientAddress convertToModelAddress(ClientAddressDto clientAddressDto) {
+        return new ClientAddress(clientAddressDto.getId(),
+                clientAddressDto.getCountry(),
+                clientAddressDto.getCity(),
+                clientAddressDto.getStreet(),
+                clientAddressDto.getHouseNumber(),
+                clientAddressDto.getFlatNumber(),
+                clientAddressDto.getPhoneNumber());
+    }
+
+    @Override
+    public void deleteCardByCardNumber(String cardNumber) {
+        CardDto cardDto = cardDao.findByCardNumber(cardNumber);
+
+        if (cardDto != null) {
+            cardDao.deleteCardByCardNumber(cardNumber);
+        }
+        log.error("Card number not found!");
     }
 }

@@ -73,8 +73,4 @@ public class ClientAddressServiceImpl implements ClientAddressService{
 
     }
 
-    @Override
-    public boolean delete(String id) {
-        return false;
-    }
 }

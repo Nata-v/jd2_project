@@ -53,13 +53,6 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
     }
 
-       @Override
-    public void delete(String id) {
-           Session session = sessionFactory.getCurrentSession();
-           session.delete(session.find(ClientDetails.class, id));
-           session.flush();
-    }
-
     @Override
     public void update(ClientDetailsDto clientDetailsDto) {
         final Session session = sessionFactory.getCurrentSession();

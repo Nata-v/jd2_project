@@ -220,4 +220,17 @@ public class AccountDaoImpl implements AccountDao {
 
         return accountDtos;
     }
+
+    @Override
+    public void deleteAccountByAccountNumber(String accountNumber) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM Account WHERE accountNumber = :searchedAccountNumber";
+        Query<Account> query = session.createQuery(hql, Account.class);
+        query.setParameter("searchedAccountNumber", accountNumber);
+        Account account = query.uniqueResult();
+        if (account != null) {
+            session.delete(account);
+            session.flush();
+        }
+    }
 }

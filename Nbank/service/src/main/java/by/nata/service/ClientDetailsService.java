@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface ClientDetailsService {
     void saveNewClientDetails(ClientDetails clientDetails);
-    boolean delete(String id);
     void updateClientDetails(ClientDetails clientDetails);
     List<ClientDetails> findAllByFilter(ClientFilter clientFilter);
     Optional<ClientDetails> findById(String id);

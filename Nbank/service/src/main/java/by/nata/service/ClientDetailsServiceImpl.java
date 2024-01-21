@@ -63,11 +63,6 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
              clientDetailsDto.getDateExpiry());
     }
     @Override
-    public boolean delete(String id) {
-        return false;
-    }
-
-    @Override
     public void updateClientDetails(ClientDetails clientDetails) {
         ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
 

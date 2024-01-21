@@ -14,6 +14,7 @@ public interface AccountService {
     Account findAccountById(String id);
 by.nata.service.model.Account findByAccountNumber(String accountNumber);
 void deleteAccount(String accountId);
+void deleteAccountByAccountNumber(String accountNumber);
 
         void createAccount(by.nata.service.model.Account account, String id);
     void cashDeposit(String accountNumber, String pin, BigDecimal balance);

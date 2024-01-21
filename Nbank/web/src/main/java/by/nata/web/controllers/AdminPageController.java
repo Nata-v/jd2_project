@@ -1,12 +1,6 @@
 package by.nata.web.controllers;
 
-import by.nata.service.AccountService;
-import by.nata.service.ClientAddressService;
-import by.nata.service.ClientDetailsService;
-import by.nata.service.ClientService;
-import by.nata.service.model.Client;
-import by.nata.service.model.ClientAddress;
-import by.nata.service.model.ClientDetails;
+import by.nata.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +17,14 @@ public class AdminPageController {
     private final ClientDetailsService clientDetailsService;
     private final ClientAddressService clientAddressService;
     private final AccountService accountService;
+    private final CardService cardService;
 @Autowired
-    public AdminPageController(ClientService clientService, ClientDetailsService clientDetailsService, ClientAddressService clientAddressService, AccountService accountService) {
+    public AdminPageController(ClientService clientService, ClientDetailsService clientDetailsService, ClientAddressService clientAddressService, AccountService accountService, CardService cardService) {
         this.clientService = clientService;
     this.clientDetailsService = clientDetailsService;
     this.clientAddressService = clientAddressService;
     this.accountService = accountService;
+    this.cardService = cardService;
 }
 
     @GetMapping("/admin")
@@ -37,10 +33,13 @@ public class AdminPageController {
         return "/admin";
     }
     @PostMapping("/admin")
-    public  String findClientById(@RequestParam("id") String id){
-
+    public  ResponseEntity<String> findClientById(@RequestParam(name = "id") String id){
+        try {
         clientService.findClientById(id);
-        return "/admin";
+            return ResponseEntity.ok("Client found successful" + id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
 
@@ -54,36 +53,43 @@ public class AdminPageController {
         }
     }
 
-    @PostMapping("/deleteAccount")
-    public ResponseEntity<String> deleteAccount(@RequestParam(name = "accountId") String accountId){
+    @PostMapping("/findAccount")
+    public ResponseEntity<String> findAccountByAccountNumber(@RequestParam(name = "accountNumber") String accountNumber) {
         try {
-            accountService.deleteAccount(accountId);
-            return ResponseEntity.ok("Account delete successful");
+            accountService.findByAccountNumber(accountNumber);
+            return ResponseEntity.ok("Account found successful " + accountNumber);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-//    @DeleteMapping("/deleteAccount/{accountId}")
-//    public ResponseEntity<String> deleteAccount(@PathVariable String accountId) {
-//        try {
-//            accountService.deleteAccount(accountId);
-//            return ResponseEntity.ok("Account delete successful");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//        }
-//    }
 
-
-
-//    @DeleteMapping("/{id}/delete")
-//    //@PostMapping("/{id}/update")
-//    public String delete(@PathVariable("id") String id){
-//        if( !clientService.delete(id)) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//        return  "redirect:/login";
-//    }
-
+    @PostMapping("/deleteAccount")
+    public ResponseEntity<String> deleteAccount(@RequestParam(name = "accountNumber") String accountNumber) {
+        try {
+            accountService.deleteAccountByAccountNumber(accountNumber);
+            return ResponseEntity.ok("Account delete successful " + accountNumber);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    @PostMapping("/findCard")
+    public ResponseEntity<String> findCardByCardNumber(@RequestParam(name = "cardNumber") String cardNumber) {
+        try {
+            cardService.findCardByCardNumber(cardNumber);
+            return ResponseEntity.ok("Card found successful " + cardNumber);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    @PostMapping("/deleteCard")
+    public ResponseEntity<String> deleteCardByCardNumber(@RequestParam(name = "cardNumber") String cardNumber) {
+        try {
+            cardService.deleteCardByCardNumber(cardNumber);
+            return ResponseEntity.ok("Card delete successful " + cardNumber);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 
 

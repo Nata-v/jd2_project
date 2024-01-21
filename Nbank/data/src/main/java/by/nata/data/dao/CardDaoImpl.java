@@ -1,9 +1,7 @@
 package by.nata.data.dao;
 
-import by.nata.data.entity.Account;
-import by.nata.data.entity.Card;
-import by.nata.data.model.AccountDto;
-import by.nata.data.model.CardDto;
+import by.nata.data.entity.*;
+import by.nata.data.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -52,15 +50,92 @@ public class CardDaoImpl implements CardDao{
     }
 
     @Override
+    public void deleteCardByCardNumber(String cardNumber) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM Card WHERE cardNumber = :searchedCardNumber";
+        Query<Card> query = session.createQuery(hql, Card.class);
+        query.setParameter("searchedCardNumber", cardNumber);
+        Card card = query.uniqueResult();
+        if (card != null) {
+            session.delete(card);
+            session.flush();
+        }
+    }
+
+    @Override
     public Card getCardById(String cardId) {
         final Session session = sessionFactory.getCurrentSession();
         return session.find(Card.class, cardId);
     }
 
     @Override
-    public Card findByCardNumber(String cardNumber) {
+    public CardDto findByCardNumber(String cardNumber) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.find(Card.class, cardNumber);
-        // return cardDao.findByCardNumber(cardNumber);
+        String hql = "from Card WHERE cardNumber = :searchedCardNumber";
+        Query<Card> query = session.createQuery(hql, Card.class);
+        query.setParameter("searchedCardNumber", cardNumber);
+        Card card = query.uniqueResult();
+
+        if (card != null) {
+            return convertToDto(card);
+        }
+        return null;
+    }
+    private CardDto convertToDto(Card card){
+        return new CardDto(
+                card.getCardId(),
+                convertToDto(card.getAccountId()),
+                card.getCardNumber(),
+                card.getBalance(),
+                card.getExpiryDate(),
+                card.getCvv(),
+                card.getCard_status(),
+                card.getCurrency()
+        );
+    }
+
+    private AccountDto convertToDto(Account account) {
+        return new AccountDto(
+                account.getAccountId(),
+                convertToDto(account.getClient()),
+                account.getAccountNumber(),
+                account.getDateOpen(),
+                account.getBalance(),
+                account.getCurrency(),
+                account.getPin());
+    }
+
+    private ClientDto convertToDto(Client client) {
+        return new ClientDto(
+                client.getId(),
+                client.getUsername(),
+                client.getPassword(),
+                client.getEmail(),
+                client.getRole(),
+                convertToDto(client.getClientDetails()),
+                convertToDto(client.getClientAddress())
+        );
+    }
+
+    private ClientDetailsDto convertToDto(ClientDetails clientDetails) {
+
+        return new ClientDetailsDto(clientDetails.getId(),
+                clientDetails.getSurname(),
+                clientDetails.getName(),
+                clientDetails.getBirthDate(),
+                clientDetails.getPassportNumber(),
+                clientDetails.getIdentityNumber(),
+                clientDetails.getDateIssue(),
+                clientDetails.getDateExpiry());
+    }
+
+    private ClientAddressDto convertToDto(ClientAddress clientAddress) {
+        return new ClientAddressDto(clientAddress.getId(),
+                clientAddress.getCountry(),
+                clientAddress.getCity(),
+                clientAddress.getStreet(),
+                clientAddress.getHouseNumber(),
+                clientAddress.getFlatNumber(),
+                clientAddress.getPhoneNumber());
     }
 }

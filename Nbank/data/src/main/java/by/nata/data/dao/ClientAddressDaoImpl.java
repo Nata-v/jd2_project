@@ -48,12 +48,6 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
 
     }
 
-    @Override
-    public void delete(String id) {
-      final   Session session = sessionFactory.getCurrentSession();
-        session.delete(session.find(ClientAddress.class, id));
-        session.flush();
-    }
 
     @Override
     public void update(ClientAddressDto clientAddressDto) {

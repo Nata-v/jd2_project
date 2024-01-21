@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface ClientAddressService {
 
     void saveClientAddress(ClientAddress clientAddress);
-    boolean delete(String id);
     void updateClientAddress(ClientAddress clientAddress);
     Optional<ClientAddress> findById(String id);
 }
