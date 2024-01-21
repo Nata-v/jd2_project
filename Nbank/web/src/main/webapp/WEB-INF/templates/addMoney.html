@@ -65,7 +65,7 @@
       <div class="header">
 
 <!--          <form th:action="@{/web/accountOperation/{accountId}}" th:method="put" th:object="${account}">-->
-            <form th:action="@{/addMoney}" method="post" onsubmit="return showConfirmation()">
+            <form th:action="@{/addMoney}" th:method="post" onsubmit="return showConfirmation()">
 
 <!--              <form th:action="@{'/web/accountOperation/' + ${account.accountId}}" method="post" th:object="${account}">-->
 <!--                <input type="hidden" th:field="*{accountId}" />-->

@@ -13,6 +13,8 @@ import by.nata.service.model.Client;
 
 import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ClientServiceImpl implements ClientService{
+    private static final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
 
     private final ClientDao clientDao;
     private final ClientDetailsDao clientDetailsDao;
@@ -72,64 +75,48 @@ public class ClientServiceImpl implements ClientService{
         clientDao.save(clientDto);
     }
 
-
     @Override
-    public Optional<Client> findClientById(String id) {
-
-        Optional<ClientDto> clientDto = clientDao.findById(id);
-        Optional<ClientDetailsDto> clientDetailsDto = clientDetailsDao.findById(id);
-        Optional<ClientAddressDto> clientAddressDto = clientAddressDao.findById(id);
-
-
-
-        Optional<Client> result = clientDto.map(dto ->
-                new Client(
-                        dto.getId(),
-                        dto.getUsername(),
-                        dto.getPassword(),
-                        dto.getEmail(),
-                        Role.USER, clientDetailsDto.map(cd ->
-                                new ClientDetails(
-                                        cd.getId(),
-                                        cd.getSurname(),
-                                        cd.getName(),
-                                        cd.getBirthDate(),
-                                        cd.getPassportNumber(),
-                                        cd.getIdentityNumber(),
-                                        cd.getDateIssue(),
-                                        cd.getDateExpiry()
-                                )
-                        ).orElse(null),
-                        clientAddressDto.map(ca ->
-                                new ClientAddress(
-                                        ca.getId(),
-                                        ca.getCountry(),
-                                        ca.getCity(),
-                                        ca.getStreet(),
-                                        ca.getHouseNumber(),
-                                        ca.getFlatNumber(),
-                                        ca.getPhoneNumber()
-                                )
-                        ).orElse(null)
-                )
-        );
-        result.ifPresent(client ->
-                applicationEventPublisher.publishEvent(new ClientEvent(this, AccessType.READ, client.getId())));
-        return result;
-
+    public Client findClientById(String id) {
+        ClientDto clientDto = clientDao.getClientById(id);
+        if (clientDto != null) {
+            return convertToModel(clientDto);
+        }
+        return null;
     }
+//    @Override
+//    public Optional<Client> findClientById(String id) {
+//        return clientDao.getClientById(id)
+//                .map(this::convertToModel);
+//    }
+
+
+//        result.ifPresent(client ->
+//                applicationEventPublisher.publishEvent(new ClientEvent(this, AccessType.READ, client.getId())));
+
 
     @Override
-
     public boolean delete(String id) {
-//        var maybeClient = clientDao.findById(id);
-//        maybeClient.ifPresent(client -> clientDao.delete(id));
-//        return maybeClient.isPresent();
-        return clientDao.findById(id).map(clientDto -> {
-            clientDao.delete(clientDto.getId());
+        ClientDto client = clientDao.getClientById(id);
+        if (client != null) {
+            clientDao.deleteClientById(client.getId());
             return true;
-        }).orElse(false);
+        }
+        return false;
     }
+
+//    @Override
+//    public boolean delete(String id) {
+//        Optional<ClientDto> clientOptional = clientDao.findById(id);
+//
+//        if (clientOptional.isPresent()) {
+//            ClientDto clientDto = clientOptional.get();
+//            clientDao.delete(clientDto.getId());
+//
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
     @Override
     public List<Client> findAllClients() {
@@ -219,30 +206,30 @@ public class ClientServiceImpl implements ClientService{
 
        // return clientDto;
     }
-    @Override
-    @Transactional
-    public void updateClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
-        ClientDto existingClientDto = clientDao.findById(client.getId()).orElse(null);
-        ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
-        ClientAddressDto existingClientAddressDto = clientAddressDao.findById(clientAddress.getId()).orElse(null);
-
-        if (existingClientDto != null && existingClientDetailsDto != null && existingClientAddressDto != null) {
-
-           // client.setId(existingClientDto.getId());
-                    client.setUsername(existingClientDto.getUsername());
-            client.setPassword(existingClientDto.getPassword());
-            client.setEmail(existingClientDto.getEmail());
-           // client.setRole(existingClientDto.getRole());
-            client.setClientDetails(clientDetails);
-            client.setClientAddress(clientAddress);
-
-//            clientDetailsDao.update(existingClientDetailsDto);
-//            clientAddressDao.update(existingClientAddressDto);
-            clientDao.update(existingClientDto, existingClientDetailsDto, existingClientAddressDto);
-
-
-        }
-    }
+//    @Override
+//    @Transactional
+//    public void updateClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
+//        ClientDto existingClientDto = clientDao.findById(client.getId()).orElse(null);
+//        ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
+//        ClientAddressDto existingClientAddressDto = clientAddressDao.findById(clientAddress.getId()).orElse(null);
+//
+//        if (existingClientDto != null && existingClientDetailsDto != null && existingClientAddressDto != null) {
+//
+//           // client.setId(existingClientDto.getId());
+//                    client.setUsername(existingClientDto.getUsername());
+//            client.setPassword(existingClientDto.getPassword());
+//            client.setEmail(existingClientDto.getEmail());
+//           // client.setRole(existingClientDto.getRole());
+//            client.setClientDetails(clientDetails);
+//            client.setClientAddress(clientAddress);
+//
+////            clientDetailsDao.update(existingClientDetailsDto);
+////            clientAddressDao.update(existingClientAddressDto);
+//            clientDao.update(existingClientDto, existingClientDetailsDto, existingClientAddressDto);
+//
+//
+//        }
+//    }
 
 
 }

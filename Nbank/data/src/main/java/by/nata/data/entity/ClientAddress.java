@@ -2,6 +2,10 @@ package by.nata.data.entity;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
@@ -16,7 +20,7 @@ public class ClientAddress {
     @GeneratedValue(generator = "client_address_uuid")
     @Column(name = "ID")
     private String id;
-
+    @NotEmpty(message = "Enter country!")
     @Column(name = "COUNTRY")
     private String country;
 
@@ -25,11 +29,16 @@ public class ClientAddress {
     @Column(name = "CITY")
     private String city;
     @Column(name = "STREET")
+    @NotEmpty(message = "Enter street!")
+    @Size(min = 2, max = 30, message = "Enter street!")
     private String street;
+    @Min(value = 0)
     @Column(name = "HOUSE_NUMBER")
     private String houseNumber;
+    @Min(value = 0)
     @Column(name = "FLAT_NUMBER")
     private String flatNumber;
+    //@Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$", message = "Invalid phone number")
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 

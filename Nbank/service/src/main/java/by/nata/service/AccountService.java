@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-    List<Account> getAllAccounts();
+    List<by.nata.service.model.Account> getAllAccounts();
     Account findAccountById(String id);
 by.nata.service.model.Account findByAccountNumber(String accountNumber);
+void deleteAccount(String accountId);
 
-        void createAccount(AccountDto accountDto, String id);
+        void createAccount(by.nata.service.model.Account account, String id);
     void cashDeposit(String accountNumber, String pin, BigDecimal balance);
     void cashWithdrawal(String accountNumber, String pin, BigDecimal balance);
     void cashTransfer(String accountNumber, String accountNumberRecipient, String pin, BigDecimal balance);

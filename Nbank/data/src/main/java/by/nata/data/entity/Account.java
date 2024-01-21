@@ -42,8 +42,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountId, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
+    public Account(String accountId, Client client, String accountNumber, ZonedDateTime dateOpen, BigDecimal balance, Currency currency, String pin) {
         this.accountId = accountId;
+        this.client = client;
         this.accountNumber = accountNumber;
         this.dateOpen = dateOpen;
         this.balance = balance;
@@ -58,7 +59,6 @@ public class Account {
     public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
-    @JsonIgnore
 
     public Client getClient() {
         return client;
@@ -124,6 +124,7 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "accountId='" + accountId + '\'' +
+                ", client=" + client +
                 ", accountNumber='" + accountNumber + '\'' +
                 ", dateOpen=" + dateOpen +
                 ", balance=" + balance +

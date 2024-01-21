@@ -48,7 +48,10 @@ public class LoginController {
     public ModelAndView useBankomat(){
         return new ModelAndView("bankomat");
     }
-
+    @GetMapping("/profile")
+    public String addClient() {
+        return "/profile";
+    }
 
 
 }

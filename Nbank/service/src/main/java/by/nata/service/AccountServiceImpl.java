@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -39,24 +40,31 @@ public class AccountServiceImpl implements AccountService{
         this.transactionsDao = transactionsDao;
     }
 
+@Override
+public void createAccount(by.nata.service.model.Account account, String id) {
+    String accountNumber = generateAccountNumber();
+    String pin = generateRandomPin();
+    ZonedDateTime openDate = ZonedDateTime.now();
+    BigDecimal balance = new BigDecimal("0.0");
 
+    ClientDto clientDto = clientDao.getClientById(id);
 
-    @Override
-    public void createAccount(AccountDto accountDto, String id) {
-        String accountNumber = generateAccountNumber();
-        String pin = generateRandomPin();
-        ZonedDateTime openDate = ZonedDateTime.now();
-        BigDecimal balance = new BigDecimal("0.0");
-
-        Account account = new Account();
-        account.setClient(clientDao.getClientById(id));
-        account.setAccountNumber(accountNumber);
-        account.setDateOpen(openDate);
-        account.setBalance(balance);
-        account.setCurrency(accountDto.getCurrency());
-        account.setPin(pin);
-        accountDao.save(account);
+    if (clientDto == null) {
+        throw new RuntimeException("Client  not found: " + id);
     }
+
+    AccountDto accountDto = new AccountDto(
+            account.getAccountId(),
+            clientDto,
+            accountNumber,
+            openDate,
+            balance,
+            account.getCurrency(),
+            pin
+    );
+
+    accountDao.save(accountDto);
+}
 
     private String generateAccountNumber(){
         String accountNumber;
@@ -194,12 +202,21 @@ accountDao.updateAccount(accountDto_recipient);
 
 
     @Override
-    public List<Account> getAllAccounts() {
+    public List<by.nata.service.model.Account> getAllAccounts() {
 
-        return null;
+        List<AccountDto> accountDto = accountDao.getAllAccounts();
+
+        List<by.nata.service.model.Account> accounts = accountDto.stream()
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
+
+        return accounts;
     }
 
-
+    @Override
+    public void deleteAccount(String accountId) {
+        List<AccountDto> accountDto = accountDao.getAccountById(accountId);
+    }
 
     @Override
     public Account findAccountById(String id) {

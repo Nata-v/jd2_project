@@ -1,10 +1,13 @@
 package by.nata.data.dao;
 
+import by.nata.data.entity.Account;
 import by.nata.data.entity.ClientDetails;
 import by.nata.data.entity.Transactions;
+import by.nata.data.model.AccountDto;
 import by.nata.data.model.TransactionsDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -46,5 +51,30 @@ private final SessionFactory sessionFactory;
         log.info("Such accountNumbers doesn't exist!");
     }
 
+    @Override
+    public List<TransactionsDto> findAllTransactions() {
+        final Session session = sessionFactory.getCurrentSession();
+        String hql = "SELECT new by.nata.data.entity.Transactions(c.id, c.accountNumber, c.accountNumberRecipient, c.balance, c.transaction_currency, c.date, c.type_operation) FROM Transactions c";
+        Query<Transactions> query = session.createQuery(hql, Transactions.class);
+        List<Transactions> allTransactions = query.getResultList();
 
+        List<TransactionsDto> transactionsDtos = new ArrayList<>();
+
+        for (Transactions transactions : allTransactions) {
+            transactionsDtos.add(convertToDto(transactions));
+        }
+
+        return transactionsDtos;
+    }
+
+    private TransactionsDto convertToDto(Transactions transactions) {
+        return new TransactionsDto(
+                transactions.getId(),
+                transactions.getAccountNumber(),
+                transactions.getAccountNumberRecipient(),
+                transactions.getBalance(),
+                transactions.getTransaction_currency(),
+                transactions.getDate(),
+                transactions.getType_operation());
+    }
 }

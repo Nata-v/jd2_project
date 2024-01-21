@@ -65,7 +65,6 @@ public class Card {
     public void setCardId(String cardId) {
         this.cardId = cardId;
     }
-    @JsonIgnore
 
     public Account getAccountId() {
         return accountId;
@@ -139,6 +138,7 @@ public class Card {
     public String toString() {
         return "Card{" +
                 "cardId='" + cardId + '\'' +
+                ", accountId=" + accountId +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", balance=" + balance +
                 ", expiryDate=" + expiryDate +

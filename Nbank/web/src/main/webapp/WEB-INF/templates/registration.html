@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="">
+<html lang="en" xmlns:th="http://thymeleaf.org" >
 <head>
   <meta charset="UTF-8"/>
   <link href="/web/static/css/online-reg.css" rel="stylesheet"/>
@@ -56,12 +56,12 @@
     <div class="col-lg-6 col-md-12">
       <h3>Зарегистрироваться в системе банка:</h3>
 
-      <form method="post"action="/web/registration" enctype="multipart/form-data">
+      <form th:method="post" th:action="@{/registration}" th:object="${client}" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="username" class="form-label">Username </label>
           <input type="text" name="username" class="form-control" placeholder="Username" id="username" required>
-
         </div>
+<!--        <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>-->
         <div class="mb-3">
           <label for="password" class="form-label">Password </label>
           <input type="text" name="password" class="form-control" id="password" placeholder="Password" required>

@@ -37,16 +37,6 @@ public class ClientDaoImpl implements ClientDao {
         this.sessionFactory = sessionFactory;
     }
 
-//    @Override
-//    public Client findByUsername(String username) {
-////        return sessionFactory.getCurrentSession()
-////                .createQuery("from Client au where au.username=:username", Client.class)
-////                .setParameter("username", username)
-////                .list();
-
-
-
-
 
     @Override
     public ClientDto findByUsername(String username) {
@@ -96,12 +86,70 @@ public class ClientDaoImpl implements ClientDao {
                             clientAddress.getPhoneNumber());
     }
 
-
     @Override
-    public void delete(String id) {
+    public void deleteClientById(String id) {
         Session session = sessionFactory.getCurrentSession();
-        session.delete(session.find(Client.class, id));
-        session.flush();
+        String hql = "DELETE FROM Client WHERE id = :id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        int result = query.executeUpdate();
+        if (result > 0) {
+            session.flush();
+        }
+    }
+
+    private Client convertToEntity(ClientDto clientDto) {
+        if (clientDto == null) {
+            throw new IllegalArgumentException("ClientDto cannot be null");
+        }
+        Client client = new Client();
+        client.setId(clientDto.getId());
+        client.setUsername(clientDto.getUsername());
+        client.setPassword(clientDto.getPassword());
+        client.setEmail(clientDto.getEmail());
+        client.setRole(clientDto.getRole());
+        ClientDetails clientDetails = convertClientDetailsDtoToEntity(clientDto.getClientDetailsDto());
+        client.setClientDetails(clientDetails);
+
+        ClientAddress clientAddress = convertClientAddressDtoToEntity(clientDto.getClientAddressDto());
+        client.setClientAddress(clientAddress);
+
+        return client;
+    }
+
+    private ClientDetails convertClientDetailsDtoToEntity(ClientDetailsDto clientDetailsDto) {
+        if (clientDetailsDto == null) {
+            throw new IllegalArgumentException("ClientDetailsDto cannot be null");
+        }
+
+        ClientDetails clientDetails = new ClientDetails();
+        clientDetails.setId(clientDetailsDto.getId());
+        clientDetails.setSurname(clientDetailsDto.getSurname());
+        clientDetails.setName(clientDetailsDto.getName());
+        clientDetails.setBirthDate(clientDetailsDto.getBirthDate());
+        clientDetails.setPassportNumber(clientDetailsDto.getPassportNumber());
+        clientDetails.setIdentityNumber(clientDetailsDto.getIdentityNumber());
+        clientDetails.setDateIssue(clientDetailsDto.getDateIssue());
+        clientDetails.setDateExpiry(clientDetailsDto.getDateExpiry());
+
+        return clientDetails;
+    }
+
+    private ClientAddress convertClientAddressDtoToEntity(ClientAddressDto clientAddressDto) {
+        if (clientAddressDto == null) {
+            throw new IllegalArgumentException("ClientAddressDto cannot be null");
+        }
+
+        ClientAddress clientAddress = new ClientAddress();
+        clientAddress.setId(clientAddressDto.getId());
+        clientAddress.setCountry(clientAddressDto.getCountry());
+        clientAddress.setCity(clientAddressDto.getCity());
+        clientAddress.setStreet(clientAddressDto.getStreet());
+        clientAddress.setHouseNumber(clientAddressDto.getHouseNumber());
+        clientAddress.setFlatNumber(clientAddressDto.getFlatNumber());
+        clientAddress.setPhoneNumber(clientAddressDto.getPhoneNumber());
+
+        return clientAddress;
     }
 
     @Override
@@ -137,51 +185,38 @@ public class ClientDaoImpl implements ClientDao {
         session.saveOrUpdate(client);
     }
 
-
-    @Override
-    public Client getClientById(String id) {
+        @Override
+        @Transactional(readOnly = true)
+    public ClientDto getClientById(String id) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Client WHERE id = :id";
         Query<Client> query = session.createQuery(hql, Client.class);
         query.setParameter("id", id);
-        return query.uniqueResult();
+            Client client = query.uniqueResult();
+
+            if (client != null) {
+                return convertToDto(client);
+            }
+
+            return null;
+
     }
 
-    @Override
-    @Transactional //(readOnly = true)
-    public Optional<ClientDto> findById(String id) {
-        final Session session = sessionFactory.getCurrentSession();
-        // return Optional.ofNullable(session.find(ClientDto.class, id));
+//    @Override
+//    public Optional<ClientDto> getClientById(String id) {
+//        Session session = sessionFactory.getCurrentSession();
+//        String hql = "FROM Client WHERE id = :id";
+//        Query<Client> query = session.createQuery(hql, Client.class);
+//        query.setParameter("id", id);
+//        Client client = query.uniqueResult();
+//
+//        return Optional.ofNullable(client).map(this::convertToDto);
+//    }
 
-        ClientDetails clientDetails = session.find(ClientDetails.class, id);
-        ClientAddress clientAddress = session.find(ClientAddress.class, id);
-        Client client = session.find(Client.class, id);
-
-        return Optional.of(new ClientDto(
-                client.getId(),
-                client.getUsername(),
-                client.getPassword(),
-                client.getEmail(),
-                client.getRole(),
-                new ClientDetailsDto(clientDetails.getId(),
-                        clientDetails.getSurname(),
-                        clientDetails.getName(),
-                        clientDetails.getBirthDate(),
-                        clientDetails.getPassportNumber(),
-                        clientDetails.getIdentityNumber(),
-                        clientDetails.getDateIssue(),
-                        clientDetails.getDateExpiry()),
-                new ClientAddressDto(clientAddress.getId(),
-                        clientAddress.getCountry(),
-                        clientAddress.getCity(),
-                        clientAddress.getStreet(),
-                        clientAddress.getHouseNumber(),
-                        clientAddress.getFlatNumber(),
-                        clientAddress.getPhoneNumber())));
-    }
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClientDto> findAll() {
         final Session session = sessionFactory.getCurrentSession();
         String hql = "SELECT new by.nata.data.entity.Client(c.id, c.username, c.password, c.email, c.role, c.clientDetails, c.clientAddress) FROM Client c";
@@ -199,50 +234,13 @@ public class ClientDaoImpl implements ClientDao {
 
 
 
-
     @Override
-
     public void save(ClientDto clientDto) {
         final Session session = sessionFactory.getCurrentSession();
 
-        ClientDetailsDto clientDetailsDto = clientDto.getClientDetailsDto();
-        ClientAddressDto clientAddressDto = clientDto.getClientAddressDto();
-
-        ClientDetails clientDetails = new ClientDetails(
-                clientDetailsDto.getId(),
-                clientDetailsDto.getSurname(),
-                clientDetailsDto.getName(),
-                clientDetailsDto.getBirthDate(),
-                clientDetailsDto.getPassportNumber(),
-                clientDetailsDto.getIdentityNumber(),
-                clientDetailsDto.getDateIssue(),
-                clientDetailsDto.getDateExpiry()
-        );
-
-        ClientAddress clientAddress = new ClientAddress(
-                clientAddressDto.getId(),
-                clientAddressDto.getCountry(),
-                clientAddressDto.getCity(),
-                clientAddressDto.getStreet(),
-                clientAddressDto.getHouseNumber(),
-                clientAddressDto.getFlatNumber(),
-                clientAddressDto.getPhoneNumber()
-        );
-        Client client = new Client(
-                clientDto.getId(),
-                clientDto.getUsername(),
-                clientDto.getPassword(),
-                clientDto.getEmail(),
-                Role.USER,
-               clientDetails,
-                clientAddress);
-
-
-session.save(clientDetails);
-session.save(clientAddress);
+        Client client = convertToEntity(clientDto);
         session.save(client);
-log.info("Client saved: {}", client);
-
-
+        log.info("Client saved: {}", client);
     }
+
 }

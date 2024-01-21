@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,9 +37,13 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public void save(Account account) {
+    public void save(AccountDto accountDto) {
+        if (accountDto == null) {
+            throw new IllegalArgumentException("AccountDto cannot be null");
+        }
         final Session session = sessionFactory.getCurrentSession();
-        session.save(account);
+        Account account = convertDtoToEntity(accountDto);
+        session.merge(account);
     }
 
 
@@ -60,7 +65,7 @@ public class AccountDaoImpl implements AccountDao {
         account.setAccountId(accountDto.getAccountId());
 
         Client client = convertClientDtoToEntity(accountDto.getClientDto());
-       account.setClient(client);
+        account.setClient(client);
 
         account.setAccountNumber(accountDto.getAccountNumber());
         account.setDateOpen(accountDto.getDateOpen());
@@ -75,20 +80,21 @@ public class AccountDaoImpl implements AccountDao {
         if (clientDto == null) {
             throw new IllegalArgumentException("ClientDto cannot be null");
         }
-            Client client = new Client();
-            client.setId(clientDto.getId());
-            client.setUsername(clientDto.getUsername());
-            client.setPassword(clientDto.getPassword());
-            client.setEmail(clientDto.getEmail());
-            client.setRole(clientDto.getRole());
-            ClientDetails clientDetails = convertClientDetailsDtoToEntity(clientDto.getClientDetailsDto());
-            client.setClientDetails(clientDetails);
+        Client client = new Client();
+        client.setId(clientDto.getId());
+        client.setUsername(clientDto.getUsername());
+        client.setPassword(clientDto.getPassword());
+        client.setEmail(clientDto.getEmail());
+        client.setRole(clientDto.getRole());
+        ClientDetails clientDetails = convertClientDetailsDtoToEntity(clientDto.getClientDetailsDto());
+        client.setClientDetails(clientDetails);
 
-            ClientAddress clientAddress = convertClientAddressDtoToEntity(clientDto.getClientAddressDto());
-            client.setClientAddress(clientAddress);
+        ClientAddress clientAddress = convertClientAddressDtoToEntity(clientDto.getClientAddressDto());
+        client.setClientAddress(clientAddress);
 
         return client;
     }
+
     private ClientDetails convertClientDetailsDtoToEntity(ClientDetailsDto clientDetailsDto) {
         if (clientDetailsDto == null) {
             throw new IllegalArgumentException("ClientDetailsDto cannot be null");
@@ -96,16 +102,17 @@ public class AccountDaoImpl implements AccountDao {
 
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setId(clientDetailsDto.getId());
-       clientDetails.setSurname(clientDetailsDto.getSurname());
-              clientDetails.setName(clientDetailsDto.getName());
-              clientDetails.setBirthDate(clientDetailsDto.getBirthDate());
-            clientDetails.setPassportNumber(clientDetailsDto.getPassportNumber());
-               clientDetails.setIdentityNumber( clientDetailsDto.getIdentityNumber());
-            clientDetails.setDateIssue(clientDetailsDto.getDateIssue());
-                clientDetails.setDateExpiry( clientDetailsDto.getDateExpiry());
+        clientDetails.setSurname(clientDetailsDto.getSurname());
+        clientDetails.setName(clientDetailsDto.getName());
+        clientDetails.setBirthDate(clientDetailsDto.getBirthDate());
+        clientDetails.setPassportNumber(clientDetailsDto.getPassportNumber());
+        clientDetails.setIdentityNumber(clientDetailsDto.getIdentityNumber());
+        clientDetails.setDateIssue(clientDetailsDto.getDateIssue());
+        clientDetails.setDateExpiry(clientDetailsDto.getDateExpiry());
 
         return clientDetails;
     }
+
     private ClientAddress convertClientAddressDtoToEntity(ClientAddressDto clientAddressDto) {
         if (clientAddressDto == null) {
             throw new IllegalArgumentException("ClientAddressDto cannot be null");
@@ -114,11 +121,11 @@ public class AccountDaoImpl implements AccountDao {
         ClientAddress clientAddress = new ClientAddress();
         clientAddress.setId(clientAddressDto.getId());
         clientAddress.setCountry(clientAddressDto.getCountry());
-                clientAddress.setCity(clientAddressDto.getCity());
-                clientAddress.setStreet(clientAddressDto.getStreet());
-                clientAddress.setHouseNumber(clientAddressDto.getHouseNumber());
-                clientAddress.setFlatNumber(clientAddressDto.getFlatNumber());
-                clientAddress.setPhoneNumber(clientAddressDto.getPhoneNumber());
+        clientAddress.setCity(clientAddressDto.getCity());
+        clientAddress.setStreet(clientAddressDto.getStreet());
+        clientAddress.setHouseNumber(clientAddressDto.getHouseNumber());
+        clientAddress.setFlatNumber(clientAddressDto.getFlatNumber());
+        clientAddress.setPhoneNumber(clientAddressDto.getPhoneNumber());
 
         return clientAddress;
     }
@@ -126,9 +133,9 @@ public class AccountDaoImpl implements AccountDao {
     @Override
     public List<AccountDto> getAccountById(String clientId) {
         final Session session = sessionFactory.getCurrentSession();
-            String hql = "FROM Account WHERE client.id = :clientId";
-            Query<Account> query = session.createQuery(hql, Account.class);
-            query.setParameter("clientId", clientId);
+        String hql = "FROM Account WHERE client.id = :clientId";
+        Query<Account> query = session.createQuery(hql, Account.class);
+        query.setParameter("clientId", clientId);
         Account account = query.uniqueResult();
 
         if (account != null) {
@@ -187,6 +194,7 @@ public class AccountDaoImpl implements AccountDao {
                 clientDetails.getDateIssue(),
                 clientDetails.getDateExpiry());
     }
+
     private ClientAddressDto convertToDto(ClientAddress clientAddress) {
         return new ClientAddressDto(clientAddress.getId(),
                 clientAddress.getCountry(),
@@ -195,5 +203,21 @@ public class AccountDaoImpl implements AccountDao {
                 clientAddress.getHouseNumber(),
                 clientAddress.getFlatNumber(),
                 clientAddress.getPhoneNumber());
+    }
+
+    @Override
+    public List<AccountDto> getAllAccounts() {
+        final Session session = sessionFactory.getCurrentSession();
+        String hql = "SELECT new by.nata.data.entity.Account(c.id, c.client, c.accountNumber, c.dateOpen, c.balance, c.currency, c.pin) FROM Account c";
+        Query<Account> query = session.createQuery(hql, Account.class);
+        List<Account> accounts = query.getResultList();
+
+        List<AccountDto> accountDtos = new ArrayList<>();
+
+        for (Account account : accounts) {
+            accountDtos.add(convertToDto(account));
+        }
+
+        return accountDtos;
     }
 }

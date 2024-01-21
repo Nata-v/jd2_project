@@ -45,7 +45,7 @@ public class AccountController {
     }
 
     @PostMapping("/account")
-    public ModelAndView registrationNewAccount(Authentication authentication, @ModelAttribute("account") AccountDto account
+    public ModelAndView registrationNewAccount(Authentication authentication, @ModelAttribute("account") Account account
     ) throws IOException {
 
         if (authentication != null) {
@@ -111,7 +111,7 @@ public class AccountController {
 
             transactionsService.saveTransactionsWithdrawal(transactions);
 
-            return ResponseEntity.ok("Deposit successful");
+            return ResponseEntity.ok("Withdrawal successful");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -140,7 +140,7 @@ public class AccountController {
 
             transactionsService.saveTransactionsTransfer(transactions);
 
-            return ResponseEntity.ok("Deposit successful");
+            return ResponseEntity.ok("Transfer successful");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

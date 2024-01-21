@@ -48,7 +48,7 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home","/static/**", "/WEB-INF/templates/**","/login", "/info", "/registration").permitAll()
-                        .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+                       // .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                         .requestMatchers("/account", "/clients",  "/createCard", "/bank").authenticated()   //hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers(antMatcher("/client/{\\d}/delete")).hasAnyAuthority(Role.ADMIN.getAuthority(), Role.USER.getAuthority())
                         .anyRequest().authenticated())

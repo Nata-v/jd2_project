@@ -2,6 +2,8 @@ package by.nata.data.entity;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,9 +22,12 @@ public class ClientDetails {
     @Column(name = "ID")
     private String id;
 
-
+    @NotEmpty(message = "Enter surname!")
+    @Size(min = 2, max = 20, message = "Surname must be from 6 to 20 characters!!")
     @Column(name = "SURNAME")
     private String surname;
+    @NotEmpty(message = "Enter name!")
+    @Size(min = 2, max = 20, message = "Name must be from 2 to 20 characters!!")
     @Column(name = "NAME")
     private String name;
     @Column(name = "BIRTH_DATE")

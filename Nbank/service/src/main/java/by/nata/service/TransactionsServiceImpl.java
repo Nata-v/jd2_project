@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -78,4 +80,27 @@ private final TransactionsDao transactionsDao;
 
     }
 
+    @Override
+    public List<Transactions> findAllTransactions() {
+        List<TransactionsDto> transactionsDto = transactionsDao.findAllTransactions();
+
+        List<Transactions> transactions = transactionsDto.stream()
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
+
+        return transactions;
+    }
+
+    private Transactions convertToModel(TransactionsDto transactionsDto){
+        return new Transactions(
+                transactionsDto.getId(),
+                transactionsDto.getAccountNumber(),
+                transactionsDto.getAccountNumberRecipient(),
+                transactionsDto.getBalance(),
+                transactionsDto.getTransaction_currency(),
+                transactionsDto.getDate(),
+                transactionsDto.getType_operation()
+
+        );
+    }
 }

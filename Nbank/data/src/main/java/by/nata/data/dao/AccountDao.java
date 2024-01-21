@@ -11,10 +11,11 @@ import java.util.Optional;
 
 public interface AccountDao {
 
-     void save(Account account);
+     void save(AccountDto accountDto);
     // void save(AccountDto accountDto, String id);
     void updateAccount(AccountDto accountDto);
     List<AccountDto> getAccountById(String accountId);
+    List<AccountDto> getAllAccounts();
 
     AccountDto findByAccountNumber(String accountNumber);
 //    Optional<AccountDto> findAccountById(String id);
