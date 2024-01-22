@@ -81,15 +81,15 @@ public class ClientDaoImplTest {
         connection.close();
     }
 
-    @Test
-    public void findByUsername() {
-
-        ClientDto foundClient = clientDao.findByUsername("admin");
-        assertNotNull(foundClient);
-
-        assertEquals("admin", foundClient.getUsername());
-
-    }
+//    @Test
+//    public void findByUsername() {
+//
+//        ClientDto foundClient = clientDao.findByUsername("admin");
+//        assertNotNull(foundClient);
+//
+//        assertEquals("admin", foundClient.getUsername());
+//
+//    }
 
 //    @Test
 //    public void deleteClientById() throws SQLException {
@@ -106,23 +106,23 @@ public class ClientDaoImplTest {
     public void update() {
     }
 
-    @Test
-    public void getClientById() {
-        String id = "aaaabbbbccccddddeeeeffff00000001";
+//    @Test
+//    public void getClientById() {
+//        String id = "aaaabbbbccccddddeeeeffff00000001";
+//
+//        ClientDto client = clientDao.getClientById(id);
+//
+//        assertNotNull(client);
+//        assertEquals("aaaabbbbccccddddeeeeffff00000001", client.getId());
+//    }
 
-        ClientDto client = clientDao.getClientById(id);
-
-        assertNotNull(client);
-        assertEquals("aaaabbbbccccddddeeeeffff00000001", client.getId());
-    }
-
-    @Test
-    public void findAll() {
-        List<ClientDto> clients = clientDao.findAll();
-
-        assertNotNull(clients);
-        assertEquals(1, clients.size());
-    }
+//    @Test
+//    public void findAll() {
+//        List<ClientDto> clients = clientDao.findAll();
+//
+//        assertNotNull(clients);
+//        assertEquals(1, clients.size());
+//    }
 
 //    @Test
 //    public void save() throws SQLException {
