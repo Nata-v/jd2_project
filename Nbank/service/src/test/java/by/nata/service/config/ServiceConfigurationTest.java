@@ -11,14 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
 //@Configuration
-//@Import(ServiceConfiguration.class)
+@Import(ServiceConfiguration.class)
 public class ServiceConfigurationTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
 
-    @After
-    public void tearDown() throws Exception {
-    }
 }

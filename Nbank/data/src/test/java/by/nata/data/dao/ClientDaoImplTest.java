@@ -1,148 +1,171 @@
 package by.nata.data.dao;
 
+import by.nata.data.config.DataConfigurationTest;
+import by.nata.data.entity.Client;
+import by.nata.data.entity.Currency;
+import by.nata.data.entity.Role;
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-//@ContextConfiguration(classes = DataConfigurationTest.class)
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@TestPropertySource(value = "classpath:test.liquibase.properties")
+import javax.sql.DataSource;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = DataConfigurationTest.class)
+@TestPropertySource(value = "classpath:test.liquibase.properties")
+//@Transactional
 public class ClientDaoImplTest {
-//    private static final String CLIENT_ID = "1";
-//    private static final String CLIENT_DETAILS_ID = "2";
-//    private static final String CLIENT_ADDRESS_ID = "3";
-//
-//    @Autowired
-//    private ClientDao clientDao;
-//    @Autowired
-//    private ClientDetailsDao clientDetailsDao;
-//
-//    @Autowired
-//    private ClientAddressDao clientAddressDao;
-//
-//    Connection connection;
-//    @Before
-//    public void setUp() throws Exception {
-//        connection = NbankTestDataSource.getConnection();
-//    }
-//
-//    @After
-//    public void tearDown() throws Exception {
-//        clientDao = null;
-//        clientDetailsDao = null;
-//        clientAddressDao = null;
-//    }
+@Autowired
+    private  ClientDao clientDao;
+@Autowired
+    private  DataSource dataSource;
 
-//    @Test
-//    public void save() throws SQLException {
-//       // String id = "4028e48f8d025c04018d025c091f0002";
-//       // String testId = UUID.randomUUID().toString();
-//        ClientDto clientDto = new ClientDto(CLIENT_ID,
-//                "nata", "hjhj", "nat@gmail.com",Role.USER, new ClientDetailsDto(
-//                CLIENT_DETAILS_ID, "Volkova", "Natali", LocalDate.of(2000, 8, 31),
-//                "KB333333", "566767677",
-//                LocalDate.of(2022, 12, 12),
-//                LocalDate.of( 2030, 01, 01)),
-//                new ClientAddressDto(CLIENT_ADDRESS_ID, "Belarus",  "Mogilev", "Pervomayskay",
-//                        "32", "01", "22-22-22"));
-//
-//        clientDao.save(clientDto);
-//
-//        System.out.println(clientDto);
-//
-//        assertNotNull(clientDto);
-//        assertEquals("nat@gmail.com", clientDto.getEmail());
-//        assertEquals("nata", clientDto.getUsername());
+    private ClientDto clientDto;
+    Connection connection;
 
-       // dto.setProductImage(bytes);
+    public ClientDaoImplTest() {
+    }
 
 
-//        ResultSet rs = connection.createStatement().executeQuery("SELECT count(*) FROM CLIENT WHERE name='NATALI'");
-//        rs.next();
-//       // String actualCount = rs.getString(id);
-//        String actual = rs.getString();
-////        assertEquals("4028e48f8d025c04018d025c091f0002", actualCount);
-//        assertEquals("nata", );
+    @Before
+    public void setUp() throws Exception {
+        connection = dataSource.getConnection();
+//        String clientId = UUID.randomUUID().toString();
+//        String clientDetailsId = UUID.randomUUID().toString();
+//        String clientAddressId = UUID.randomUUID().toString();
+//        String sql1 = "insert into CLIENT_DETAILS (id, surname, name, birth_date, passport_number, identity_number, date_issue, date_expiry )" +
+//                "values (" +clientDetailsId + " 'Jonson', 'Tom', '1990-05-12', 'KB565656', '364557M0757', '2020-12-12', '2027-12-12')";
+//
+//        String sql2 = "insert into CLIENT_ADDRESS (id, country, city, street, house_number, flat_number, phone_number )" +
+//                "values (" + clientAddressId + " 'Russia', 'Moscow', 'Arbat', '135', '250', '8029363738')";
+//
+//        String sql = "insert into client (id, username, password, email, role, CLIENT_DETAILS, CLIENT_ADDRESS)" +
+//                " values (" + clientId + " 'tom', 'tom55', 'tom@gmail.com', 'USER', 'a1', 'b1')";
+//        connection.createStatement().executeUpdate(sql1);
+//        connection.createStatement().executeUpdate(sql2);
+//        connection.createStatement().executeUpdate(sql);
+
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+//        connection = dataSource.getConnection();
+//        String sql1 = "delete from CLIENT_ADDRESS";
+//        String sql2 = "delete from CLIENT_DETAILS";
+//        String sql = "delete from client";
+//        connection.createStatement().executeUpdate(sql1);
+//        connection.createStatement().executeUpdate(sql2);
+//        connection.createStatement().executeUpdate(sql);
+        connection.close();
+    }
+
+    @Test
+    public void findByUsername() {
+
+        ClientDto foundClient = clientDao.findByUsername("admin");
+        assertNotNull(foundClient);
+
+        assertEquals("admin", foundClient.getUsername());
+
     }
 
 //    @Test
-//    public void delete() {
-//        ClientDto clientDto = new ClientDto(CLIENT_ID,
-//                "nata", "hjhj", "nat@gmail.com", Role.USER, new ClientDetailsDto(
-//                CLIENT_DETAILS_ID, "Volkova", "Natali", LocalDate.of(2000, 8, 31),
-//                "KB333333", "566767677",
-//                LocalDate.of(2022, 12, 12),
-//                LocalDate.of(2030, 01, 01)),
-//                new ClientAddressDto(CLIENT_ADDRESS_ID, "Belarus", "Mogilev", "Pervomayskay",
-//                        "32", "01", "22-22-22"));
-//clientDao.save(clientDto);
-//        System.out.println(clientDto);
+//    public void deleteClientById() throws SQLException {
+//        ClientDto foundClient = clientDao.findByUsername("admin");
+//        clientDao.deleteClientById(foundClient.getId());
 //
-//        clientDao.delete(CLIENT_ID);
-//       // verify(clientDao).delete(CLIENT_ID);
-//        assertNull(clientDto.getId());
+//        assertNull(foundClient);
+//
+//        assertEquals(null, foundClient.getId());
+//
 //    }
 
-//    @Test
-//    public void update() {
-//        ClientDto clientDto = new ClientDto(CLIENT_ID, "username", "password", "email",Role.USER,
-//                new ClientDetailsDto("1", "surname", "name",
-//                        LocalDate.of(2000, 8, 31) , " ", "",
-//                        LocalDate.of(2000, 8, 31),
-//                        LocalDate.of(2000, 8, 31)),
-//                new ClientAddressDto("1", "country", "city", "street", "houseNumber", "flatNumber", "phoneNumber"));
-//
-//       // clientDao.save(clientDto);
-//
-//
-//
-//      clientDao.update(clientDto);
-//        assertEquals("1", company.getId());
-//        assertEquals("Facebook", company.getName());
-//    }
+    @Test
+    public void update() {
+    }
+
+    @Test
+    public void getClientById() {
+        String id = "aaaabbbbccccddddeeeeffff00000001";
+
+        ClientDto client = clientDao.getClientById(id);
+
+        assertNotNull(client);
+        assertEquals("aaaabbbbccccddddeeeeffff00000001", client.getId());
+    }
+
+    @Test
+    public void findAll() {
+        List<ClientDto> clients = clientDao.findAll();
+
+        assertNotNull(clients);
+        assertEquals(1, clients.size());
+    }
 
 //    @Test
-//    public void findById() {
-//        ClientDto clientDto = new ClientDto(CLIENT_ID,
-//                "nata", "hjhj", "nat@gmail.com",Role.USER, new ClientDetailsDto(
-//                CLIENT_DETAILS_ID, "Volkova", "Natali", LocalDate.of(2000, 8, 31),
-//                "KB333333", "566767677",
-//                LocalDate.of(2022, 12, 12),
-//                LocalDate.of( 2030, 01, 01)),
-//                new ClientAddressDto(CLIENT_ADDRESS_ID, "Belarus",  "Mogilev", "Pervomayskay",
-//                        "32", "01", "22-22-22"));
+//    public void save() throws SQLException {
+//                String clientId = UUID.randomUUID().toString();
+//        String clientDetailsId = UUID.randomUUID().toString();
+//        String clientAddressId = UUID.randomUUID().toString();
+//
+// ClientDetailsDto clientDetailsDto = new ClientDetailsDto(clientDetailsId, "Jonson", "Tom",
+//         LocalDate.of(1990, 05, 12), "KB565656",
+//         "364557M0757", LocalDate.of(2020, 12, 12),
+//         LocalDate.of(2027, 12, 12));
+//
+// ClientAddressDto clientAddressDto =  new ClientAddressDto(clientAddressId, "Russia", "Moscow", "Arbat",
+//         "135", "250", "8029363738");
+//
+//    clientDto = new ClientDto(clientId, "tom", "tom55", "tom@gmail.com",
+//         Role.USER, clientDetailsDto, clientAddressDto);
+//
+//
+////        clientDto = new ClientDto(clientId, "tom", "tom55", "tom@gmail.com",
+////                Role.USER, new ClientDetailsDto(clientDetailsId, "Jonson", "Tom",
+////                LocalDate.of(1990, 05, 12), "KB565656",
+////                "364557M0757", LocalDate.of(2020, 12, 12),
+////                LocalDate.of(2027, 12, 12)),
+////                new ClientAddressDto(clientAddressId, "Russia", "Moscow", "Arbat",
+////                        "135", "250", "8029363738"));
 //
 //        clientDao.save(clientDto);
-//        System.out.println(clientDto);
-
-      //  Optional<ClientDto> result = clientDao.findById(CLIENT_ID);
-//        Optional<ClientDto> result = clientDao.findById(CLIENT_ID);
+//        ClientDto savedClient = clientDao.findByUsername("tom");
 //
-//        assertTrue(result.isPresent());
-//        assertEquals(clientDto, result.get());
+//        assertNotNull(savedClient);
 //
-//        assertEquals(CLIENT_ID, result.orElseThrow().getId());
-//        assertEquals("nata", result.orElseThrow().getUsername());
-//        assertEquals("Volkova", result.orElseThrow().getClientDetailsDto().getSurname());
-//        assertEquals("Belarus", result.orElseThrow().getClientAddressDto().getCountry());
+//        assertEquals("tom", savedClient.getUsername());
+//        assertEquals("tom@gmail.com", savedClient.getEmail());
+////        assertEquals("USER", savedClient.getRole());
+//
+//        assertNotNull(savedClient.getClientDetailsDto());
+//        assertEquals("Jonson", savedClient.getClientDetailsDto().getSurname());
+//
+//        assertNotNull(savedClient.getClientAddressDto());
+//        assertEquals("Russia", savedClient.getClientAddressDto().getCountry());
+//
+//
 //
 //    }
-
-
-//    @Test
-//    public void findAll() {
-//        List<ClientDto> clients = new ArrayList<>();
-//        clients.add(new ClientDto("1", "nata", "12345", "nat@mail.ru", new ClientDetails(), new ClientAddress()));
-//        clients.add(new ClientDto("2", "bob", "14444", "bob@mail.ru", new ClientDetails(), new ClientAddress()));
-//        clients.add(new ClientDto("3", "star", "47474", "star@mail.ru", new ClientDetails(), new ClientAddress()));
-//
-//
-//        System.out.println(clients);
-//        when(clientDao.findAll()).thenReturn(clients);
-//
-//        List<ClientDto> result = clientDao.findAll();
-//        System.out.println(result);
-//
-//        assertEquals(clients, result);
-//
-
-
-
-
+}

@@ -98,6 +98,15 @@ public class ClientDaoImpl implements ClientDao {
         }
     }
 
+    @Override
+    public void save(ClientDto clientDto) {
+        final Session session = sessionFactory.getCurrentSession();
+
+        Client client = convertToEntity(clientDto);
+        session.save(client);
+        log.info("Client saved: {}", client);
+    }
+
     private Client convertToEntity(ClientDto clientDto) {
         if (clientDto == null) {
             throw new IllegalArgumentException("ClientDto cannot be null");
@@ -234,13 +243,6 @@ public class ClientDaoImpl implements ClientDao {
 
 
 
-    @Override
-    public void save(ClientDto clientDto) {
-        final Session session = sessionFactory.getCurrentSession();
 
-        Client client = convertToEntity(clientDto);
-        session.save(client);
-        log.info("Client saved: {}", client);
-    }
 
 }
