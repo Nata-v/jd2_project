@@ -1,6 +1,7 @@
 package by.nata.web.rest;
 
 import by.nata.data.dao.TransactionsDao;
+import by.nata.data.model.TransactionsDto;
 import by.nata.service.*;
 import by.nata.service.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,12 +73,12 @@ public class AdminController {
 
 
     @GetMapping("/allTransactionsPage")
-    public ResponseEntity<List<by.nata.data.entity.Transactions>> findAllTransactions(
+    public ResponseEntity<List<TransactionsDto>> findAllTransactions(
             @RequestParam(name = "offset",  required = false, defaultValue = "0") Integer offset,
             @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit) {
 
         if (offset != null && limit != null) {
-            List<by.nata.data.entity.Transactions> paginatedTransactions = transactionsDao.getTransactions(offset, limit);
+            List<TransactionsDto> paginatedTransactions = transactionsDao.getTransactions(offset, limit);
 
             if (paginatedTransactions.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

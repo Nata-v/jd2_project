@@ -17,5 +17,5 @@ public interface CardDao {
     List<CardDto> getAllCards();
     CardDto findByCardNumber(String cardNumber);
     void deleteCardByCardNumber(String cardNumber);
-   // List<CardDto> getAllAccounts();
+
 }

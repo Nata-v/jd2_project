@@ -15,11 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional
@@ -37,23 +35,23 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public void save(AccountDto accountDto) {
+    public String save(AccountDto accountDto) {
         if (accountDto == null) {
             throw new IllegalArgumentException("AccountDto cannot be null");
         }
         final Session session = sessionFactory.getCurrentSession();
         Account account = convertDtoToEntity(accountDto);
-        session.merge(account);
+       return String.valueOf(session.merge(account));
     }
 
 
-    public void updateAccount(AccountDto accountDto) {
+    public Account updateAccount(AccountDto accountDto) {
         if (accountDto == null) {
             throw new IllegalArgumentException("AccountDto cannot be null");
         }
         Account account = convertDtoToEntity(accountDto);
         Session session = sessionFactory.getCurrentSession();
-        session.merge(account);
+        return session.merge(account);
     }
 
     private Account convertDtoToEntity(AccountDto accountDto) {
@@ -223,7 +221,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public void deleteAccountByAccountNumber(String accountNumber) {
+    public AccountDto deleteAccountByAccountNumber(String accountNumber) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Account WHERE accountNumber = :searchedAccountNumber";
         Query<Account> query = session.createQuery(hql, Account.class);
@@ -233,5 +231,6 @@ public class AccountDaoImpl implements AccountDao {
             session.delete(account);
             session.flush();
         }
+        return null;
     }
 }

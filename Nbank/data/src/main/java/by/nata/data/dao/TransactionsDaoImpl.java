@@ -1,5 +1,6 @@
 package by.nata.data.dao;
 
+import by.nata.data.entity.Account;
 import by.nata.data.entity.Transactions;
 import by.nata.data.model.TransactionsDto;
 import org.hibernate.Session;
@@ -32,7 +33,7 @@ private final SessionFactory sessionFactory;
     }
 
     @Override
-    public void save(TransactionsDto transactionsDto) {
+    public String save(TransactionsDto transactionsDto) {
         final Session session = sessionFactory.getCurrentSession();
         Transactions transactions = new Transactions(
                 transactionsDto.getId(),
@@ -44,8 +45,23 @@ private final SessionFactory sessionFactory;
                 transactionsDto.getType_operation()
         );
 
-        session.save(transactions);
-        log.info("Such accountNumbers doesn't exist!");
+       return (String) session.save(transactions);
+        //log.info("Such accountNumbers doesn't exist!");
+
+    }
+
+    @Override
+    public TransactionsDto findById(String id) {
+        final Session session = sessionFactory.getCurrentSession();
+        String hql = "from Transactions WHERE id = :searchedId";
+        Query<Transactions> query = session.createQuery(hql, Transactions.class);
+        query.setParameter("searchedId", id);
+        Transactions transactions = query.uniqueResult();
+
+        if (transactions != null) {
+            return convertToDto(transactions);
+        }
+        return null;
     }
 
     @Override
@@ -76,12 +92,19 @@ private final SessionFactory sessionFactory;
     }
 
     @Override
-    public List<Transactions> getTransactions(Integer startPosition, Integer pageSize) {
+    public List<TransactionsDto> getTransactions(Integer startPosition, Integer pageSize) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Transactions", Transactions.class)
+
+        List<Transactions> transactionsList = session.createQuery("from Transactions", Transactions.class)
                 .setFirstResult(startPosition)
                 .setMaxResults(pageSize)
                 .list();
+
+        List<TransactionsDto> transactionsDtoList = new ArrayList<>();
+        for (Transactions transactions : transactionsList) {
+            transactionsDtoList.add(convertToDto(transactions));
+        }
+        return transactionsDtoList;
     }
 
 }

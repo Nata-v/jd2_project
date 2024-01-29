@@ -1,11 +1,12 @@
 package by.nata.data.dao;
 
-import by.nata.data.entity.Client;
 import by.nata.data.entity.ClientDetails;
 import by.nata.data.model.ClientDetailsDto;
-import by.nata.data.model.ClientDto;
 import by.nata.data.model.ClientFilterDto;
-import org.hibernate.Hibernate;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,12 +62,6 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
     }
 
     @Override
-    public void update(ClientDetailsDto clientDetailsDto) {
-        final Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(clientDetailsDto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public Optional<ClientDetailsDto> findById(String id) {
         final Session session = sessionFactory.getCurrentSession();
@@ -90,8 +84,6 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
    @Override
     public List<ClientDetails> findAllByFilter(ClientFilterDto clientFilterDto) {
         final Session session = sessionFactory.getCurrentSession();
-//        var criteria = session.getCriteriaBuilder().createQuery(ClientDto.class);
-//        criteria.from(ClientDto.class);
         var cb = sessionFactory.getCurrentSession().getCriteriaBuilder();
 
         var criteria = cb.createQuery(ClientDetails.class);
@@ -99,14 +91,14 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
         criteria.select(clientDetails);
 
         List<Predicate> predicates = new ArrayList<>();
-        if (clientFilterDto.surname() != null){
-            predicates.add((Predicate) cb.like(clientDetails.get("surname"), clientFilterDto.surname()));
+        if (clientFilterDto.getSurname() != null){
+            predicates.add((Predicate) cb.like(clientDetails.get("surname"), clientFilterDto.getSurname()));
         }
-        if (clientFilterDto.name() != null){
-            predicates.add((Predicate) cb.like(clientDetails.get("name"), clientFilterDto.name()));
+        if (clientFilterDto.getName() != null){
+            predicates.add((Predicate) cb.like(clientDetails.get("name"), clientFilterDto.getName()));
         }
-        if (clientFilterDto.birthDate() != null){
-            predicates.add((Predicate) cb.lessThan(clientDetails.get("birthDate"), clientFilterDto.birthDate()));
+        if (clientFilterDto.getBirthDate() != null){
+            predicates.add((Predicate) cb.lessThan(clientDetails.get("birthDate"), clientFilterDto.getBirthDate()));
         }
         criteria.where(predicates.toArray(jakarta.persistence.criteria.Predicate[]::new));
         return session.createQuery(criteria).getResultList();

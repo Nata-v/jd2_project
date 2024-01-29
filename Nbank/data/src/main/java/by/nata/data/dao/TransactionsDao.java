@@ -8,8 +8,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface TransactionsDao {
-void save(TransactionsDto transactionsDto);
+String save(TransactionsDto transactionsDto);
     List<TransactionsDto> findAllTransactions();
-    List<Transactions> getTransactions(Integer startPosition, Integer pageSize);
+    List<TransactionsDto> getTransactions(Integer startPosition, Integer pageSize);
+    TransactionsDto findById(String id);
 
 }

@@ -20,8 +20,6 @@ public interface ClientDetailsDao  {
     String save(ClientDetailsDto clientDetailsDto);
 
      Optional<ClientDetailsDto> findById(String id);
-
-    void update(ClientDetailsDto clientDetailsDto);
     List<ClientDetails> findAllByFilter(ClientFilterDto clientFilterDto);
 
 

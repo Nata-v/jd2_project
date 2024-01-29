@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface ClientAddressService {
 
     void saveClientAddress(ClientAddress clientAddress);
-    void updateClientAddress(ClientAddress clientAddress);
     Optional<ClientAddress> findById(String id);
 }

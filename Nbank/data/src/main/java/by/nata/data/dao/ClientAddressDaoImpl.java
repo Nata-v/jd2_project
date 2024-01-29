@@ -19,9 +19,10 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public class ClientAddressDaoImpl implements ClientAddressDao{
+public class ClientAddressDaoImpl implements ClientAddressDao {
     private static final Logger log = LoggerFactory.getLogger(ClientAddressDaoImpl.class);
     private final SessionFactory sessionFactory;
+
     @Autowired
     public ClientAddressDaoImpl(SessionFactory sessionFactory) {
         if (sessionFactory == null) {
@@ -44,16 +45,10 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
                 clientAddressDto.getPhoneNumber()
         );
 
-       return (String) session.save(clientAddress);
+        return (String) session.save(clientAddress);
 
     }
 
-
-    @Override
-    public void update(ClientAddressDto clientAddressDto) {
-       final Session session = sessionFactory.getCurrentSession();
-       session.saveOrUpdate(clientAddressDto);
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -71,8 +66,4 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
                 clientAddress.getPhoneNumber()));
     }
 
-    @Override
-    public List<ClientAddressDto> findAll() {
-        return null;
-    }
 }

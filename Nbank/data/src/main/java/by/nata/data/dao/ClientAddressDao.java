@@ -18,7 +18,5 @@ public interface ClientAddressDao  {
 
     String save(ClientAddressDto clientAddressDto);
     Optional<ClientAddressDto> findById(String id);
-    void update(ClientAddressDto clientAddressDto);
-     List<ClientAddressDto> findAll();
 
 }

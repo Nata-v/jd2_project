@@ -62,23 +62,23 @@ public class ClientDetailsServiceImpl implements ClientDetailsService{
              clientDetailsDto.getDateIssue(),
              clientDetailsDto.getDateExpiry());
     }
-    @Override
-    public void updateClientDetails(ClientDetails clientDetails) {
-        ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
+//    @Override
+//    public void updateClientDetails(ClientDetails clientDetails) {
+//        ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
+//
+//        if (existingClientDetailsDto != null) {
+//            clientDetails.setSurname(existingClientDetailsDto.getSurname());
+//            clientDetails.setName(existingClientDetailsDto.getName());
+//            clientDetails.setBirthDate(existingClientDetailsDto.getBirthDate());
+//            clientDetails.setPassportNumber(existingClientDetailsDto.getPassportNumber());
+//            clientDetails.setIdentityNumber(existingClientDetailsDto.getIdentityNumber());
+//            clientDetails.setDateIssue(existingClientDetailsDto.getDateIssue());
+//            clientDetails.setDateExpiry(existingClientDetailsDto.getDateExpiry());
+//
+//            clientDetailsDao.update(existingClientDetailsDto);
+//        }
 
-        if (existingClientDetailsDto != null) {
-            clientDetails.setSurname(existingClientDetailsDto.getSurname());
-            clientDetails.setName(existingClientDetailsDto.getName());
-            clientDetails.setBirthDate(existingClientDetailsDto.getBirthDate());
-            clientDetails.setPassportNumber(existingClientDetailsDto.getPassportNumber());
-            clientDetails.setIdentityNumber(existingClientDetailsDto.getIdentityNumber());
-            clientDetails.setDateIssue(existingClientDetailsDto.getDateIssue());
-            clientDetails.setDateExpiry(existingClientDetailsDto.getDateExpiry());
 
-            clientDetailsDao.update(existingClientDetailsDto);
-        }
-
-    }
 
     @Override
     public List<ClientDetails> findAllByFilter(ClientFilter clientFilter) {

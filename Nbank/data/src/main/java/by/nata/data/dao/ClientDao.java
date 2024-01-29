@@ -13,7 +13,6 @@ public interface ClientDao {
   ClientDto getClientById(String id);
   ClientDto deleteClientById(String id);
 
-  //void delete(String id);
  // Optional<ClientDto> findById(String id);
   void update(ClientDto clientDto, ClientDetailsDto clientDetailsDto, ClientAddressDto clientAddressDto);
   List<ClientDto> findAll();
