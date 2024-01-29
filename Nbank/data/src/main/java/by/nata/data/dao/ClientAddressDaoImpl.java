@@ -31,7 +31,7 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
     }
 
     @Override
-    public void save(ClientAddressDto clientAddressDto) {
+    public String save(ClientAddressDto clientAddressDto) {
 
         final Session session = sessionFactory.getCurrentSession();
         ClientAddress clientAddress = new ClientAddress(
@@ -44,7 +44,7 @@ public class ClientAddressDaoImpl implements ClientAddressDao{
                 clientAddressDto.getPhoneNumber()
         );
 
-        session.save(clientAddress);
+       return (String) session.save(clientAddress);
 
     }
 

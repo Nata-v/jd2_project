@@ -35,22 +35,30 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
     }
 
     @Override
-    public void save(ClientDetailsDto clientDetailsDto) {
+    public String save(ClientDetailsDto clientDetailsDto) {
 
         final Session session = sessionFactory.getCurrentSession();
-        ClientDetails clientDetails = new ClientDetails(
-                clientDetailsDto.getId(),
-                clientDetailsDto.getSurname(),
-                clientDetailsDto.getName(),
-                clientDetailsDto.getBirthDate(),
-                clientDetailsDto.getPassportNumber(),
-                clientDetailsDto.getIdentityNumber(),
-                clientDetailsDto.getDateIssue(),
-                clientDetailsDto.getDateExpiry()
-        );
+        ClientDetails clientDetails = convertClientDetailsDtoToEntity(clientDetailsDto);
 
-        session.save(clientDetails);
+        return (String) session.save(clientDetails);
 
+    }
+    private ClientDetails convertClientDetailsDtoToEntity(ClientDetailsDto clientDetailsDto) {
+        if (clientDetailsDto == null) {
+            throw new IllegalArgumentException("ClientDetailsDto cannot be null");
+        }
+
+        ClientDetails clientDetails = new ClientDetails();
+        clientDetails.setId(clientDetailsDto.getId());
+        clientDetails.setSurname(clientDetailsDto.getSurname());
+        clientDetails.setName(clientDetailsDto.getName());
+        clientDetails.setBirthDate(clientDetailsDto.getBirthDate());
+        clientDetails.setPassportNumber(clientDetailsDto.getPassportNumber());
+        clientDetails.setIdentityNumber(clientDetailsDto.getIdentityNumber());
+        clientDetails.setDateIssue(clientDetailsDto.getDateIssue());
+        clientDetails.setDateExpiry(clientDetailsDto.getDateExpiry());
+
+        return clientDetails;
     }
 
     @Override

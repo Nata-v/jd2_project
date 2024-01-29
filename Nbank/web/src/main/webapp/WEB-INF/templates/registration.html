@@ -138,12 +138,14 @@
         <div class="mb-3">
           <label for="phoneNumber" class="form-label">PhoneNumber </label>
           <input type="text" name="phoneNumber" class="form-control" placeholder="PhoneNumber" id="phoneNumber" required>
-
         </div>
 
         <button class="btn btn-primary" type="submit">Register</button>
 
       </form>
+      <div th:if="${errors}">
+        <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+      </div>
     </div>
 
     <div class="col-lg-6 col-md-12"
@@ -157,7 +159,7 @@
           <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
             банка или закать доставку на дом. </p>
           <sec:authorize access="hasRole('ROLE_ADMIN')">
-          <a href="/web/add/buyCard" class="btn btn-primary">Заказать карту</a>
+          <a href="/web/login" class="btn btn-primary">Заказать карту</a>
             </sec:authorize>
         </div>
         <h3>Карта рассрочки от N-Bank</h3>
@@ -175,20 +177,20 @@
       <div class="row" style="margin-top: 650px;">
         <div class="col-lg-4 col-md-6">
           <div class="card">
-            <img src="/web/static/img/cards.jpg" class="card-img-top" alt="...">
+            <img src="/web/static/img/card.webp" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Карточки</h5>
               <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
                 банка или закать доставку на дом. </p>
               <sec:authorize access="hasRole('ROLE_ADMIN')">
-              <a href="#" class="btn btn-primary">Заказать карту</a>
+              <a href="/web/login" class="btn btn-primary">Заказать карту</a>
               </sec:authorize>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="card">
-            <img src="/web/static/img/card.webp" class="card-img-top" alt="...">
+            <img src="/web/static/img/img3.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Кредиты</h5>
               <p class="card-text">N-BANK предлагает вам различные виды кредитов под небольшие
@@ -208,7 +210,7 @@
               <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой срок.
               </p>
               <sec:authorize access="hasRole('ROLE_ADMIN')">
-              <a href="#" class="btn btn-primary">Оформить вклад</a>
+              <a href="/web/login" class="btn btn-primary">Оформить вклад</a>
               </sec:authorize>
             </div>
           </div>

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public interface ClientDetailsDao  {
 
-    void save(ClientDetailsDto clientDetailsDto);
+    String save(ClientDetailsDto clientDetailsDto);
 
      Optional<ClientDetailsDto> findById(String id);
 

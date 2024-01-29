@@ -12,9 +12,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
@@ -53,15 +55,17 @@ private final ClientAddressService clientAddressService;
 
     @PostMapping("/registration")
 
-    public ModelAndView registrationClient(@Valid Client client, @Valid ClientDetails clientDetails,
-                                           @Valid  ClientAddress clientAddress,
-                                           BindingResult bindingResult) throws IOException {
-if (bindingResult.hasGlobalErrors()){
+    public ModelAndView registrationClient(@Validated Client client, @Validated ClientDetails clientDetails,
+                                           @Validated  ClientAddress clientAddress,
+                                           BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
+if (bindingResult.hasErrors()){
+    redirectAttributes.addFlashAttribute("client", client);
+    redirectAttributes.addFlashAttribute("clientDetails", clientDetails);
+    redirectAttributes.addFlashAttribute("clientAddress", clientAddress);
+
+    redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
     return  new ModelAndView("registration");
 }
-    System.out.println("Add client: " + client);
-        System.out.println("Add clientDetails: " + clientDetails);
-        System.out.println("Add clientAddress: " + clientAddress);
 
         clientService.saveNewClient(client, clientDetails, clientAddress);
         return new ModelAndView("login");

@@ -50,7 +50,6 @@ public class WebConfiguration  implements WebMvcConfigurer  {
             SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
             templateResolver.setApplicationContext(applicationContext);
             templateResolver.setPrefix("/WEB-INF/templates/");
-           // templateResolver.setPrefix("/templates/client/");
             templateResolver.setSuffix(".html");
             templateResolver.setTemplateMode(TemplateMode.HTML);
             templateResolver.setCharacterEncoding("UTF-8");

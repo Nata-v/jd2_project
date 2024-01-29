@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 
 <head>
     <meta charset="UTF-8">
@@ -217,7 +218,7 @@
                                     <p class="card-text">Оформив карту online, вы можете забрать ее в любом отделении
                                         банка или закать доставку на дом. </p>
                                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/web/add/card" class="btn btn-primary">Заказать карту</a>
+                                    <a href="/web/card" class="btn btn-primary">Заказать карту</a>
                                     </sec:authorize>
                                 </div>
                             </div>
@@ -231,7 +232,7 @@
                                         проценты. Не нужно откладывать покупки, оформите кредит online не выходя из
                                         дома. </p>
                                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/web/add/credit" class="btn btn-primary">Оформить кредит</a>
+                                    <a href="/web/credit" class="btn btn-primary">Оформить кредит</a>
                                     </sec:authorize>
                                 </div>
                             </div>
@@ -244,7 +245,7 @@
                                     <p class="card-text">Совершайте денежные вклады под выгодные проценты на любой срок.
                                     </p>
                                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                    <a href="/web/add/contribution" class="btn btn-primary">Оформить вклад</a>
+                                    <a href="/web/contribution" class="btn btn-primary">Оформить вклад</a>
                                     </sec:authorize>
                                 </div>
                             </div>

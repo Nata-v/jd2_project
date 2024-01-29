@@ -30,15 +30,11 @@ public class ClientServiceImpl implements ClientService{
     private static final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
 
     private final ClientDao clientDao;
-    private final ClientDetailsDao clientDetailsDao;
-    private final ClientAddressDao clientAddressDao;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public ClientServiceImpl(ClientDao clientDao, ClientDetailsDao clientDetailsDao, ClientAddressDao clientAddressDao, ApplicationEventPublisher applicationEventPublisher) {
+    public ClientServiceImpl(ClientDao clientDao, ApplicationEventPublisher applicationEventPublisher) {
         this.clientDao = clientDao;
-        this.clientDetailsDao = clientDetailsDao;
-        this.clientAddressDao = clientAddressDao;
 
         this.applicationEventPublisher = applicationEventPublisher;
     }

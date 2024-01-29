@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientDao {
-    void save(ClientDto clientDto);
+    String save(ClientDto clientDto);
   ClientDto getClientById(String id);
-  void deleteClientById(String id);
+  ClientDto deleteClientById(String id);
 
   //void delete(String id);
  // Optional<ClientDto> findById(String id);

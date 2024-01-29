@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -87,7 +88,7 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
-    public void deleteClientById(String id) {
+    public ClientDto deleteClientById(String id) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "DELETE FROM Client WHERE id = :id";
         Query query = session.createQuery(hql);
@@ -96,15 +97,16 @@ public class ClientDaoImpl implements ClientDao {
         if (result > 0) {
             session.flush();
         }
+        return null;
     }
 
     @Override
-    public void save(ClientDto clientDto) {
+    public String save(ClientDto clientDto) {
         final Session session = sessionFactory.getCurrentSession();
 
         Client client = convertToEntity(clientDto);
-        session.save(client);
         log.info("Client saved: {}", client);
+        return (String) session.save(client);
     }
 
     private Client convertToEntity(ClientDto clientDto) {

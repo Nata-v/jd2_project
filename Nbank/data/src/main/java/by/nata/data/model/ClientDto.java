@@ -5,7 +5,7 @@ import by.nata.data.entity.Role;
 
 import java.io.Serializable;
 
-public final class ClientDto implements Serializable {
+public  final class ClientDto implements Serializable {
     private static final long serialVersionUID = 5162859898448298928L;
 
     private final String id;
@@ -14,7 +14,7 @@ public final class ClientDto implements Serializable {
     private final String password;
     private final String email;
     private final Role role;
-   private final ClientDetailsDto clientDetailsDto;
+   private final   ClientDetailsDto clientDetailsDto;
 
     private final ClientAddressDto clientAddressDto;
 
@@ -56,6 +56,7 @@ public final class ClientDto implements Serializable {
     public ClientAddressDto getClientAddressDto() {
         return clientAddressDto;
     }
+
 
     @Override
     public String toString() {
