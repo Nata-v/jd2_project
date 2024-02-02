@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Open in browser: http://localhost:8080/web/clients
+ * http://localhost:8080/web/static/swagger/index.html
  */
 @RestController
 @Secured("ADMIN")

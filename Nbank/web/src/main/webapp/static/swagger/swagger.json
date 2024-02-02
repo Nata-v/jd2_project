@@ -1,0 +1,418 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Nbank REST API",
+    "version" : "v1",
+    "title" : "Nbank REST API"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/web",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/allAccounts" : {
+      "get" : {
+        "operationId" : "findAllAccounts",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Account"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/allCards" : {
+      "get" : {
+        "operationId" : "findAllCards",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Card"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/allTransactions" : {
+      "get" : {
+        "operationId" : "findAllTransactions",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Transactions"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/allTransactionsPage" : {
+      "get" : {
+        "operationId" : "findAllTransactions",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/TransactionsDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clients/{id}" : {
+      "get" : {
+        "operationId" : "getClient",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Client"
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "createClient",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Client"
+          }
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ClientDetails"
+          }
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ClientAddress"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Client"
+            }
+          }
+        }
+      },
+      "put" : {
+        "operationId" : "updateClient",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Client"
+            }
+          },
+          "501" : {
+            "description" : ""
+          }
+        }
+      },
+      "delete" : {
+        "operationId" : "deleteClient",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "/clientDetails" : {
+      "get" : {
+        "operationId" : "findClientDetailsById",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ClientDetails"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients" : {
+      "get" : {
+        "operationId" : "findAllClients",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Client"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Account" : {
+      "type" : "object",
+      "properties" : {
+        "accountId" : {
+          "type" : "string"
+        },
+        "client" : {
+          "$ref" : "#/definitions/Client"
+        },
+        "accountNumber" : {
+          "type" : "string"
+        },
+        "dateOpen" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "balance" : {
+          "type" : "number"
+        },
+        "currency" : {
+          "type" : "string",
+          "enum" : [ "USD", "EUR", "RUB", "BYR" ]
+        },
+        "pin" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Card" : {
+      "type" : "object",
+      "properties" : {
+        "cardId" : {
+          "type" : "string"
+        },
+        "account" : {
+          "$ref" : "#/definitions/Account"
+        },
+        "cardNumber" : {
+          "type" : "string"
+        },
+        "balance" : {
+          "type" : "number"
+        },
+        "expiryDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "cvv" : {
+          "type" : "string"
+        },
+        "card_status" : {
+          "type" : "string",
+          "enum" : [ "DEBIT", "CREDIT", "OVERDRAFT" ]
+        },
+        "currency" : {
+          "type" : "string",
+          "enum" : [ "USD", "EUR", "RUB", "BYR" ]
+        }
+      }
+    },
+    "Client" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "role" : {
+          "type" : "string",
+          "enum" : [ "USER", "ADMIN" ]
+        },
+        "clientDetails" : {
+          "$ref" : "#/definitions/ClientDetails"
+        },
+        "clientAddress" : {
+          "$ref" : "#/definitions/ClientAddress"
+        }
+      }
+    },
+    "ClientAddress" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "country" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "houseNumber" : {
+          "type" : "string"
+        },
+        "flatNumber" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ClientDetails" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "surname" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "passportNumber" : {
+          "type" : "string"
+        },
+        "identityNumber" : {
+          "type" : "string"
+        },
+        "dateIssue" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dateExpiry" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
+    "Transactions" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "accountNumber" : {
+          "type" : "string"
+        },
+        "accountNumberRecipient" : {
+          "type" : "string"
+        },
+        "balance" : {
+          "type" : "number"
+        },
+        "transaction_currency" : {
+          "type" : "string",
+          "enum" : [ "USD", "EUR", "RUB", "BYR" ]
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "type_operation" : {
+          "type" : "string",
+          "enum" : [ "ADD_BALANCE", "WITHDRAW", "TRANSFER" ]
+        }
+      }
+    },
+    "TransactionsDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "accountNumber" : {
+          "type" : "string"
+        },
+        "accountNumberRecipient" : {
+          "type" : "string"
+        },
+        "balance" : {
+          "type" : "number"
+        },
+        "transaction_currency" : {
+          "type" : "string",
+          "enum" : [ "USD", "EUR", "RUB", "BYR" ]
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "type_operation" : {
+          "type" : "string",
+          "enum" : [ "ADD_BALANCE", "WITHDRAW", "TRANSFER" ]
+        }
+      }
+    }
+  }
+}
