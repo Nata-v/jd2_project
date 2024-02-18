@@ -20,16 +20,6 @@
 
     <dependencies>
 <!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--            <version>3.1.5</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-mail</artifactId>-->
-<!--            <version>3.1.5</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
 <!--            <groupId>org.springframework.data</groupId>-->
 <!--            <artifactId>spring-data-jpa</artifactId>-->
 <!--            <version>2.7.14</version>-->
@@ -149,25 +139,19 @@
 
     <build>
         <plugins>
-
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-war-plugin</artifactId>-->
-<!--                        <version>3.3.1</version>-->
-<!--                    </plugin>-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.1</version>
-<!--                        <configuration>-->
-<!--                            <annotationProcessorPaths>-->
-<!--                                <path>-->
-<!--                                    <groupId>org.projectlombok</groupId>-->
-<!--                                    <artifactId>lombok</artifactId>-->
-<!--                                    <version>1.18.28</version>-->
-<!--                                </path>-->
-<!--                            </annotationProcessorPaths>-->
-<!--                        </configuration>-->
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                    <version>1.18.28</version>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
                     </plugin>
 
 
@@ -183,25 +167,25 @@
                         <id>update</id>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <configuration>
-                            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>update_test</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <configuration>
-                            <propertyFile>src/test/resources/test.liquibase.properties</propertyFile>
-                            <changeLogFile>src/main/resources/changelog-master.xml</changeLogFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <goal>update</goal>
+        </goals>
+            <configuration>
+                <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+            </configuration>
+        </execution>
+        <execution>
+            <id>update_test</id>
+            <phase>process-resources</phase>
+            <goals>
+                <goal>update</goal>
+            </goals>
+            <configuration>
+                <propertyFile>src/test/resources/test.liquibase.properties</propertyFile>
+                <changeLogFile>src/main/resources/changelog-master.xml</changeLogFile>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
         </plugins>
     </build>
 

@@ -3,10 +3,6 @@ package by.nata.data.dao;
 import by.nata.data.entity.ClientDetails;
 import by.nata.data.model.ClientDetailsDto;
 import by.nata.data.model.ClientFilterDto;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Expression;
-import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -105,8 +101,4 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
     }
 
-//    @Override
-//    public List<ClientDetailsDto> findAll() {
-//        return null;
-//    }
 }

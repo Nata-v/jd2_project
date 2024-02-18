@@ -1,23 +1,25 @@
-package by.nata.data.config;
+package by.nata.service.config;
+
+import by.nata.data.config.NbankDataSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class NbankDataSource {
-    private static NbankDataSource dataSource;
-    protected NbankDataSource() throws ClassNotFoundException{
+public class NbankDataSourceTest extends NbankDataSource {
+    private static NbankDataSourceTest dataSource;
+    protected NbankDataSourceTest() throws ClassNotFoundException{
         Class.forName("com.mysql.cj.jdbc.Driver");
 
     }
     protected Connection getNbankConnection() throws SQLException {
-        return   DriverManager.getConnection("jdbc:mysql://localhost:3306/N_BANK?createDatabaseIfNotExist=true",
+        return   DriverManager.getConnection("jdbc:mysql://localhost:3306/N_BANK_TEST?createDatabaseIfNotExist=true",
                 "user",
                 "user");
     }
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         if (dataSource == null){
-            dataSource = new NbankDataSource();
+            dataSource = new NbankDataSourceTest();
         }
         return dataSource.getNbankConnection();
     }

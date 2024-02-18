@@ -10,7 +10,7 @@ public class NbankDataSourceTest extends NbankDataSource{
         Class.forName("com.mysql.cj.jdbc.Driver");
 
     }
-    protected Connection getEShopConnection() throws SQLException {
+    protected Connection getNbankConnection() throws SQLException {
         return   DriverManager.getConnection("jdbc:mysql://localhost:3306/N_BANK_TEST?createDatabaseIfNotExist=true",
                 "user",
                 "user");
@@ -19,6 +19,6 @@ public class NbankDataSourceTest extends NbankDataSource{
         if (dataSource == null){
             dataSource = new NbankDataSourceTest();
         }
-        return dataSource.getEShopConnection();
+        return dataSource.getNbankConnection();
     }
 }

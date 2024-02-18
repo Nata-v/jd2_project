@@ -13,7 +13,7 @@
                 name VARCHAR(128)NOT NULL,
                 birth_date Date  NOT NULL,
                 passport_number VARCHAR(50) NOT NULL,
-                identity_number VARCHAR(100) NOT NULL,
+                identity_number VARCHAR(100) NOT NULL UNIQUE,
                 date_issue Date NOT NULL,
                 date_expiry Date NOT NULL ,
                 PRIMARY KEY (id)
@@ -42,15 +42,15 @@
         <sql>
             CREATE TABLE IF NOT EXISTS client (
             id VARCHAR(256) NOT NULL,
-            username VARCHAR(50) NOT NULL,
+            username VARCHAR(50) NOT NULL UNIQUE,
             password VARCHAR(100) NOT NULL,
-            email VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL UNIQUE,
             role VARCHAR(5),
             client_details_id VARCHAR(256) NOT NULL,
             client_address_id VARCHAR(256) NOT NULL,
             PRIMARY KEY (id),
-            FOREIGN KEY (client_details_id) REFERENCES client_details (id),
-            FOREIGN KEY (client_address_id) REFERENCES client_address (id)
+            FOREIGN KEY (client_details_id) REFERENCES client_details (id) ON DELETE CASCADE,
+            FOREIGN KEY (client_address_id) REFERENCES client_address (id) ON DELETE CASCADE
 
 
             );
@@ -61,11 +61,11 @@
                 CREATE TABLE IF NOT EXISTS account (
                 account_id VARCHAR(256) NOT NULL,
                 client_id VARCHAR(256) NOT NULL,
-                account_number VARCHAR(20) NOT NULL,
+                account_number VARCHAR(20) NOT NULL UNIQUE,
                 date_open TIMESTAMP NOT NULL,
                 balance DECIMAL(10,2),
                 currency ENUM ('EUR', 'USD', 'RUB', 'BYR'),
-                pin VARCHAR(4) NOT NULL,
+                pin VARCHAR(4) NOT NULL ,
                 PRIMARY KEY (account_id),
                 FOREIGN KEY (client_id) REFERENCES client(id)
                 );
@@ -99,7 +99,7 @@
                 CREATE TABLE IF NOT EXISTS card (
                 card_id VARCHAR(256) NOT NULL,
                 account_id  VARCHAR(256) NOT NULL,
-                card_number VARCHAR(16) NOT NULL,
+                card_number VARCHAR(16) NOT NULL ,
                 balance DECIMAL(10,2),
                 expiry_date DATE NOT NULL,
                 cvv VARCHAR(3) NOT NULL,
@@ -130,7 +130,7 @@
 <!--        <sql>-->
 <!--            CREATE TABLE IF NOT EXISTS cities (-->
 <!--            id VARCHAR(256)  NOT NULL,-->
-<!--            name  VARCHAR(128),-->
+<!--            name  VARCHAR(128) unique,-->
 <!--            PRIMARY KEY (id)-->
 <!--            );-->
 <!--        </sql>-->

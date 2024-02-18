@@ -31,14 +31,18 @@ public class ClientDetailsDaoImplTest {
         @Before
         public void setUp() throws Exception {
             connection = NbankDataSourceTest.getConnection();
+            connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
             connection.createStatement().executeUpdate("DELETE FROM CLIENT_DETAILS;");
+            connection.createStatement().executeUpdate("delete from client");
         }
 
         @After
         public void tearDown() throws Exception {
             clientDetailsDao = null;
             connection = NbankDataSourceTest.getConnection();
+            connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
             connection.createStatement().executeUpdate("DELETE FROM CLIENT_DETAILS;");
+            connection.createStatement().executeUpdate("delete from client");
             connection.close();
         }
 

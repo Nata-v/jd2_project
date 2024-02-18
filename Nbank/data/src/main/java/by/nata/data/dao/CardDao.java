@@ -16,6 +16,6 @@ public interface CardDao {
     void save(CardDto cardDto, String accountNumber);
     List<CardDto> getAllCards();
     CardDto findByCardNumber(String cardNumber);
-    void deleteCardByCardNumber(String cardNumber);
+    CardDto deleteCardByCardNumber(String cardNumber);
 
 }

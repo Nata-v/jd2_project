@@ -42,6 +42,10 @@ public class AccountDaoImplTest {
         connection = NbankDataSourceTest.getConnection();
         if (connection != null) {
             connection.createStatement().executeUpdate("delete from account");
+            connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
+            connection.createStatement().executeUpdate("delete from CLIENT_DETAILS");
+            connection.createStatement().executeUpdate("delete from client");
+
         }
     }
 
@@ -50,6 +54,10 @@ public class AccountDaoImplTest {
         accountDao = null;
         connection = NbankDataSourceTest.getConnection();
         connection.createStatement().executeUpdate("delete from account");
+        connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
+        connection.createStatement().executeUpdate("delete from CLIENT_DETAILS");
+        connection.createStatement().executeUpdate("delete from client");
+
         connection.close();
     }
 
@@ -118,9 +126,11 @@ public class AccountDaoImplTest {
         expectedAccount.setPin("3003");
         accountDao.save(expectedAccount);
 
+        AccountDto savedAccount = accountDao.findByAccountNumber("56877t6g789nj987");
+
         BigDecimal newBalance = new BigDecimal(2000);
-        expectedAccount.setBalance(newBalance);
-       Account updatedAccount = accountDao.updateAccount(expectedAccount);
+        savedAccount.setBalance(newBalance);
+       Account updatedAccount = accountDao.updateAccount(savedAccount);
 
         assertNotNull(updatedAccount);
         assertEquals(newBalance, updatedAccount.getBalance());

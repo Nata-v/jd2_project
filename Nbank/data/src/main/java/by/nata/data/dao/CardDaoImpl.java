@@ -53,7 +53,7 @@ public class CardDaoImpl implements CardDao{
     }
 
     @Override
-    public void deleteCardByCardNumber(String cardNumber) {
+    public CardDto deleteCardByCardNumber(String cardNumber) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Card WHERE cardNumber = :searchedCardNumber";
         Query<Card> query = session.createQuery(hql, Card.class);
@@ -63,13 +63,14 @@ public class CardDaoImpl implements CardDao{
             session.delete(card);
             session.flush();
         }
+        return null;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CardDto> getAllCards() {
         final Session session = sessionFactory.getCurrentSession();
-        String hql = "SELECT new by.nata.data.entity.Card(c.cardId, c.accountId, c.cardNumber, c.balance, c.expiryDate, c.cvv, c.card_status,m c.currency) FROM Card c";
+        String hql = "SELECT new by.nata.data.entity.Card(c.cardId, c.accountId, c.cardNumber, c.balance, c.expiryDate, c.cvv, c.card_status, c.currency) FROM Card c";
         Query<Card> query = session.createQuery(hql, Card.class);
         List<Card> cards = query.getResultList();
 

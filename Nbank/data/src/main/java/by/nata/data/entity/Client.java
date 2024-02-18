@@ -22,15 +22,15 @@ public class Client {
     private String id;
     @NotEmpty(message = "Enter username!")
     @Size(min = 3, max = 15, message = "Username must be from 3 to 15 characters!")
-    @Column(name = "USERNAME", nullable = false, unique = true)
+    @Column(name = "USERNAME", nullable = false)
     private String username;
     @NotEmpty(message = "Enter password!")
     @Size(min = 3, max = 20, message = "Password must be from 3 to 20 characters!!")
-    @Column(name = "PASSWORD", nullable = false, unique = true)
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
     @NotEmpty(message = "Email should not be empty!")
     @Email(message = "Email should be valid!")
-    @Column(name = "EMAIL", unique = true)
+    @Column(name = "EMAIL")
     private String email;
     @Enumerated(EnumType.STRING)
     @Column(name = "role")

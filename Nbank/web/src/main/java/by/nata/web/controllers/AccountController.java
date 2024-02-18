@@ -58,7 +58,7 @@ public class AccountController {
                 accountService.createAccount(account, clientId);
             }
         }
-        return new ModelAndView("login");
+        return new ModelAndView("bank");
 
     }
 

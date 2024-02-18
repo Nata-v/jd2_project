@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 
 @Controller
-//@SessionAttributes({"client"})
 @SuppressWarnings({"unused"})
 public class ClientController {
     private static final Logger log = LoggerFactory.getLogger(ClientController.class);
@@ -36,16 +35,6 @@ private final ClientAddressService clientAddressService;
     this.clientAddressService = clientAddressService;
 }
 
-
-
-
-    @GetMapping("/bank/{id}")
-    public String goMainPage(@CookieValue ("JSESSIONID") String jsessionId,
-                             @PathVariable("id") String id,
-                             Model model, Client client){
-    model.addAttribute("client", client);
-    return "/bank";
-    }
 
 
     @GetMapping("/registration")
@@ -70,6 +59,25 @@ if (bindingResult.hasErrors()){
         clientService.saveNewClient(client, clientDetails, clientAddress);
         return new ModelAndView("login");
     }
-
+//@PostMapping("/registration")
+//
+//public ModelAndView registrationClient(@ModelAttribute("client") @Valid Client client,
+//                                       @Validated ClientDetails clientDetails,
+//                                       @Validated  ClientAddress clientAddress,
+//                                       BindingResult bindingResult, Model model) throws IOException {
+//    if (bindingResult.hasErrors()) {
+//        return new ModelAndView("registration");
+//    }
+//
+//        Client existingClient = clientService.findByUsername(client.getUsername());
+//        if (existingClient != null) {
+//            model.addAttribute("usernameExists", true);
+//            return new ModelAndView("registration");
+//    }
+//
+//    clientService.saveNewClient(client, clientDetails, clientAddress);
+//    return new ModelAndView("login");
+//
+//}
 
 }

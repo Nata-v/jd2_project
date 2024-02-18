@@ -35,7 +35,7 @@ public class ClientDetails {
     private LocalDate birthDate;
     @Column(name = "PASSPORT_NUMBER")
     private String passportNumber;
-    @Column(name = "IDENTITY_NUMBER", unique = true)
+    @Column(name = "IDENTITY_NUMBER")
     private String identityNumber;
     @Column(name = "DATE_ISSUE")
     private LocalDate dateIssue;

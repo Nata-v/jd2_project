@@ -6,9 +6,6 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 import java.util.Optional;
 
-
-//@Repository
-//@Transactional
 public abstract class BaseDao<K, E> implements Dao<K, E> {
 
     private final SessionFactory sessionFactory;

@@ -1,10 +1,11 @@
 package by.nata.service;
 
 import by.nata.data.dao.ClientDao;
-import by.nata.data.listener.ClientEvent;
+import by.nata.data.entity.Role;
 import by.nata.data.model.ClientAddressDto;
 import by.nata.data.model.ClientDetailsDto;
 import by.nata.data.model.ClientDto;
+import by.nata.service.config.NbankDataSourceTest;
 import by.nata.service.config.ServiceConfigurationTest;
 import by.nata.service.model.Client;
 import by.nata.service.model.ClientAddress;
@@ -13,66 +14,109 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-//@ContextConfiguration(classes = ServiceConfigurationTest.class)
-//@RunWith(SpringJUnit4ClassRunner.class)
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ServiceConfigurationTest.class)
+@TestPropertySource(value = "classpath:some.properties")
 public class ClientServiceImplTest {
-//    private static final String CLIENT_ID = "1";
-//    private static final String CLIENT_DETAILS_ID = "2";
-//    private static final String CLIENT_ADDRESS_ID = "3";
-//    @Mock
-//    private ClientDao clientDao;
-//    @Mock
-//    private ApplicationEventPublisher eventPublisher;
+    private static final String CLIENT_ID = "1";
+    private static final String CLIENT_DETAILS_ID = "2";
+    private static final String CLIENT_ADDRESS_ID = "3";
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private ClientDao clientDao;
+Connection connection;
 
-//    @InjectMocks
-//    @Mock
-//    private ClientService clientService;
-//    @Before
-//    public void setUp() throws Exception {
-//        MockitoAnnotations.initMocks(this);
-//    }
-//
-//    @After
-//    public void tearDown() throws Exception {
-//    }
-//
-//    @Test
-//    public void saveNewClient() {
-//
-//
-//    }
+    @Before
+    public void setUp() throws Exception {
+        connection = NbankDataSourceTest.getConnection();
+        if (connection != null) {
+            connection.createStatement().executeUpdate("delete from client");
+            connection.createStatement().executeUpdate("delete from CLIENT_DETAILS");
+            connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
+        }
+    }
 
-//    @Test
-//    public void findAllClientsTest(){
-//        List<Client> result = clientService.findAllClients();
-//       // assertThat(result).;
-//
-//
-//    }
+    @After
+    public void tearDown() throws Exception {
+        clientDao = null;
+        connection = NbankDataSourceTest.getConnection();
+        connection.createStatement().executeUpdate("delete from client");
+        connection.createStatement().executeUpdate("delete from CLIENT_DETAILS");
+        connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
+        connection.close();
 
-//    @Test
-//    public void findClientById() {
-//
-//        Optional<Client> findClient =clientService.findClientById(CLIENT_ID);
-//
-//    }
+    }
+
+    @Test
+    public void saveNewClient() {
+        Role userRole = Role.valueOf("USER");
+        ClientAddress clientAddress = new ClientAddress(null,
+                "Belarus",
+                "Minsk",
+                "Nemiga",
+                "6",
+                "15",
+                "25-45-55");
+        ClientDetails clientDetails = new ClientDetails(null,
+                "Volkova",
+                "Natali",
+                LocalDate.of(2000, 8, 31),
+                "KB232323",
+                "1235M0987",
+                LocalDate.of(2020, 10, 10),
+                LocalDate.of(2025, 10, 10));
+        Client client = new Client(null,
+                "nata",
+                "12345",
+                "nata@gmail.com",
+                userRole,
+                clientDetails,
+                clientAddress);
+       clientService.saveNewClient(client, clientDetails, clientAddress);
+//       Client foundClient = clientService.findByUsername("nata");
+//       assertNotNull(foundClient);
+        // when(clientService.findByUsername("nata")).thenReturn();
+        //   clientDao.save(client)
+        // verify(clientDao).save(any(ClientDto.class));
+        //assertNotNull(find);
+       // Client findClient = clientService.findClientById(CLIENT_ID);
+       // ClientDto clientDto = clientDao.getClientById(client.getId());
+       // assertNotNull(clientDto);
+        //assertEquals("nata@gmail.com", find.equals(client.getEmail()));
+    }
+
+    @Test
+    public void findAllClientsTest() {
+        List<Client> result = clientService.findAllClients();
+        assertNotNull(result);
+
+    }
+
+    @Test
+    public void findClientById() {
+
+        Client findClient = clientService.findClientById(CLIENT_ID);
+        // assertNotNull(findClient);
+
+    }
+    //  Optional<Client> findClient =clientService.findClientById(CLIENT_ID);
+    //assertTrue(findClient.isPresent());
+    //findClient.isPresent(client -> assertEquals("Volkova", client.getSurname()));
 //        Mockito.doReturn(Optional.of(new Client(CLIENT_ID,
 //                       "nata",
 //                "12345",
@@ -80,17 +124,13 @@ public class ClientServiceImplTest {
 //                new ClientDetails(CLIENT_DETAILS_ID,
 //                        "Volkova",
 //                        "Natali",
-//                        "Nikolaevna",
 //                        LocalDate.of(2000, 8, 31),
 //                        "KB232323",
 //                        "1235M0987",
-//                        "Mogilev",
 //                        LocalDate.of(2020,10,10),
 //                        LocalDate.of(2025,10,10)),
 //                new ClientAddress(CLIENT_ADDRESS_ID,
 //                        "Belarus",
-//                        "Minskaya obl",
-//                        null,
 //                        "Minsk",
 //                        "Nemiga",
 //                        "6",
@@ -134,10 +174,6 @@ public class ClientServiceImplTest {
 //       // actualResult.isPresent(actual -> assertEquals(expectedResult, actual));
 //         assertEquals(expectedResult, actualResult);
 //        verify(eventPublisher).publishEvent(any(ClientEvent.class));
-
-
-
-
 
 
     // Предполагаемые значения из базы данных

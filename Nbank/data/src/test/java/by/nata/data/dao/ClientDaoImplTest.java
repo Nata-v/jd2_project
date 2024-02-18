@@ -38,6 +38,7 @@ public class ClientDaoImplTest {
             connection.createStatement().executeUpdate("delete from client");
             connection.createStatement().executeUpdate("delete from CLIENT_DETAILS");
             connection.createStatement().executeUpdate("delete from CLIENT_ADDRESS");
+
         }
 
         }
@@ -163,7 +164,6 @@ public class ClientDaoImplTest {
 
         assertEquals("tom", savedClient.getUsername());
         assertEquals("tom@gmail.com", savedClient.getEmail());
-//        assertEquals("USER", savedClient.getRole());
 
         assertNotNull(savedClient.getClientDetailsDto());
         assertEquals("Jonson", savedClient.getClientDetailsDto().getSurname());

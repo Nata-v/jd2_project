@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class AccountServiceImpl implements AccountService{
 public void createAccount(by.nata.service.model.Account account, String id) {
     String accountNumber = generateAccountNumber();
     String pin = generateRandomPin();
-    ZonedDateTime openDate = ZonedDateTime.now();
+    ZonedDateTime openDate = ZonedDateTime.now(ZoneId.of("UTC"));
     BigDecimal balance = new BigDecimal("0.0");
 
     ClientDto clientDto = clientDao.getClientById(id);

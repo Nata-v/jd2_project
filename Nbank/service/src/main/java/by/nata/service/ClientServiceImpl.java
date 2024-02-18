@@ -13,6 +13,7 @@ import by.nata.service.model.Client;
 
 import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@Slf4j
 public class ClientServiceImpl implements ClientService{
-    private static final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
 
     private final ClientDao clientDao;
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -43,32 +44,33 @@ public class ClientServiceImpl implements ClientService{
 
     public void saveNewClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
 
-
-        ClientDto clientDto = new ClientDto(
-                client.getId(),
-                client.getUsername(),
-                client.getPassword(),
-                client.getEmail(),
-                Role.USER, new ClientDetailsDto(
-                        clientDetails.getId(),
-                        clientDetails.getSurname(),
-                        clientDetails.getName(),
-                        clientDetails.getBirthDate(),
-                        clientDetails.getPassportNumber(),
-                        clientDetails.getIdentityNumber(),
-                        clientDetails.getDateIssue(),
-                        clientDetails.getDateExpiry()),
-                new ClientAddressDto(
-                        clientAddress.getId(),
-                        clientAddress.getCountry(),
-                        clientAddress.getCity(),
-                        clientAddress.getStreet(),
-                        clientAddress.getHouseNumber(),
-                        clientAddress.getFlatNumber(),
-                        clientAddress.getPhoneNumber()
-                ));
-
+        ClientDto clientDto = mapToClientDto(client, clientDetails, clientAddress);
         clientDao.save(clientDto);
+//        ClientDto clientDto = new ClientDto(
+//                client.getId(),
+//                client.getUsername(),
+//                client.getPassword(),
+//                client.getEmail(),
+//                Role.USER, new ClientDetailsDto(
+//                        clientDetails.getId(),
+//                        clientDetails.getSurname(),
+//                        clientDetails.getName(),
+//                        clientDetails.getBirthDate(),
+//                        clientDetails.getPassportNumber(),
+//                        clientDetails.getIdentityNumber(),
+//                        clientDetails.getDateIssue(),
+//                        clientDetails.getDateExpiry()),
+//                new ClientAddressDto(
+//                        clientAddress.getId(),
+//                        clientAddress.getCountry(),
+//                        clientAddress.getCity(),
+//                        clientAddress.getStreet(),
+//                        clientAddress.getHouseNumber(),
+//                        clientAddress.getFlatNumber(),
+//                        clientAddress.getPhoneNumber()
+//                ));
+//
+//        clientDao.save(clientDto);
     }
 
     @Override
@@ -80,13 +82,12 @@ public class ClientServiceImpl implements ClientService{
         return null;
     }
 //    @Override
-//    public Optional<Client> findClientById(String id) {
+//    public Optional<Client> findById(String id) {
 //        return clientDao.getClientById(id)
 //                .map(this::convertToModel);
 //    }
 
-
-//        result.ifPresent(client ->
+    //        result.ifPresent(client ->
 //                applicationEventPublisher.publishEvent(new ClientEvent(this, AccessType.READ, client.getId())));
 
 
@@ -176,13 +177,13 @@ public class ClientServiceImpl implements ClientService{
 
     private ClientDto mapToClientDto(Client client, ClientDetails clientDetails,
                                      ClientAddress clientAddress) {
-
+        Role role = Role.USER;
         return new ClientDto(
                 client.getId(),
                 client.getUsername(),
                 client.getPassword(),
                 client.getEmail(),
-                client.getRole(),
+                role,
                 new ClientDetailsDto(
                         clientDetails.getId(),
                         clientDetails.getSurname(),
@@ -200,7 +201,6 @@ public class ClientServiceImpl implements ClientService{
                         clientAddress.getFlatNumber(),
                         clientAddress.getPhoneNumber()));
 
-       // return clientDto;
     }
 //    @Override
 //    @Transactional
