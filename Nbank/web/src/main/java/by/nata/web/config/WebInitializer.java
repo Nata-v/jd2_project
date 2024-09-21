@@ -2,10 +2,13 @@ package by.nata.web.config;
 
 import by.nata.data.config.DataConfiguration;
 import by.nata.service.config.ServiceConfiguration;
-import by.nata.web.config.WebConfiguration;
 import by.nata.web.rest.RestConfiguration;
 import by.nata.web.security.WebSecurityConfig;
-import jakarta.servlet.*;
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletContainerInitializer;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRegistration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 

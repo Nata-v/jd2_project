@@ -1,28 +1,22 @@
 package by.nata.data.dao;
 
 import by.nata.data.entity.Client;
-
 import by.nata.data.entity.ClientAddress;
 import by.nata.data.entity.ClientDetails;
-import by.nata.data.entity.Role;
 import by.nata.data.model.ClientAddressDto;
 import by.nata.data.model.ClientDetailsDto;
 import by.nata.data.model.ClientDto;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional
@@ -53,6 +47,7 @@ public class ClientDaoImpl implements ClientDao {
 
         return null;
     }
+
     private ClientDto convertToDto(Client client) {
         return new ClientDto(
                 client.getId(),
@@ -68,23 +63,23 @@ public class ClientDaoImpl implements ClientDao {
     private ClientDetailsDto convertToDto(ClientDetails clientDetails) {
 
         return new ClientDetailsDto(clientDetails.getId(),
-                            clientDetails.getSurname(),
-                            clientDetails.getName(),
-                            clientDetails.getBirthDate(),
-                            clientDetails.getPassportNumber(),
-                            clientDetails.getIdentityNumber(),
-                            clientDetails.getDateIssue(),
-                            clientDetails.getDateExpiry());
+                clientDetails.getSurname(),
+                clientDetails.getName(),
+                clientDetails.getBirthDate(),
+                clientDetails.getPassportNumber(),
+                clientDetails.getIdentityNumber(),
+                clientDetails.getDateIssue(),
+                clientDetails.getDateExpiry());
     }
 
     private ClientAddressDto convertToDto(ClientAddress clientAddress) {
         return new ClientAddressDto(clientAddress.getId(),
-                            clientAddress.getCountry(),
-                            clientAddress.getCity(),
-                            clientAddress.getStreet(),
-                            clientAddress.getHouseNumber(),
-                            clientAddress.getFlatNumber(),
-                            clientAddress.getPhoneNumber());
+                clientAddress.getCountry(),
+                clientAddress.getCity(),
+                clientAddress.getStreet(),
+                clientAddress.getHouseNumber(),
+                clientAddress.getFlatNumber(),
+                clientAddress.getPhoneNumber());
     }
 
     @Override
@@ -196,20 +191,20 @@ public class ClientDaoImpl implements ClientDao {
         session.saveOrUpdate(client);
     }
 
-        @Override
-        @Transactional(readOnly = true)
+    @Override
+    @Transactional(readOnly = true)
     public ClientDto getClientById(String id) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Client WHERE id = :id";
         Query<Client> query = session.createQuery(hql, Client.class);
         query.setParameter("id", id);
-            Client client = query.uniqueResult();
+        Client client = query.uniqueResult();
 
-            if (client != null) {
-                return convertToDto(client);
-            }
+        if (client != null) {
+            return convertToDto(client);
+        }
 
-            return null;
+        return null;
 
     }
 
@@ -223,7 +218,6 @@ public class ClientDaoImpl implements ClientDao {
 //
 //        return Optional.ofNullable(client).map(this::convertToDto);
 //    }
-
 
 
     @Override
@@ -242,9 +236,6 @@ public class ClientDaoImpl implements ClientDao {
 
         return clientDtos;
     }
-
-
-
 
 
 }

@@ -1,7 +1,10 @@
 package by.nata.data.dao;
 
 
-import by.nata.data.entity.*;
+import by.nata.data.entity.Account;
+import by.nata.data.entity.Client;
+import by.nata.data.entity.ClientAddress;
+import by.nata.data.entity.ClientDetails;
 import by.nata.data.model.AccountDto;
 import by.nata.data.model.ClientAddressDto;
 import by.nata.data.model.ClientDetailsDto;
@@ -41,7 +44,7 @@ public class AccountDaoImpl implements AccountDao {
         }
         final Session session = sessionFactory.getCurrentSession();
         Account account = convertDtoToEntity(accountDto);
-       return String.valueOf(session.merge(account));
+        return String.valueOf(session.merge(account));
     }
 
 

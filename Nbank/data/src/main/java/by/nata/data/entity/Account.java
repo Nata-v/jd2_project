@@ -1,8 +1,15 @@
 package by.nata.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -32,7 +39,7 @@ public class Account {
     private BigDecimal balance;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "CURRENCY")
-    // @NotAudited
+
     private Currency currency;
 
     @Column(name = "pin")

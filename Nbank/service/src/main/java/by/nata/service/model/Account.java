@@ -1,26 +1,23 @@
 package by.nata.service.model;
 
 import by.nata.data.entity.Currency;
-import by.nata.data.model.AccountDto;
-import by.nata.data.model.ClientDetailsDto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.Optional;
 
 public class Account implements Serializable {
     private static final long serialVersionUID = 745959034670944882L;
 
-    private  String accountId;
+    private String accountId;
 
     private Client client;
 
-    private  String accountNumber;
+    private String accountNumber;
 
-    private  ZonedDateTime dateOpen;
+    private ZonedDateTime dateOpen;
 
-    private  BigDecimal balance;
+    private BigDecimal balance;
     private Currency currency;
     private String pin;
 
@@ -94,38 +91,4 @@ public class Account implements Serializable {
         this.pin = pin;
     }
 
-//    public static Account mapFromAccountDto(AccountDto accountDto, ClientDetailsDto clientDetailsDto){
-//        return new Account(
-//                accountDto.getAccountId(),
-//                new ClientDetails(clientDetailsDto.getId(),
-//                        clientDetailsDto.getSurname(),
-//                        clientDetailsDto.getName(),
-//                        clientDetailsDto.getBirthDate(),
-//                        clientDetailsDto.getPassportNumber(),
-//                        clientDetailsDto.getIdentityNumber(),
-//                        clientDetailsDto.getDateIssue(),
-//                        clientDetailsDto.getDateExpiry()),
-//                accountDto.getAccountNumber(),
-//                accountDto.getDateOpen(),
-//                accountDto.getBalance(),
-//                accountDto.getCurrency(),
-//                accountDto.getPin()
-//        );
-//    }
-//    public static AccountDto mapToAccountDto(Account account, ClientDetails clientDetails){
-//        return new AccountDto(account.getAccountId(),
-//                new ClientDetailsDto(clientDetails.getId(),
-//                        clientDetails.getSurname(),
-//                        clientDetails.getName(),
-//                        clientDetails.getBirthDate(),
-//                        clientDetails.getPassportNumber(),
-//                        clientDetails.getIdentityNumber(),
-//                        clientDetails.getDateIssue(),
-//                        clientDetails.getDateExpiry()),
-//                account.getAccountNumber(),
-//                account.getDateOpen(),
-//                account.getBalance(),
-//                account.getCurrency(),
-//                account.getPin());
-//    }
 }

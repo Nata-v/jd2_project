@@ -1,34 +1,27 @@
 package by.nata.service;
 
 
-import by.nata.data.dao.ClientAddressDao;
 import by.nata.data.dao.ClientDao;
-import by.nata.data.dao.ClientDetailsDao;
 import by.nata.data.entity.Role;
-import by.nata.data.listener.AccessType;
-import by.nata.data.listener.ClientEvent;
-import by.nata.data.model.*;
-
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import by.nata.service.model.Client;
-
 import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @Slf4j
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 
     private final ClientDao clientDao;
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -46,31 +39,6 @@ public class ClientServiceImpl implements ClientService{
 
         ClientDto clientDto = mapToClientDto(client, clientDetails, clientAddress);
         clientDao.save(clientDto);
-//        ClientDto clientDto = new ClientDto(
-//                client.getId(),
-//                client.getUsername(),
-//                client.getPassword(),
-//                client.getEmail(),
-//                Role.USER, new ClientDetailsDto(
-//                        clientDetails.getId(),
-//                        clientDetails.getSurname(),
-//                        clientDetails.getName(),
-//                        clientDetails.getBirthDate(),
-//                        clientDetails.getPassportNumber(),
-//                        clientDetails.getIdentityNumber(),
-//                        clientDetails.getDateIssue(),
-//                        clientDetails.getDateExpiry()),
-//                new ClientAddressDto(
-//                        clientAddress.getId(),
-//                        clientAddress.getCountry(),
-//                        clientAddress.getCity(),
-//                        clientAddress.getStreet(),
-//                        clientAddress.getHouseNumber(),
-//                        clientAddress.getFlatNumber(),
-//                        clientAddress.getPhoneNumber()
-//                ));
-//
-//        clientDao.save(clientDto);
     }
 
     @Override
@@ -81,15 +49,6 @@ public class ClientServiceImpl implements ClientService{
         }
         return null;
     }
-//    @Override
-//    public Optional<Client> findById(String id) {
-//        return clientDao.getClientById(id)
-//                .map(this::convertToModel);
-//    }
-
-    //        result.ifPresent(client ->
-//                applicationEventPublisher.publishEvent(new ClientEvent(this, AccessType.READ, client.getId())));
-
 
     @Override
     public boolean delete(String id) {
@@ -101,19 +60,6 @@ public class ClientServiceImpl implements ClientService{
         return false;
     }
 
-//    @Override
-//    public boolean delete(String id) {
-//        Optional<ClientDto> clientOptional = clientDao.findById(id);
-//
-//        if (clientOptional.isPresent()) {
-//            ClientDto clientDto = clientOptional.get();
-//            clientDao.delete(clientDto.getId());
-//
-//            return true;
-//        }
-//
-//        return false;
-//    }
 
     @Override
     public List<Client> findAllClients() {
@@ -130,7 +76,7 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public Client findByUsername(String username) {
 
-        ClientDto clientDto = clientDao.findByUsername(username );
+        ClientDto clientDto = clientDao.findByUsername(username);
         if (clientDto != null) {
             return convertToModel(clientDto);
         }
@@ -145,9 +91,8 @@ public class ClientServiceImpl implements ClientService{
                 clientDto.getPassword(),
                 clientDto.getEmail(),
                 clientDto.getRole(),
-          convertToModelDetails(clientDto.getClientDetailsDto()),
+                convertToModelDetails(clientDto.getClientDetailsDto()),
                 convertToModelAddress(clientDto.getClientAddressDto()));
-
 
 
     }
@@ -202,31 +147,6 @@ public class ClientServiceImpl implements ClientService{
                         clientAddress.getPhoneNumber()));
 
     }
-//    @Override
-//    @Transactional
-//    public void updateClient(Client client, ClientDetails clientDetails, ClientAddress clientAddress) {
-//        ClientDto existingClientDto = clientDao.findById(client.getId()).orElse(null);
-//        ClientDetailsDto existingClientDetailsDto = clientDetailsDao.findById(clientDetails.getId()).orElse(null);
-//        ClientAddressDto existingClientAddressDto = clientAddressDao.findById(clientAddress.getId()).orElse(null);
-//
-//        if (existingClientDto != null && existingClientDetailsDto != null && existingClientAddressDto != null) {
-//
-//           // client.setId(existingClientDto.getId());
-//                    client.setUsername(existingClientDto.getUsername());
-//            client.setPassword(existingClientDto.getPassword());
-//            client.setEmail(existingClientDto.getEmail());
-//           // client.setRole(existingClientDto.getRole());
-//            client.setClientDetails(clientDetails);
-//            client.setClientAddress(clientAddress);
-//
-////            clientDetailsDao.update(existingClientDetailsDto);
-////            clientAddressDao.update(existingClientAddressDto);
-//            clientDao.update(existingClientDto, existingClientDetailsDto, existingClientAddressDto);
-//
-//
-//        }
-//    }
-
 
 }
 

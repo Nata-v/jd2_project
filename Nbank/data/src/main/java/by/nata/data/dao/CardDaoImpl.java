@@ -1,14 +1,21 @@
 package by.nata.data.dao;
 
-import by.nata.data.entity.*;
-import by.nata.data.model.*;
+import by.nata.data.entity.Account;
+import by.nata.data.entity.Card;
+import by.nata.data.entity.Client;
+import by.nata.data.entity.ClientAddress;
+import by.nata.data.entity.ClientDetails;
+import by.nata.data.model.AccountDto;
+import by.nata.data.model.CardDto;
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +24,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class CardDaoImpl implements CardDao{
+public class CardDaoImpl implements CardDao {
     private static final Logger log = LoggerFactory.getLogger(CardDaoImpl.class);
     private final SessionFactory sessionFactory;
 
@@ -28,9 +35,10 @@ public class CardDaoImpl implements CardDao{
         }
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     @Transactional
-    public void save(CardDto cardDto, String accountNumber){
+    public void save(CardDto cardDto, String accountNumber) {
         final Session session = sessionFactory.getCurrentSession();
 
         String hql = "from Account WHERE accountNumber = :accountNumber";
@@ -38,7 +46,7 @@ public class CardDaoImpl implements CardDao{
         query.setParameter("accountNumber", accountNumber);
         Account account = query.uniqueResult();
         if (account == null) {
-            throw new IllegalArgumentException("Account not found: " + accountNumber     );
+            throw new IllegalArgumentException("Account not found: " + accountNumber);
         }
         Card card = new Card();
         card.setCardId(cardDto.getCardId());
@@ -97,7 +105,8 @@ public class CardDaoImpl implements CardDao{
         }
         return null;
     }
-    private CardDto convertToDto(Card card){
+
+    private CardDto convertToDto(Card card) {
         return new CardDto(
                 card.getCardId(),
                 convertToDto(card.getAccountId()),

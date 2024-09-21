@@ -23,19 +23,19 @@ public class LoginController {
 
 
     @GetMapping("/info")
-    public String goToInfo(){
+    public String goToInfo() {
         return "info";
     }
 
     @PostMapping("/login")
-    public String login(){
+    public String login() {
         return "redirect:/bank";
     }
 
 
     @Secured({"ADMIN", "USER"})
     @GetMapping("/bank")
-    public String goToMainPage(Authentication authentication, Model model){
+    public String goToMainPage(Authentication authentication, Model model) {
 
         if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -44,10 +44,12 @@ public class LoginController {
         }
         return "bank";
     }
+
     @GetMapping("/bankomat")
-    public ModelAndView useBankomat(){
+    public ModelAndView useBankomat() {
         return new ModelAndView("bankomat");
     }
+
     @GetMapping("/profile")
     public String addClient() {
         return "/profile";

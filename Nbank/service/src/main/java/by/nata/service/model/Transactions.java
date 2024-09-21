@@ -66,7 +66,6 @@ public class Transactions implements Serializable {
     }
 
 
-
     public ZonedDateTime getDate() {
         return date;
     }

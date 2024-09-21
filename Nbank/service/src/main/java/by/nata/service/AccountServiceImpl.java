@@ -1,17 +1,15 @@
 package by.nata.service;
 
 import by.nata.data.dao.AccountDao;
-import by.nata.data.dao.CardDaoImpl;
 import by.nata.data.dao.ClientDao;
 import by.nata.data.dao.TransactionsDao;
-import by.nata.data.entity.Account;
-import by.nata.data.entity.TypeOperation;
-import by.nata.data.model.*;
+import by.nata.data.model.AccountDto;
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import by.nata.service.model.Client;
 import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
-import by.nata.service.model.Transactions;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +17,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
     private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     private final AccountDao accountDao;
     private final ClientDao clientDao;
-    private  final TransactionsDao transactionsDao;
+    private final TransactionsDao transactionsDao;
 
     @Autowired
     public AccountServiceImpl(AccountDao accountDao, ClientDao clientDao, TransactionsDao transactionsDao) {
@@ -42,38 +41,38 @@ public class AccountServiceImpl implements AccountService{
         this.transactionsDao = transactionsDao;
     }
 
-@Override
-public void createAccount(by.nata.service.model.Account account, String id) {
-    String accountNumber = generateAccountNumber();
-    String pin = generateRandomPin();
-    ZonedDateTime openDate = ZonedDateTime.now(ZoneId.of("UTC"));
-    BigDecimal balance = new BigDecimal("0.0");
+    @Override
+    public void createAccount(by.nata.service.model.Account account, String id) {
+        String accountNumber = generateAccountNumber();
+        String pin = generateRandomPin();
+        ZonedDateTime openDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        BigDecimal balance = new BigDecimal("0.0");
 
-    ClientDto clientDto = clientDao.getClientById(id);
+        ClientDto clientDto = clientDao.getClientById(id);
 
-    if (clientDto == null) {
-        throw new RuntimeException("Client  not found: " + id);
+        if (clientDto == null) {
+            throw new RuntimeException("Client  not found: " + id);
+        }
+
+        AccountDto accountDto = new AccountDto(
+                account.getAccountId(),
+                clientDto,
+                accountNumber,
+                openDate,
+                balance,
+                account.getCurrency(),
+                pin
+        );
+
+        accountDao.save(accountDto);
     }
 
-    AccountDto accountDto = new AccountDto(
-            account.getAccountId(),
-            clientDto,
-            accountNumber,
-            openDate,
-            balance,
-            account.getCurrency(),
-            pin
-    );
-
-    accountDao.save(accountDto);
-}
-
-    private String generateAccountNumber(){
+    private String generateAccountNumber() {
         String accountNumber;
-        do{
+        do {
             accountNumber = UUID.randomUUID().toString().replaceAll("-", "")
                     .substring(0, 16);
-        }while (accountDao.findByAccountNumber(accountNumber) != null);
+        } while (accountDao.findByAccountNumber(accountNumber) != null);
         return accountNumber;
     }
 
@@ -96,9 +95,9 @@ public void createAccount(by.nata.service.model.Account account, String id) {
         accountDto.setBalance(newBalance);
         accountDao.updateAccount(accountDto);
 
-         log.error("Счет с номером " + accountNumber + " не найден");
+        log.error("Счет с номером " + accountNumber + " не найден");
 
-        }
+    }
 
 
     @Override
@@ -138,7 +137,7 @@ public void createAccount(by.nata.service.model.Account account, String id) {
 
         }
         accountDao.updateAccount(accountDto_sender);
-accountDao.updateAccount(accountDto_recipient);
+        accountDao.updateAccount(accountDto_recipient);
         log.error("Счет с номером " + accountNumberRecipient + " не найден");
     }
 
@@ -161,10 +160,11 @@ accountDao.updateAccount(accountDto_recipient);
         }
         return null;
     }
-    private by.nata.service.model.Account convertToModel(AccountDto accountDto){
+
+    private by.nata.service.model.Account convertToModel(AccountDto accountDto) {
         return new by.nata.service.model.Account(
                 accountDto.getAccountId(),
-               convertToModel(accountDto.getClientDto()),
+                convertToModel(accountDto.getClientDto()),
                 accountDto.getAccountNumber(),
                 accountDto.getDateOpen(),
                 accountDto.getBalance(),
@@ -182,7 +182,6 @@ accountDao.updateAccount(accountDto_recipient);
                 clientDto.getRole(),
                 convertToModelDetails(clientDto.getClientDetailsDto()),
                 convertToModelAddress(clientDto.getClientAddressDto()));
-
 
 
     }
@@ -210,7 +209,6 @@ accountDao.updateAccount(accountDto_recipient);
     }
 
 
-
     @Override
     public List<by.nata.service.model.Account> getAllAccounts() {
 
@@ -222,9 +220,6 @@ accountDao.updateAccount(accountDto_recipient);
 
         return accounts;
     }
-
-
-
 
 
 }

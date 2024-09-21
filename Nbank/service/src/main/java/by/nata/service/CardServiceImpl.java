@@ -1,7 +1,12 @@
 package by.nata.service;
 
-import by.nata.data.dao.*;
-import by.nata.data.model.*;
+import by.nata.data.dao.AccountDao;
+import by.nata.data.dao.CardDao;
+import by.nata.data.model.AccountDto;
+import by.nata.data.model.CardDto;
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import by.nata.service.model.Card;
 import by.nata.service.model.Client;
 import by.nata.service.model.ClientAddress;
@@ -100,7 +105,8 @@ public class CardServiceImpl implements CardService {
         }
         return null;
     }
-    private Card convertToModel(CardDto cardDto){
+
+    private Card convertToModel(CardDto cardDto) {
         return new Card(
                 cardDto.getCardId(),
                 convertToModel(cardDto.getAccountDto()),
@@ -113,7 +119,7 @@ public class CardServiceImpl implements CardService {
         );
     }
 
-    private by.nata.service.model.Account convertToModel(AccountDto accountDto){
+    private by.nata.service.model.Account convertToModel(AccountDto accountDto) {
         return new by.nata.service.model.Account(
                 accountDto.getAccountId(),
                 convertToModel(accountDto.getClientDto()),
@@ -134,7 +140,6 @@ public class CardServiceImpl implements CardService {
                 clientDto.getRole(),
                 convertToModelDetails(clientDto.getClientDetailsDto()),
                 convertToModelAddress(clientDto.getClientAddressDto()));
-
 
 
     }

@@ -6,26 +6,26 @@ import by.nata.service.model.ClientAddress;
 import by.nata.service.model.ClientDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 //http://localhost:8080/web/static/swagger/swagger.json
 @RestController
 public class ClientRestController {
 
     private final ClientService clientService;
-@Autowired
+
+    @Autowired
     public ClientRestController(ClientService clientService) {
         this.clientService = clientService;
     }
 
-//    @GetMapping(value = "/api/clients")
-//    public List<Client> getClients(
-//            @RequestParam(name = "offset") int offset,
-//            @RequestParam(name = "limit") int limit
-//    ) {
-//        return clientService.findAllClients(); //readAll(offset, limit);
-//    }
 
     @GetMapping(value = "/api/clients/{id}")
     public Client getClient(
@@ -36,7 +36,7 @@ public class ClientRestController {
     @PostMapping(value = "/api/clients/{id}")
     public Client createClient(
             @PathVariable("id") String id,
-            @RequestBody Client client, @RequestBody ClientDetails clientDetails,@RequestBody ClientAddress clientAddress) {
+            @RequestBody Client client, @RequestBody ClientDetails clientDetails, @RequestBody ClientAddress clientAddress) {
         client.setId(id);
         clientService.saveNewClient(client, clientDetails, clientAddress);
         return client;

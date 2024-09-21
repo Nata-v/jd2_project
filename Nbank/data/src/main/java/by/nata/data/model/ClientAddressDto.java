@@ -10,7 +10,6 @@ public final class ClientAddressDto implements Serializable {
 
     private final String country;
 
-   // private final Cities city;
     private final String city;
     private final String street;
     private final String houseNumber;

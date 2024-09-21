@@ -36,10 +36,10 @@ public class CardController {
     @PostMapping("/createCard")
     public ModelAndView orderCard(@ModelAttribute("card") Card card, @RequestParam("accountNumber") String accountNumber) throws IOException {
 
-                cardService.createCard(card, accountNumber);
+        cardService.createCard(card, accountNumber);
 
-            return new ModelAndView("bank");
-        }
+        return new ModelAndView("bank");
+    }
 
 
 }

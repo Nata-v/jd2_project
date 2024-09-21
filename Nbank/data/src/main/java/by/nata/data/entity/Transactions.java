@@ -1,9 +1,14 @@
 package by.nata.data.entity;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -12,7 +17,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "TRANSACTIONS")
-//@Audited
 public class Transactions {
     @Id
     @GenericGenerator(strategy = "uuid", name = "transactions_uuid")
@@ -28,7 +32,6 @@ public class Transactions {
     private BigDecimal balance;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "TRANSACTION_CURRENCY")
-    // @NotAudited
     private Currency transaction_currency;
 
     @Column(name = "DATE")
@@ -43,7 +46,7 @@ public class Transactions {
     public Transactions(String id, String accountNumber, String accountNumberRecipient, BigDecimal balance, Currency transaction_currency, ZonedDateTime date, TypeOperation type_operation) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.accountNumberRecipient= accountNumberRecipient;
+        this.accountNumberRecipient = accountNumberRecipient;
         this.balance = balance;
         this.transaction_currency = transaction_currency;
         this.date = date;

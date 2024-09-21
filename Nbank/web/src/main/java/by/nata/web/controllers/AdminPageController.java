@@ -1,13 +1,19 @@
 package by.nata.web.controllers;
 
-import by.nata.service.*;
+import by.nata.service.AccountService;
+import by.nata.service.CardService;
+import by.nata.service.ClientAddressService;
+import by.nata.service.ClientDetailsService;
+import by.nata.service.ClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
@@ -18,24 +24,26 @@ public class AdminPageController {
     private final ClientAddressService clientAddressService;
     private final AccountService accountService;
     private final CardService cardService;
-@Autowired
+
+    @Autowired
     public AdminPageController(ClientService clientService, ClientDetailsService clientDetailsService, ClientAddressService clientAddressService, AccountService accountService, CardService cardService) {
         this.clientService = clientService;
-    this.clientDetailsService = clientDetailsService;
-    this.clientAddressService = clientAddressService;
-    this.accountService = accountService;
-    this.cardService = cardService;
-}
+        this.clientDetailsService = clientDetailsService;
+        this.clientAddressService = clientAddressService;
+        this.accountService = accountService;
+        this.cardService = cardService;
+    }
 
     @GetMapping("/admin")
-    public  String findClientById(){
+    public String findClientById() {
 
         return "/admin";
     }
+
     @PostMapping("/admin")
-    public  ResponseEntity<String> findClientById(@RequestParam(name = "id") String id){
+    public ResponseEntity<String> findClientById(@RequestParam(name = "id") String id) {
         try {
-        clientService.findClientById(id);
+            clientService.findClientById(id);
             return ResponseEntity.ok("Client found successful" + id);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -44,7 +52,7 @@ public class AdminPageController {
 
 
     @PostMapping("/delete")
-    public ResponseEntity<String> deleteClientById(@RequestParam(name = "id") String id){
+    public ResponseEntity<String> deleteClientById(@RequestParam(name = "id") String id) {
         try {
             clientService.delete(id);
             return ResponseEntity.ok("Client delete successful");
@@ -72,6 +80,7 @@ public class AdminPageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
     @PostMapping("/findCard")
     public ResponseEntity<String> findCardByCardNumber(@RequestParam(name = "cardNumber") String cardNumber) {
         try {
@@ -81,6 +90,7 @@ public class AdminPageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
     @PostMapping("/deleteCard")
     public ResponseEntity<String> deleteCardByCardNumber(@RequestParam(name = "cardNumber") String cardNumber) {
         try {
@@ -90,17 +100,6 @@ public class AdminPageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-
-
-
-//    @PutMapping("/{id}")
-//    //@PostMapping("/{id}/update")
-//    public String update(@PathVariable("id") String id,
-//                         @ModelAttribute Client client, ClientDetails clientDetails, ClientAddress clientAddress){
-//        clientService.updateClient(client, clientDetails, clientAddress);
-//        return  "redirect:/profile/{id}";
-//    }
-
 
 
 

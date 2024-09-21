@@ -2,24 +2,21 @@ package by.nata.service.model;
 
 import by.nata.data.entity.Role;
 
-
-
 import java.io.Serializable;
-import java.util.Objects;
 
 
 public class Client implements Serializable {
-    private static  long serialVersionUID = 3402708669125589382L;
-    private  String id;
+    private static long serialVersionUID = 3402708669125589382L;
+    private String id;
 
-    private  String username;
-    private  String password;
+    private String username;
+    private String password;
 
-    private  String email;
-    private  Role role;
+    private String email;
+    private Role role;
     private ClientDetails clientDetails;
 
-    private  ClientAddress clientAddress;
+    private ClientAddress clientAddress;
 
 
     public Client() {
@@ -70,7 +67,8 @@ public class Client implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-        public Role getRole() {
+
+    public Role getRole() {
         return role;
     }
 

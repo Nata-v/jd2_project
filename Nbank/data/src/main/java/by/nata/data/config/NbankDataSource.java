@@ -6,17 +6,20 @@ import java.sql.SQLException;
 
 public class NbankDataSource {
     private static NbankDataSource dataSource;
-    protected NbankDataSource() throws ClassNotFoundException{
+
+    protected NbankDataSource() throws ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
     }
+
     protected Connection getNbankConnection() throws SQLException {
-        return   DriverManager.getConnection("jdbc:mysql://localhost:3306/N_BANK?createDatabaseIfNotExist=true",
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/N_BANK?createDatabaseIfNotExist=true",
                 "user",
                 "user");
     }
+
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        if (dataSource == null){
+        if (dataSource == null) {
             dataSource = new NbankDataSource();
         }
         return dataSource.getNbankConnection();

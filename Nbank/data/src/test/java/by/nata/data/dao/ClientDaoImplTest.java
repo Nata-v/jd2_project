@@ -19,7 +19,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataConfigurationTest.class)
@@ -41,7 +45,7 @@ public class ClientDaoImplTest {
 
         }
 
-        }
+    }
 
     @After
     public void tearDown() throws Exception {
@@ -170,7 +174,6 @@ public class ClientDaoImplTest {
 
         assertNotNull(savedClient.getClientAddressDto());
         assertEquals("Russia", savedClient.getClientAddressDto().getCountry());
-
 
 
     }

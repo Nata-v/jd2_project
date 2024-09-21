@@ -1,10 +1,12 @@
 package by.nata.data.entity;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,8 +26,6 @@ public class ClientAddress {
     @Column(name = "COUNTRY")
     private String country;
 
-//    @JoinColumn(name = "CITY_ID")
-//    @OneToOne(cascade = CascadeType.ALL)
     @Column(name = "CITY")
     private String city;
     @Column(name = "STREET")

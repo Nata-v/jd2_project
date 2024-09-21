@@ -1,28 +1,22 @@
 package by.nata.service.model;
 
 
-
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ClientDetails implements Serializable {
 
     private static final long serialVersionUID = 4965439671051563406L;
 
-    private  String id;
-    private  String surname;
-    private  String name;
-    //@DateTimeFormat(pattern = "dd-MM-yyy")
-    private  LocalDate birthDate;
-    private  String passportNumber;
-    private  String identityNumber;
+    private String id;
+    private String surname;
+    private String name;
+    private LocalDate birthDate;
+    private String passportNumber;
+    private String identityNumber;
 
-    private  LocalDate dateIssue;
-    private  LocalDate dateExpiry;
+    private LocalDate dateIssue;
+    private LocalDate dateExpiry;
 
     public ClientDetails() {
     }

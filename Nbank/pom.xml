@@ -39,26 +39,7 @@
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.slf4j</groupId>-->
-<!--                <artifactId>slf4j-log4j12</artifactId>-->
-<!--                <version>2.0.7</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.hibernate</groupId>-->
-<!--                <artifactId>hibernate-jcache</artifactId>-->
-<!--                <version>${hibernate.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.ehcache</groupId>-->
-<!--                <artifactId>ehcache</artifactId>-->
-<!--                <version>3.10.8</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.hibernate</groupId>-->
-<!--                <artifactId>hibernate-envers</artifactId>-->
-<!--                <version>${hibernate.version}</version>-->
-<!--            </dependency>-->
+
 
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -178,7 +159,12 @@
                 <artifactId>spring-security-taglibs</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-test</artifactId>
+                <version>${spring.security.version}</version>
+                <scope>test</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

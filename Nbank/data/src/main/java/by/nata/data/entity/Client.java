@@ -1,11 +1,19 @@
 package by.nata.data.entity;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
@@ -13,7 +21,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "CLIENT")
-//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Client {
     @Id
     @GenericGenerator(strategy = "uuid", name = "client_uuid")
@@ -35,11 +42,11 @@ public class Client {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
-    @OneToOne(cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CLIENT_DETAILS_ID")
     private ClientDetails clientDetails;
 
-    @ManyToOne(cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CLIENT_ADDRESS_ID")
     private ClientAddress clientAddress;
 

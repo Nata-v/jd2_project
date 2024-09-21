@@ -1,26 +1,24 @@
 package by.nata.service.model;
 
 
-
 import java.io.Serializable;
 
 
 public class ClientAddress implements Serializable {
     private static final long serialVersionUID = -1357701676527618932L;
 
-    private  String id;
-    private  String country;
-   // private final Cities city;
-    private  String city;
-    private  String street;
-    private  String houseNumber;
-    private  String flatNumber;
-    private  String phoneNumber;
+    private String id;
+    private String country;
+    private String city;
+    private String street;
+    private String houseNumber;
+    private String flatNumber;
+    private String phoneNumber;
 
     public ClientAddress() {
     }
 
-    public ClientAddress(String id, String country,String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
+    public ClientAddress(String id, String country, String city, String street, String houseNumber, String flatNumber, String phoneNumber) {
         this.id = id;
         this.country = country;
         this.city = city;

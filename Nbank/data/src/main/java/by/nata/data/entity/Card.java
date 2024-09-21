@@ -1,10 +1,16 @@
 package by.nata.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -13,7 +19,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "CARD")
-//@Audited
 public class Card {
     @Id
     @GenericGenerator(strategy = "uuid", name = "card_uuid")
@@ -23,7 +28,6 @@ public class Card {
 
     @JoinColumn(name = "ACCOUNT_ID")
     @ManyToOne(cascade = CascadeType.ALL)
-    // @NotAudited
     private Account accountId;
     @Column(name = "CARD_NUMBER")
     private String cardNumber;
@@ -36,11 +40,9 @@ public class Card {
     private String cvv;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "CARD_STATUS")
-    //@NotAudited
     private CardStatus card_status;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "CURRENCY")
-    // @NotAudited
     private Currency currency;
 
 

@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ClientDetailsService {
     void saveNewClientDetails(ClientDetails clientDetails);
+
     List<ClientDetails> findAllByFilter(ClientFilter clientFilter);
+
     Optional<ClientDetails> findById(String id);
 }

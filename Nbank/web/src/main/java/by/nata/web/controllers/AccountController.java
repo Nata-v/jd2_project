@@ -1,12 +1,12 @@
 package by.nata.web.controllers;
 
 import by.nata.data.entity.Currency;
-import by.nata.data.model.AccountDto;
-import by.nata.data.model.TransactionsDto;
 import by.nata.service.AccountService;
 import by.nata.service.ClientService;
 import by.nata.service.TransactionsService;
-import by.nata.service.model.*;
+import by.nata.service.model.Account;
+import by.nata.service.model.Client;
+import by.nata.service.model.Transactions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Locale;
 
 @Controller
 @Slf4j

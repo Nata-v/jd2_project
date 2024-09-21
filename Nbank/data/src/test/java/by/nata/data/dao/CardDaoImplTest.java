@@ -5,8 +5,11 @@ import by.nata.data.config.NbankDataSourceTest;
 import by.nata.data.entity.CardStatus;
 import by.nata.data.entity.Currency;
 import by.nata.data.entity.Role;
-import by.nata.data.entity.TypeOperation;
-import by.nata.data.model.*;
+import by.nata.data.model.AccountDto;
+import by.nata.data.model.CardDto;
+import by.nata.data.model.ClientAddressDto;
+import by.nata.data.model.ClientDetailsDto;
+import by.nata.data.model.ClientDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +25,10 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataConfigurationTest.class)

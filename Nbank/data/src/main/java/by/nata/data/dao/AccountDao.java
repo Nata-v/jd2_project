@@ -7,13 +7,17 @@ import java.util.List;
 
 public interface AccountDao {
 
-     String save(AccountDto accountDto);
+    String save(AccountDto accountDto);
+
     Account updateAccount(AccountDto accountDto);
+
     List<AccountDto> getAccountById(String accountId);
+
     List<AccountDto> getAllAccounts();
+
     AccountDto deleteAccountByAccountNumber(String accountNumber);
+
     AccountDto findByAccountNumber(String accountNumber);
-//    Optional<AccountDto> findAccountById(String id);
 
 
 }

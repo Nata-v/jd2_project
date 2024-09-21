@@ -24,7 +24,10 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataConfigurationTest.class)
@@ -130,7 +133,7 @@ public class AccountDaoImplTest {
 
         BigDecimal newBalance = new BigDecimal(2000);
         savedAccount.setBalance(newBalance);
-       Account updatedAccount = accountDao.updateAccount(savedAccount);
+        Account updatedAccount = accountDao.updateAccount(savedAccount);
 
         assertNotNull(updatedAccount);
         assertEquals(newBalance, updatedAccount.getBalance());
@@ -164,7 +167,7 @@ public class AccountDaoImplTest {
         expectedAccount.setCurrency(currency);
         expectedAccount.setPin("3003");
 
-               accountDao.save(expectedAccount);
+        accountDao.save(expectedAccount);
         List<AccountDto> savedAccounts = accountDao.getAccountById(id);
         assertNotNull(savedAccounts);
         for (AccountDto savedAccount : savedAccounts) {

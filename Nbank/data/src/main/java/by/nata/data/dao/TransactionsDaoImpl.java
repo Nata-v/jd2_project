@@ -1,6 +1,5 @@
 package by.nata.data.dao;
 
-import by.nata.data.entity.Account;
 import by.nata.data.entity.Transactions;
 import by.nata.data.model.TransactionsDto;
 import org.hibernate.Session;
@@ -14,14 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional
-public class TransactionsDaoImpl implements TransactionsDao{
+public class TransactionsDaoImpl implements TransactionsDao {
     private static final Logger log = LoggerFactory.getLogger(TransactionsDaoImpl.class);
 
-private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
 
     @Autowired
@@ -45,8 +43,7 @@ private final SessionFactory sessionFactory;
                 transactionsDto.getType_operation()
         );
 
-       return (String) session.save(transactions);
-        //log.info("Such accountNumbers doesn't exist!");
+        return (String) session.save(transactions);
 
     }
 

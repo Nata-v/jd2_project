@@ -1,7 +1,15 @@
 package by.nata.data.entity;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -24,10 +32,9 @@ public class BankomatOperations {
     private ZonedDateTime date;
     @Column(name = "AMOUNT")
     private BigDecimal amount;
-@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @JoinColumn(name = "TYPE_OPERATION")
     private TypeOperation typeOperation;
-
 
 
 }

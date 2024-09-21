@@ -39,6 +39,7 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
         return (String) session.save(clientDetails);
 
     }
+
     private ClientDetails convertClientDetailsDtoToEntity(ClientDetailsDto clientDetailsDto) {
         if (clientDetailsDto == null) {
             throw new IllegalArgumentException("ClientDetailsDto cannot be null");
@@ -64,20 +65,19 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
 
         ClientDetails clientDetails = session.find(ClientDetails.class, id);
         return Optional.of(new ClientDetailsDto(clientDetails.getId(),
-                        clientDetails.getSurname(),
-                        clientDetails.getName(),
-                        clientDetails.getBirthDate(),
-                        clientDetails.getPassportNumber(),
-                        clientDetails.getIdentityNumber(),
-                        clientDetails.getDateIssue(),
-                        clientDetails.getDateExpiry()));
+                clientDetails.getSurname(),
+                clientDetails.getName(),
+                clientDetails.getBirthDate(),
+                clientDetails.getPassportNumber(),
+                clientDetails.getIdentityNumber(),
+                clientDetails.getDateIssue(),
+                clientDetails.getDateExpiry()));
 
 
     }
 
 
-
-   @Override
+    @Override
     public List<ClientDetails> findAllByFilter(ClientFilterDto clientFilterDto) {
         final Session session = sessionFactory.getCurrentSession();
         var cb = sessionFactory.getCurrentSession().getCriteriaBuilder();
@@ -87,13 +87,13 @@ public class ClientDetailsDaoImpl implements ClientDetailsDao {
         criteria.select(clientDetails);
 
         List<Predicate> predicates = new ArrayList<>();
-        if (clientFilterDto.getSurname() != null){
+        if (clientFilterDto.getSurname() != null) {
             predicates.add((Predicate) cb.like(clientDetails.get("surname"), clientFilterDto.getSurname()));
         }
-        if (clientFilterDto.getName() != null){
+        if (clientFilterDto.getName() != null) {
             predicates.add((Predicate) cb.like(clientDetails.get("name"), clientFilterDto.getName()));
         }
-        if (clientFilterDto.getBirthDate() != null){
+        if (clientFilterDto.getBirthDate() != null) {
             predicates.add((Predicate) cb.lessThan(clientDetails.get("birthDate"), clientFilterDto.getBirthDate()));
         }
         criteria.where(predicates.toArray(jakarta.persistence.criteria.Predicate[]::new));

@@ -3,7 +3,6 @@ package by.nata.data.model;
 import by.nata.data.entity.Currency;
 import by.nata.data.entity.TypeOperation;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;

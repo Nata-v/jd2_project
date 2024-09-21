@@ -1,10 +1,7 @@
 package by.nata.service;
 
 import by.nata.data.dao.ClientAddressDao;
-
-
 import by.nata.data.model.ClientAddressDto;
-
 import by.nata.service.model.ClientAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +11,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ClientAddressServiceImpl implements ClientAddressService{
+public class ClientAddressServiceImpl implements ClientAddressService {
 
     private final ClientAddressDao clientAddressDao;
 
     @Autowired
-    public ClientAddressServiceImpl( ClientAddressDao clientAddressDao) {
+    public ClientAddressServiceImpl(ClientAddressDao clientAddressDao) {
         this.clientAddressDao = clientAddressDao;
     }
 
@@ -34,7 +31,7 @@ public class ClientAddressServiceImpl implements ClientAddressService{
                 clientAddress.getFlatNumber(),
                 clientAddress.getPhoneNumber()
         );
-            clientAddressDao.save(clientAddressDto);
+        clientAddressDao.save(clientAddressDto);
 
 
     }
@@ -56,21 +53,5 @@ public class ClientAddressServiceImpl implements ClientAddressService{
                 clientAddressDto.getPhoneNumber());
     }
 
-//    @Override
-//    public void updateClientAddress(ClientAddress clientAddress) {
-//        ClientAddressDto existingClientAddressDto = clientAddressDao.findById(clientAddress.getId()).orElse(null);
-//
-//        if (existingClientAddressDto != null) {
-//            clientAddress.setCountry(existingClientAddressDto.getCountry());
-//            clientAddress.setCity(existingClientAddressDto.getCity());
-//            clientAddress.setStreet(existingClientAddressDto.getStreet());
-//            clientAddress.setHouseNumber(existingClientAddressDto.getHouseNumber());
-//            clientAddress.setFlatNumber(existingClientAddressDto.getFlatNumber());
-//            clientAddress.setPhoneNumber(existingClientAddressDto.getPhoneNumber());
-//
-//            clientAddressDao.update(existingClientAddressDto);
-//        }
-//
-//    }
 
 }

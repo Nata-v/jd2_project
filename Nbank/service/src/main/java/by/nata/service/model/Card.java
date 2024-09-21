@@ -9,13 +9,13 @@ import java.time.ZonedDateTime;
 
 public class Card implements Serializable {
     private static final long serialVersionUID = 413071048981360036L;
-    private  String cardId;
+    private String cardId;
     private Account account;
-    private  String cardNumber;
+    private String cardNumber;
     private BigDecimal balance;
-    private  ZonedDateTime expiryDate;
-    private  String cvv;
-    private  CardStatus card_status;
+    private ZonedDateTime expiryDate;
+    private String cvv;
+    private CardStatus card_status;
 
     private Currency currency;
 

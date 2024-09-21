@@ -3,7 +3,6 @@ package by.nata.data.model;
 import by.nata.data.entity.CardStatus;
 import by.nata.data.entity.Currency;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -26,7 +25,7 @@ public final class CardDto implements Serializable {
 
     private final Currency currency;
 
-    public CardDto(String cardId,AccountDto accountDto, String cardNumber, BigDecimal balance, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
+    public CardDto(String cardId, AccountDto accountDto, String cardNumber, BigDecimal balance, ZonedDateTime expiryDate, String cvv, CardStatus card_status, Currency currency) {
         this.cardId = cardId;
         this.accountDto = accountDto;
         this.cardNumber = cardNumber;
